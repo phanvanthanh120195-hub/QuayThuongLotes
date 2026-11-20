@@ -225,6 +225,20 @@ export ConnectionStrings__LuckyDraw="Host=...;...;Search Path=luckydraw"
 dotnet LuckyDraw.Web.dll --urls http://0.0.0.0:5280
 ```
 
+### Chạy bản build sẵn trong git (máy không tải được gói NuGet)
+
+Repo có sẵn thư mục `LuckyDraw.Web/bin` và `obj` (bản build Debug, khoảng 17 MB), nên máy đích **không cần tải gói NuGet và không cần build**. Máy đích vẫn cần:
+- **ASP.NET Core Runtime 8** (hoặc .NET 8 SDK). Có thể tải bộ cài *offline* ở máy khác rồi chép sang bằng USB.
+- **Mạng ra Internet tới Supabase**, vì database nằm trên mạng. Nếu hoàn toàn không có Internet, phải cài PostgreSQL ngay trên máy đó, chạy các script ở mục 2.2 bằng `psql`, và trỏ chuỗi kết nối về `Host=localhost`.
+
+```powershell
+cd LuckyDraw\LuckyDraw.Web
+$env:ConnectionStrings__LuckyDraw = "Host=...;Port=5432;Database=postgres;Username=...;Password=...;SSL Mode=Require;Search Path=luckydraw"
+dotnet bin\Debug\net8.0\LuckyDraw.Web.dll --contentRoot . --urls http://0.0.0.0:5280
+```
+
+`--contentRoot .` để app tìm thấy thư mục `wwwroot` (CSS, JS, ảnh) và `Views`. Khi sửa code, nhớ build lại (`dotnet build`) **trước khi commit** để `bin` khớp với code.
+
 Muốn app tự chạy cùng máy thì có thể dùng IIS (cài *ASP.NET Core Hosting Bundle*), Windows Service hoặc `systemd`.
 
 Muốn bắt buộc đăng nhập mới xem được màn chiếu: đặt `"LuckyDraw": { "PublicView": false }` trong `appsettings.json`, hoặc biến môi trường `LuckyDraw__PublicView=false`.

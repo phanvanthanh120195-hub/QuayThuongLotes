@@ -1,6 +1,6 @@
 ## .NET
-bin/
-obj/
+## bin/ và obj/ ĐƯỢC đưa lên git (theo yêu cầu) để máy không có mạng vẫn chạy được bản build sẵn
+## mà không cần tải gói NuGet. Nhớ build lại trước khi commit để bin khớp với code.
 *.user
 .vs/
 
