@@ -1,0 +1,53 @@
+@model IReadOnlyList<AppUser>
+@{
+    ViewData["Title"] = L["Tài khoản"];
+    int currentId = ViewBag.CurrentUserId;
+}
+<div class="page-head">
+    <div>
+        <h1>@L["Tài khoản"]</h1>
+        <p class="sub">@L["Admin: toàn quyền trang quản trị. Operator (MC): chỉ bấm quay và đánh dấu vắng mặt trên màn hình chính."]</p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-primary" asp-action="Create">@Html.Icon("plus") @L["Tạo tài khoản"]</a>
+    </div>
+</div>
+
+<div class="card-ld">
+    <div class="table-wrap">
+        <table class="table table-ld">
+            <thead>
+                <tr>
+                    <th>@L["Tên đăng nhập"]</th>
+                    <th>@L["Tên hiển thị"]</th>
+                    <th>@L["Vai trò"]</th>
+                    <th>@L["Trạng thái"]</th>
+                    <th>@L["Đăng nhập gần nhất"]</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var u in Model)
+            {
+                <tr class="@(u.IsActive ? "" : "opacity-50")">
+                    <td class="mono fw-semibold">@u.UserName @if (u.UserId == currentId) { <span class="tag gold ms-1">@L["Bạn"]</span> }</td>
+                    <td>@u.DisplayName</td>
+                    <td><span class="tag @(u.Role == Roles.Admin ? "red" : "")">@u.Role</span></td>
+                    <td>@(u.IsActive ? L["Hoạt động"] : L["Đã khoá"])</td>
+                    <td class="small">@(u.LastLoginAt is null ? "—" : VnTime.Format(u.LastLoginAt))</td>
+                    <td class="actions-cell">
+                        <a class="btn btn-ghost btn-icon" asp-action="Password" asp-route-id="@u.UserId" title="@L["Đổi mật khẩu"]">@Html.Icon("key")</a>
+                        <a class="btn btn-ghost btn-icon" asp-action="Edit" asp-route-id="@u.UserId" title="@L["Sửa"]">@Html.Icon("edit")</a>
+                        @if (u.UserId != currentId)
+                        {
+                            <form method="post" asp-action="Delete" asp-route-id="@u.UserId" data-confirm="@L["Xoá tài khoản {0}?", u.UserName]">
+                                <button class="btn btn-ghost btn-icon danger" type="submit" title="@L["Xoá"]">@Html.Icon("trash")</button>
+                            </form>
+                        }
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

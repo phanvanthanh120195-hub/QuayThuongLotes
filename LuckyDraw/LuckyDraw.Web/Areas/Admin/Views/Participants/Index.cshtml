@@ -1,0 +1,173 @@
+@model ParticipantsViewModel
+@{
+    ViewData["Title"] = L["Người tham dự"];
+    var s = Model.Search;
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+    var statuses = new (string? Key, string Label, int? Count)[]
+    {
+        (null, L["Tất cả"], Model.Stats.Total),
+        ("eligible", L["Chưa trúng"], Model.Stats.Total - Model.Stats.Won - Model.Stats.Absent),
+        ("won", L["Đã trúng"], Model.Stats.Won),
+        ("absent", L["Vắng mặt"], Model.Stats.Absent)
+    };
+}
+<div class="page-head">
+    <div>
+        <h1>@L["Người tham dự"]</h1>
+        <p class="sub">@L["Danh sách người được quay của sự kiện đang quản lý. Người vắng mặt không được quay."]</p>
+    </div>
+    <div class="actions">
+        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#photosModal">@Html.Icon("image") @L["Tải ảnh hàng loạt"]</button>
+        <a class="btn btn-light" asp-controller="Import" asp-action="Index">@Html.Icon("upload") @L["Import Excel"]</a>
+        <a class="btn btn-primary" asp-action="Create">@Html.Icon("plus") @L["Thêm người"]</a>
+    </div>
+</div>
+
+<div class="card-ld">
+    <div class="tabs-ld">
+        @foreach (var st in statuses)
+        {
+            <a class="@(s.Status == st.Key || (string.IsNullOrEmpty(s.Status) && st.Key is null) ? "active" : "")"
+               asp-action="Index" asp-route-status="@st.Key" asp-route-q="@s.Q" asp-route-dept="@s.Dept">
+                @st.Label<span class="count">@st.Count</span>
+            </a>
+        }
+    </div>
+    <form method="get" asp-action="Index" class="toolbar">
+        <input type="hidden" name="status" value="@s.Status" />
+        <div class="search">
+            @Html.Icon("search")
+            <input type="search" name="q" value="@s.Q" class="form-control form-control-sm" placeholder="@L["Tìm theo mã hoặc tên…"]" />
+        </div>
+        @if (Model.DepartmentNames.Count > 0)
+        {
+            <select name="dept" class="form-select form-select-sm" style="max-width:240px" data-autosubmit>
+                <option value="">@L["Tất cả bộ phận"]</option>
+                @foreach (var d in Model.DepartmentNames)
+                {
+                    <option value="@d" selected="@(d == s.Dept)">@d</option>
+                }
+            </select>
+        }
+        <button class="btn btn-light btn-sm" type="submit">@L["Lọc"]</button>
+        @if (!string.IsNullOrEmpty(s.Q) || !string.IsNullOrEmpty(s.Dept))
+        {
+            <a class="btn btn-ghost btn-sm" asp-action="Index" asp-route-status="@s.Status">@Html.Icon("x") @L["Bỏ lọc"]</a>
+        }
+        <div class="ms-auto">
+            <button type="button" class="btn btn-ghost btn-sm danger" data-bs-toggle="modal" data-bs-target="#deleteAll">@Html.Icon("trash") @L["Xoá danh sách"]</button>
+        </div>
+    </form>
+
+    @if (Model.Page.Items.Count == 0)
+    {
+        <div class="empty">
+            @Html.Icon("users")
+            @if (Model.Stats.Total == 0)
+            {
+                <h3>@L["Chưa có người tham dự"]</h3>
+                <p>@L["Import danh sách từ Excel để nhanh hơn."]</p>
+                <a class="btn btn-primary" asp-controller="Import" asp-action="Index">@Html.Icon("upload") @L["Import Excel"]</a>
+            }
+            else
+            {
+                <h3>@L["Không có kết quả phù hợp"]</h3>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="table-wrap">
+            <table class="table table-ld">
+                <thead>
+                    <tr>
+                        <th>@L["Mã NV"]</th>
+                        <th>@L["Họ tên"]</th>
+                        <th>@L["Bộ phận"]</th>
+                        <th>@L["Chức vụ"]</th>
+                        <th>@L["Ngày vào làm"]</th>
+                        <th class="text-center">@L["Thâm niên"]</th>
+                        <th>@L["Trạng thái"]</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var p in Model.Page.Items)
+                {
+                    var months = Seniority.Months(p.JoinDate, Model.Event.EventDate);
+                    <tr>
+                        <td class="mono fw-semibold">@p.EmployeeCode</td>
+                        <td>
+                            <div class="person">
+                                @if (p.PhotoPath != null) { <img class="avatar-sm" src="@p.PhotoPath" alt="" loading="lazy" /> }
+                                else { <span class="avatar-sm ph">@(p.FullName.Split(' ', StringSplitOptions.RemoveEmptyEntries).LastOrDefault()?[..1])</span> }
+                                <div><div class="fw-semibold">@p.FullName</div>@if (p.FullNameZh != null) { <div class="small-note">@p.FullNameZh</div> }</div>
+                            </div>
+                        </td>
+                        <td><div>@(p.DepartmentNameVi)</div>@if (p.DepartmentNameZhTw != null && p.DepartmentNameZhTw != p.DepartmentNameVi) { <div class="small-note">@p.DepartmentNameZhTw</div> }</td>
+                        <td>@p.Position</td>
+                        <td class="text-nowrap">@p.JoinDate.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center">@L["{0} tháng", months]</td>
+                        <td>
+                            @if (p.WonPrizeId != null) { <span class="tag gold">@Html.Icon("trophy") @LocalizedName.WonPrize(p)</span> }
+                            @if (p.IsAbsent) { <span class="tag red">@L["Vắng mặt"]</span> }
+                            @if (p.WonPrizeId == null && !p.IsAbsent) { <span class="tag green">@L["Chưa trúng"]</span> }
+                        </td>
+                        <td class="actions-cell">
+                            <form method="post" asp-action="ToggleAbsent" asp-route-id="@p.ParticipantId" asp-route-returnUrl="@returnUrl">
+                                <button class="btn btn-ghost btn-icon" type="submit" title="@(p.IsAbsent ? L["Đánh dấu có mặt"] : L["Đánh dấu vắng mặt"])">@Html.Icon(p.IsAbsent ? "user-check" : "user-x")</button>
+                            </form>
+                            <a class="btn btn-ghost btn-icon" asp-action="Edit" asp-route-id="@p.ParticipantId" title="@L["Sửa"]">@Html.Icon("edit")</a>
+                            <form method="post" asp-action="Delete" asp-route-id="@p.ParticipantId" asp-route-returnUrl="@returnUrl" data-confirm="@L["Xoá {0} – {1}?", p.EmployeeCode, p.FullName]">
+                                <button class="btn btn-ghost btn-icon danger" type="submit" title="@L["Xoá"]">@Html.Icon("trash")</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    <partial name="_Pager" model="@(new PagerModel { Page = Model.Page.Page, TotalPages = Model.Page.TotalPages, Total = Model.Page.Total, Route = new() { ["q"] = s.Q, ["status"] = s.Status, ["dept"] = s.Dept } })" />
+</div>
+
+<div class="modal fade" id="photosModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content" method="post" asp-action="Photos" enctype="multipart/form-data">
+            <div class="modal-header">
+                <h5 class="modal-title">@L["Tải ảnh hàng loạt"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@L["Đóng"]"></button>
+            </div>
+            <div class="modal-body">
+                <p>@L["Đặt tên file ảnh theo mã số thẻ, ví dụ VN000032.jpg (hoặc “VN000032 - Tô Văn Thọ.jpg”). Ảnh sẽ tự gắn vào đúng người; ảnh trùng mã thay ảnh cũ."]</p>
+                <label class="form-label" for="photoFiles">@L["Chọn nhiều ảnh hoặc một file .zip"]</label>
+                <input class="form-control" type="file" id="photoFiles" name="files" multiple accept=".jpg,.jpeg,.png,.webp,.zip" required />
+                <div class="form-text">@L["JPG, PNG, WEBP tối đa 5 MB mỗi ảnh. Nên dùng ảnh vuông, mặt ở giữa."]</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@L["Huỷ"]</button>
+                <button type="submit" class="btn btn-primary">@Html.Icon("upload") @L["Tải lên"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="modal fade" id="deleteAll" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content" method="post" asp-action="DeleteAll">
+            <div class="modal-header">
+                <h5 class="modal-title">@L["Xoá danh sách người tham dự"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@L["Đóng"]"></button>
+            </div>
+            <div class="modal-body">
+                <p>@L["Xoá tất cả người tham dự của sự kiện này, trừ những người đã có kết quả quay. Dùng khi muốn import lại danh sách từ đầu."]</p>
+                <label class="form-label" for="confirmDelete">@L["Gõ XOA để xác nhận"]</label>
+                <input class="form-control" id="confirmDelete" name="confirm" autocomplete="off" data-confirm-text="XOA" data-confirm-target="#deleteAllBtn" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@L["Huỷ"]</button>
+                <button type="submit" class="btn btn-primary" id="deleteAllBtn" disabled>@Html.Icon("trash") @L["Xoá"]</button>
+            </div>
+        </form>
+    </div>
+</div>

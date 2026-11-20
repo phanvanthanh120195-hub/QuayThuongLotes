@@ -1,0 +1,58 @@
+@model AuditViewModel
+@{
+    ViewData["Title"] = L["Nhật ký"];
+}
+<div class="page-head">
+    <div>
+        <h1>@L["Nhật ký thao tác"]</h1>
+        <p class="sub">@L["Mọi thao tác thay đổi dữ liệu đều được ghi lại và không thể sửa hay xoá."]</p>
+    </div>
+</div>
+
+<div class="card-ld">
+    <form method="get" asp-action="Index" class="toolbar">
+        <select name="act" class="form-select form-select-sm" style="max-width:260px" data-autosubmit>
+            <option value="">@L["Tất cả thao tác"]</option>
+            @foreach (var a in Model.Actions) { <option value="@a" selected="@(a == Model.Action)">@a</option> }
+        </select>
+        <div class="form-check ms-2">
+            <input class="form-check-input" type="checkbox" name="all" value="true" id="allEvents" checked="@Model.AllEvents" data-autosubmit />
+            <label class="form-check-label" for="allEvents">@L["Mọi sự kiện"]</label>
+        </div>
+    </form>
+    @if (Model.Page.Items.Count == 0)
+    {
+        <div class="empty">@Html.Icon("list")<h3>@L["Chưa có nhật ký"]</h3></div>
+    }
+    else
+    {
+        <div class="table-wrap">
+            <table class="table table-ld">
+                <thead>
+                    <tr>
+                        <th>@L["Thời gian"]</th>
+                        <th>@L["Người thao tác"]</th>
+                        <th>@L["Thao tác"]</th>
+                        <th>@L["Đối tượng"]</th>
+                        <th>@L["Chi tiết"]</th>
+                        <th>IP</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var log in Model.Page.Items)
+                {
+                    <tr>
+                        <td class="small text-nowrap">@VnTime.Format(log.CreatedAt, "dd/MM/yyyy HH:mm:ss")</td>
+                        <td class="fw-semibold">@log.UserName</td>
+                        <td><span class="tag @(log.Action.Contains("DELETE") || log.Action.Contains("RESET") || log.Action.Contains("FAILED") ? "red" : "")">@log.Action</span></td>
+                        <td class="small">@log.Entity @(log.EntityId is null ? "" : "#" + log.EntityId)</td>
+                        <td class="small mono text-break" style="max-width:380px">@log.Detail</td>
+                        <td class="small-note">@log.IpAddress</td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    <partial name="_Pager" model="@(new PagerModel { Page = Model.Page.Page, TotalPages = Model.Page.TotalPages, Total = Model.Page.Total, Route = new() { ["act"] = Model.Action, ["all"] = Model.AllEvents ? "true" : null } })" />
+</div>

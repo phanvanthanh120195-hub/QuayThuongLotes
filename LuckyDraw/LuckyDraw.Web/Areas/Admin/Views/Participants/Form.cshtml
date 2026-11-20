@@ -1,0 +1,197 @@
+@model ParticipantFormModel
+@{
+    var isNew = Model.ParticipantId == 0;
+    ViewData["Title"] = isNew ? L["Thêm người tham dự"] : L["Sửa người tham dự"];
+    Event? ev = ViewBag.Event;
+    IReadOnlyList<string> deptVi = ViewBag.DeptVi;
+    IReadOnlyList<string> deptZh = ViewBag.DeptZh;
+    IReadOnlyList<Prize> prizes = ViewBag.Prizes;
+    var prizeData = prizes.Where(p => p.IsActive).Select(p => new { name = LocalizedName.Get(p), min = p.MinSeniorityMonths, max = p.MaxSeniorityMonths });
+}
+@section Head {
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet" />
+}
+<div class="page-head">
+    <div>
+        <div class="crumb"><a asp-action="Index">@L["Người tham dự"]</a> / @ViewData["Title"]</div>
+        <h1>@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-xl-7">
+        <form method="post" asp-action="@(isNew ? "Create" : "Edit")" asp-route-id="@(isNew ? null : Model.ParticipantId)" enctype="multipart/form-data" class="card-ld" novalidate>
+            <div class="form-section">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label asp-for="EmployeeCode" class="form-label"></label>
+                        <input asp-for="EmployeeCode" class="form-control mono" />
+                        <span asp-validation-for="EmployeeCode"></span>
+                    </div>
+                    <div class="col-md-8">
+                        <label asp-for="JoinDate" class="form-label"></label>
+                        <input asp-for="JoinDate" class="form-control" type="date" />
+                        <span asp-validation-for="JoinDate"></span>
+                        <div class="form-text">@L["Dùng để tính thâm niên theo điều kiện của từng giải."]</div>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="FullName" class="form-label"></label>
+                        <input asp-for="FullName" class="form-control" />
+                        <span asp-validation-for="FullName"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="FullNameZh" class="form-label"></label>
+                        <input asp-for="FullNameZh" class="form-control" lang="zh" />
+                        <span asp-validation-for="FullNameZh"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="DepartmentVi" class="form-label"></label>
+                        <input asp-for="DepartmentVi" class="form-control" list="deptViList" />
+                        <span asp-validation-for="DepartmentVi"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="DepartmentZh" class="form-label"></label>
+                        <input asp-for="DepartmentZh" class="form-control" lang="zh" list="deptZhList" />
+                        <span asp-validation-for="DepartmentZh"></span>
+                    </div>
+                    <div class="col-12">
+                        <label asp-for="Position" class="form-label"></label>
+                        <input asp-for="Position" class="form-control" />
+                        <span asp-validation-for="Position"></span>
+                    </div>
+                    <input type="hidden" asp-for="DepartmentId" />
+                    <datalist id="deptViList">@foreach (var d in deptVi) { <option value="@d"></option> }</datalist>
+                    <datalist id="deptZhList">@foreach (var d in deptZh) { <option value="@d"></option> }</datalist>
+                </div>
+            </div>
+            <div class="form-section">
+                <h3>@L["Ảnh chân dung"]</h3>
+                <p class="hint">@L["JPG, PNG, WEBP tối đa 5 MB mỗi ảnh. Nên dùng ảnh vuông, mặt ở giữa."] @L["Hiện trên màn chiếu khi người này trúng giải."]</p>
+                <input asp-for="Photo" type="file" class="form-control" accept=".jpg,.jpeg,.png,.webp" data-preview="#pvPhoto" />
+                <span asp-validation-for="Photo"></span>
+                @if (Model.PhotoPath != null)
+                {
+                    <div class="form-check mt-2">
+                        <input class="form-check-input" type="checkbox" asp-for="RemovePhoto" />
+                        <label class="form-check-label" asp-for="RemovePhoto"></label>
+                    </div>
+                }
+            </div>
+            <div class="form-section">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" asp-for="IsAbsent" />
+                    <label class="form-check-label fw-semibold" asp-for="IsAbsent"></label>
+                </div>
+                <div class="form-text">@L["Người vắng mặt sẽ không được quay ở các lượt sau."]</div>
+            </div>
+            <div class="form-foot">
+                <a class="btn btn-light" asp-action="Index">@L["Huỷ"]</a>
+                <button type="submit" class="btn btn-primary">@Html.Icon("check") @L["Lưu"]</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-xl-5">
+        <div class="preview-sticky">
+            <div class="card-ld mb-3">
+                <div class="card-head"><h2>@Html.Icon("monitor") @L["Khi trúng giải trên màn chiếu"]</h2></div>
+                <div class="card-body">
+                    <div class="winner-preview">
+                        <div class="wp-photo">
+                            <img id="pvPhoto" src="@Model.PhotoPath" alt="" hidden="@(Model.PhotoPath is null)" />
+                            <span id="pvNoPhoto" hidden="@(Model.PhotoPath != null)">@Html.Icon("image")</span>
+                        </div>
+                        <div class="wp-code" id="pvCode">@(string.IsNullOrEmpty(Model.EmployeeCode) ? "VN000000" : Model.EmployeeCode)</div>
+                        <div class="wp-name" id="pvName">@(string.IsNullOrEmpty(Model.FullName) ? L["Họ tên"] : Model.FullName)</div>
+                        <div class="wp-dept" id="pvDept">@Model.DepartmentVi</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-ld">
+                <div class="card-head">
+                    <h2>@Html.Icon("clock") @L["Thâm niên"]</h2>
+                    @if (ev != null) { <span class="small-note">@L["Tính đến {0}", ev.EventDate.ToString("dd/MM/yyyy")]</span> }
+                </div>
+                <div class="card-body">
+                    <div class="stat p-0 mb-3">
+                        <div class="stat-icon gold">@Html.Icon("calendar")</div>
+                        <div><div class="num" id="senMonths">—</div><div class="lbl">@L["Thâm niên tại ngày sự kiện"]</div></div>
+                    </div>
+                    <div class="small-note mb-1">@L["Giải người này đủ điều kiện"]</div>
+                    <div id="eligList">
+                        @if (!prizes.Any()) { <p class="small-note mb-0">@L["Chưa có giải thưởng."]</p> }
+                    </div>
+                    <div class="flash err mt-3 mb-0" id="absentNote" hidden>@Html.Icon("user-x") <span>@L["Đang đánh dấu vắng mặt: sẽ không được quay."]</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            var eventDate = @Html.Raw(ev is null ? "null" : "'" + ev.EventDate.ToString("yyyy-MM-dd") + "'");
+            var prizes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(prizeData));
+            var monthsLabel = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["{0} tháng"].Value));
+            var yes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Đủ điều kiện"].Value));
+            var no = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Không đủ"].Value));
+
+            // Giống Seniority.Months phía server: đủ n tháng ⇔ ngày vào làm <= (ngày sự kiện − n tháng)
+            function addMonths(d, n) {
+                var y = d.getFullYear(), m = d.getMonth() + n, day = d.getDate();
+                var last = new Date(y, m + 1, 0).getDate();
+                return new Date(y, m, Math.min(day, last));
+            }
+            function months(join, ev) {
+                var m = (ev.getFullYear() - join.getFullYear()) * 12 + ev.getMonth() - join.getMonth();
+                while (m > 0 && join > addMonths(ev, -m)) m--;
+                return Math.max(0, m);
+            }
+            function parse(s) { var p = (s || '').split('-'); return p.length === 3 ? new Date(+p[0], +p[1] - 1, +p[2]) : null; }
+
+            var input = document.querySelector('input[name="JoinDate"]'), absent = document.getElementById('IsAbsent');
+            function update() {
+                var j = parse(input.value), e = parse(eventDate), list = document.getElementById('eligList');
+                document.getElementById('absentNote').hidden = !(absent && absent.checked);
+                if (!j || !e || !prizes.length) { document.getElementById('senMonths').textContent = '—'; return; }
+                var m = months(j, e);
+                document.getElementById('senMonths').textContent = monthsLabel.replace('{0}', m);
+                list.innerHTML = '';
+                prizes.forEach(function (p) {
+                    var ok = (p.min == null || m >= p.min) && (p.max == null || m < p.max);
+                    var row = document.createElement('div');
+                    row.className = 'elig-row';
+                    var name = document.createElement('span');
+                    name.textContent = p.name;
+                    var tag = document.createElement('span');
+                    tag.className = 'tag ' + (ok ? 'green' : '');
+                    tag.textContent = ok ? yes : no;
+                    row.appendChild(name);
+                    row.appendChild(tag);
+                    list.appendChild(row);
+                });
+            }
+            // Xem trước thẻ người trúng
+            [['EmployeeCode', 'pvCode', 'VN000000'], ['FullName', 'pvName', ''], ['DepartmentVi', 'pvDept', '']].forEach(function (x) {
+                var inp = document.getElementById(x[0]), out = document.getElementById(x[1]);
+                if (!inp || !out) return;
+                var ph = x[2] || out.textContent;
+                inp.addEventListener('input', function () { out.textContent = inp.value.trim() || (x[0] === 'DepartmentVi' ? '' : ph); });
+            });
+            var photoIn = document.getElementById('Photo'), rm = document.getElementById('RemovePhoto');
+            var pvPhoto = document.getElementById('pvPhoto'), pvNo = document.getElementById('pvNoPhoto'), orig = pvPhoto.getAttribute('src');
+            if (photoIn) photoIn.addEventListener('change', function () { if (photoIn.files[0]) { pvNo.hidden = true; if (rm) rm.checked = false; } });
+            if (rm) rm.addEventListener('change', function () {
+                var off = rm.checked && !(photoIn.files && photoIn.files[0]);
+                pvPhoto.hidden = off || !orig; pvNo.hidden = !off && !!orig;
+            });
+
+            input.addEventListener('input', update);
+            input.addEventListener('change', update);
+            if (absent) absent.addEventListener('change', update);
+            update();
+        })();
+    </script>
+}

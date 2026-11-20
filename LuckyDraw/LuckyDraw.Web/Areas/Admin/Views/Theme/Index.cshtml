@@ -1,0 +1,291 @@
+@model ThemeFormModel
+@{
+    ViewData["Title"] = L["Giao diện"];
+    Event ev = ViewBag.Event;
+    var t = Model.Theme;
+}
+@section Head {
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Montserrat:wght@800&family=Oswald:wght@700&family=Playfair+Display:wght@800&display=swap" rel="stylesheet" />
+}
+<div class="page-head">
+    <div>
+        <h1>@L["Giao diện màn chiếu"]</h1>
+        <p class="sub">@L["Chủ đề, ảnh nền, logo, ô quay số và nút bắt đầu của màn hình quay. Bản xem trước bên phải cập nhật ngay khi bạn chỉnh."]</p>
+    </div>
+</div>
+
+<form method="post" asp-action="Index" enctype="multipart/form-data" id="themeForm">
+    <div asp-validation-summary="All" class="flash err"></div>
+    <div class="row g-3">
+        <div class="col-xl-7">
+            <div class="card-ld">
+                <div class="form-section">
+                    <h3>@L["Chủ đề có sẵn"]</h3>
+                    <p class="hint">@L["Màu nền và màu nhấn mặc định của màn chiếu."]</p>
+                    <div class="choice-grid">
+                        @foreach (var p in ThemeOptions.Presets)
+                        {
+                            <label class="choice">
+                                <input type="radio" name="Theme.ThemeKey" value="@p.Key" checked="@(t.ThemeKey == p.Key)" data-bg="@p.Bg" data-accent="@p.Accent" />
+                                <div class="swatch" style="background:@p.Bg"></div>
+                                <div class="t">@L[p.Label]</div>
+                            </label>
+                        }
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>@L["Ảnh nền"]</h3>
+                    <p class="hint">@L["JPG, PNG hoặc WEBP, tối đa 5 MB. Nên dùng tỉ lệ 16:9 (1920×1080). Để trống thì dùng màu của chủ đề."]</p>
+                    <div class="row g-3 align-items-end">
+                        <div class="col-md-6">
+                            <input asp-for="Background" type="file" class="form-control" accept=".jpg,.jpeg,.png,.webp" id="bgFile" />
+                            @if (t.BackgroundPath != null)
+                            {
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" asp-for="RemoveBackground" />
+                                    <label class="form-check-label" asp-for="RemoveBackground">@L["Xoá ảnh nền hiện tại"]</label>
+                                </div>
+                            }
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">@L["Làm mờ"] <span class="muted" data-out="blur">@t.BackgroundBlur</span>px</label>
+                            <input type="range" class="form-range" min="0" max="20" name="Theme.BackgroundBlur" value="@t.BackgroundBlur" />
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">@L["Phủ tối"] <span class="muted" data-out="dim">@t.BackgroundDim</span>%</label>
+                            <input type="range" class="form-range" min="0" max="80" name="Theme.BackgroundDim" value="@t.BackgroundDim" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>@L["Logo"]</h3>
+                    <p class="hint">@L["PNG nền trong suốt là đẹp nhất, tối đa 2 MB. Hiển thị góc trên bên trái."]</p>
+                    <input asp-for="Logo" type="file" class="form-control" accept=".jpg,.jpeg,.png,.webp" id="logoFile" style="max-width:420px" />
+                    @if (t.LogoPath != null)
+                    {
+                        <div class="form-check mt-2">
+                            <input class="form-check-input" type="checkbox" asp-for="RemoveLogo" />
+                            <label class="form-check-label" asp-for="RemoveLogo">@L["Xoá logo hiện tại"]</label>
+                        </div>
+                    }
+                </div>
+
+                <div class="form-section">
+                    <h3>@L["Tên sự kiện"]</h3>
+                    <p class="hint">@L["Phông chữ phải có chữ Hán; nếu thiếu, màn chiếu tự dùng Microsoft JhengHei / YaHei."]</p>
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <label class="form-label">@L["Phông chữ"]</label>
+                            <select class="form-select" name="Theme.TitleFont">
+                                @foreach (var f in ThemeOptions.Fonts) { <option value="@f" selected="@(t.TitleFont == f)" style="font-family:'@f'">@f</option> }
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">@L["Màu chữ"]</label>
+                            <input type="color" class="form-control form-control-color w-100" name="Theme.TitleColor" value="@t.TitleColor" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">@L["Cỡ chữ"] <span class="muted" data-out="size">@t.TitleSize</span>px</label>
+                            <input type="range" class="form-range" min="24" max="140" name="Theme.TitleSize" value="@t.TitleSize" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>@L["Ô quay số"]</h3>
+                    <div class="choice-grid mb-3" style="grid-template-columns:repeat(2,minmax(0,200px))">
+                        @foreach (var ds in ThemeOptions.DigitStyles)
+                        {
+                            <label class="choice">
+                                <input type="radio" name="Theme.DigitBox.Style" value="@ds.Key" checked="@(t.DigitBox.Style == ds.Key)" />
+                                <div class="swatch d-flex align-items-center justify-content-center gap-1" style="height:44px;background:#5a0610">
+                                    <span class="digit-sample @ds.Key">8</span><span class="digit-sample @ds.Key">8</span>
+                                </div>
+                                <div class="t">@L[ds.Label]</div>
+                            </label>
+                        }
+                    </div>
+                    <div class="row g-3">
+                        <div class="col-md-5">
+                            <label class="form-label">@L["Bo góc"] <span class="muted" data-out="radius">@t.DigitBox.Radius</span>%</label>
+                            <input type="range" class="form-range" min="0" max="50" name="Theme.DigitBox.Radius" value="@t.DigitBox.Radius" />
+                            <div class="form-text">@L["0 = ô vuông, 50 = ô tròn."]</div>
+                        </div>
+                        <div class="col-md-3">
+                            <label class="form-label">@L["Ký tự chờ"]</label>
+                            <input class="form-control text-center" maxlength="1" name="Theme.DigitBox.Placeholder" value="@t.DigitBox.Placeholder" />
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label">@L["Phông số"]</label>
+                            <select class="form-select" name="Theme.DigitBox.FontFamily">
+                                @foreach (var f in ThemeOptions.Fonts) { <option value="@f" selected="@(t.DigitBox.FontFamily == f)">@f</option> }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>@L["Nút bắt đầu"]</h3>
+                    <div class="choice-grid mb-3" style="grid-template-columns:repeat(4,1fr)">
+                        @for (var i = 1; i <= 4; i++)
+                        {
+                            <label class="choice text-center">
+                                <input type="radio" name="Theme.StartButton.Style" value="@i" checked="@(t.StartButton.Style == i)" />
+                                <div class="t">@L["Kiểu {0}", i]</div>
+                            </label>
+                        }
+                    </div>
+                    <div class="row g-2">
+                        <div class="col-md-3 col-6"><label class="form-label"><span class="lang-flag">VI</span></label><input class="form-control" name="Theme.StartButton.Label.Vi" value="@t.StartButton.Label.Vi" maxlength="30" /></div>
+                        <div class="col-md-3 col-6"><label class="form-label"><span class="lang-flag">繁</span></label><input class="form-control" name="Theme.StartButton.Label.ZhTW" value="@t.StartButton.Label.ZhTW" maxlength="30" /></div>
+                        <div class="col-md-3 col-6"><label class="form-label"><span class="lang-flag">简</span></label><input class="form-control" name="Theme.StartButton.Label.ZhCN" value="@t.StartButton.Label.ZhCN" maxlength="30" /></div>
+                        <div class="col-md-3 col-6"><label class="form-label"><span class="lang-flag">EN</span></label><input class="form-control" name="Theme.StartButton.Label.En" value="@t.StartButton.Label.En" maxlength="30" /></div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>@L["Hiệu ứng & kết quả"]</h3>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <label class="form-label">@L["Hiệu ứng sân khấu"]</label>
+                            <select class="form-select" name="Theme.StageEffect">
+                                @foreach (var x in ThemeOptions.StageEffects) { <option value="@x.Key" selected="@(t.StageEffect == x.Key)">@L[x.Label]</option> }
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">@L["Hiệu ứng khi đang quay"]</label>
+                            <select class="form-select" name="Theme.SpinEffect">
+                                @foreach (var x in ThemeOptions.SpinEffects) { <option value="@x.Key" selected="@(t.SpinEffect == x.Key)">@L[x.Label]</option> }
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">@L["Hiệu ứng chúc mừng"]</label>
+                            <select class="form-select" name="Theme.CongratsEffect">
+                                @foreach (var x in ThemeOptions.CongratsEffects) { <option value="@x.Key" selected="@(t.CongratsEffect == x.Key)">@L[x.Label]</option> }
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">@L["Vị trí bảng kết quả"]</label>
+                            <select class="form-select" name="Theme.ResultPanelPosition">
+                                @foreach (var x in ThemeOptions.ResultPositions) { <option value="@x.Key" selected="@(t.ResultPanelPosition == x.Key)">@L[x.Label]</option> }
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label" for="fwSpeed">@L["Tốc độ bay của pháo hoa"] <span class="muted" data-out="fwspeed">@t.FireworksSpeed</span>%</label>
+                            <input type="range" class="form-range" id="fwSpeed" min="30" max="200" step="10" name="Theme.FireworksSpeed" value="@t.FireworksSpeed"
+                                   oninput="document.querySelector('[data-out=fwspeed]').textContent = this.value" list="fwSpeedMarks" />
+                            <datalist id="fwSpeedMarks"><option value="50"></option><option value="100"></option><option value="150"></option></datalist>
+                            <div class="form-text">@L["100% = tốc độ thật. Kéo nhỏ để pháo bay và nổ chậm lại (quay chậm), kéo lớn để nhanh hơn."]</div>
+                        </div>
+                    </div>
+                    <label class="form-label mt-3">@L["Lời chúc mừng"]</label>
+                    <div class="row g-2">
+                        <div class="col-md-3 col-6"><div class="input-group"><span class="input-group-text lang-flag m-0">VI</span><input class="form-control" name="Theme.CongratsTitle.Vi" value="@t.CongratsTitle.Vi" maxlength="60" /></div></div>
+                        <div class="col-md-3 col-6"><div class="input-group"><span class="input-group-text lang-flag m-0">繁</span><input class="form-control" name="Theme.CongratsTitle.ZhTW" value="@t.CongratsTitle.ZhTW" maxlength="60" /></div></div>
+                        <div class="col-md-3 col-6"><div class="input-group"><span class="input-group-text lang-flag m-0">简</span><input class="form-control" name="Theme.CongratsTitle.ZhCN" value="@t.CongratsTitle.ZhCN" maxlength="60" /></div></div>
+                        <div class="col-md-3 col-6"><div class="input-group"><span class="input-group-text lang-flag m-0">EN</span><input class="form-control" name="Theme.CongratsTitle.En" value="@t.CongratsTitle.En" maxlength="60" /></div></div>
+                    </div>
+                </div>
+
+                <div class="form-foot">
+                    <a class="btn btn-light" asp-action="Index">@L["Huỷ thay đổi"]</a>
+                    <button type="submit" class="btn btn-primary">@Html.Icon("check") @L["Lưu giao diện"]</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-5">
+            <div class="card-ld preview-sticky">
+                <div class="card-head"><h2>@Html.Icon("eye") @L["Xem trước"]</h2><span class="small-note">16:9</span></div>
+                <div class="card-body">
+                    <div class="stage-preview" id="stage">
+                        <div class="bg" id="stageBg" style="@(t.BackgroundPath != null ? $"background-image:url('{t.BackgroundPath}')" : "")"></div>
+                        <div class="dim" id="stageDim"></div>
+                        <img class="logo" id="stageLogo" src="@t.LogoPath" alt="" hidden="@(t.LogoPath is null)" />
+                        <div class="title" id="stageTitle">@LocalizedName.Get(ev)</div>
+                        <div class="prize">@L["Giải nhất"]</div>
+                        <div class="boxes" id="stageBoxes">
+                            @for (var i = 0; i < 5; i++) { <span>@t.DigitBox.Placeholder</span> }
+                        </div>
+                        <button type="button" class="start" id="stageStart">@LocalizedName.Get(t.StartButton.Label)</button>
+                    </div>
+                    <p class="small-note mt-3 mb-0">@L["Bản xem trước gần đúng; màn chiếu thật sẽ có hiệu ứng động và bảng kết quả."]</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        (function () {
+            var form = document.getElementById('themeForm');
+            var stage = document.getElementById('stage');
+            var bg = document.getElementById('stageBg');
+            var dim = document.getElementById('stageDim');
+            var title = document.getElementById('stageTitle');
+            var start = document.getElementById('stageStart');
+            var logo = document.getElementById('stageLogo');
+            var hasBgImage = bg.style.backgroundImage !== '';
+            var val = function (n) { var el = form.elements[n]; return el ? el.value : ''; };
+            var lang = document.documentElement.lang;
+            var labelField = lang === 'zh-TW' ? 'ZhTW' : lang === 'zh-CN' ? 'ZhCN' : lang.indexOf('en') === 0 ? 'En' : 'Vi';
+
+            function update() {
+                var preset = form.querySelector('input[name="Theme.ThemeKey"]:checked');
+                if (preset) {
+                    stage.style.background = preset.getAttribute('data-bg');
+                    if (!hasBgImage) bg.style.backgroundImage = '';
+                }
+                var blur = val('Theme.BackgroundBlur'), dimV = val('Theme.BackgroundDim');
+                bg.style.filter = 'blur(' + blur + 'px)';
+                dim.style.opacity = hasBgImage ? dimV / 100 : 0;
+                title.style.fontFamily = "'" + val('Theme.TitleFont') + "', 'Microsoft JhengHei', 'Microsoft YaHei', sans-serif";
+                title.style.color = val('Theme.TitleColor');
+                title.style.fontSize = Math.max(14, val('Theme.TitleSize') / 2.4) + 'px';
+                var radius = val('Theme.DigitBox.Radius');
+                var ph = val('Theme.DigitBox.Placeholder') || '?';
+                document.getElementById('stageBoxes').className = 'boxes ' + (val('Theme.DigitBox.Style') || 'glass');
+                document.querySelectorAll('#stageBoxes span').forEach(function (s) {
+                    s.style.borderRadius = radius + '%';
+                    s.style.fontFamily = "'" + val('Theme.DigitBox.FontFamily') + "', sans-serif";
+                    s.textContent = ph;
+                });
+                var style = form.querySelector('input[name="Theme.StartButton.Style"]:checked');
+                start.className = 'start s' + (style ? style.value : 2);
+                start.textContent = val('Theme.StartButton.Label.' + labelField) || val('Theme.StartButton.Label.Vi');
+                document.querySelector('[data-out=blur]').textContent = blur;
+                document.querySelector('[data-out=dim]').textContent = dimV;
+                document.querySelector('[data-out=size]').textContent = val('Theme.TitleSize');
+                document.querySelector('[data-out=radius]').textContent = radius;
+            }
+
+            document.getElementById('bgFile').addEventListener('change', function () {
+                if (this.files && this.files[0]) {
+                    bg.style.backgroundImage = 'url(' + URL.createObjectURL(this.files[0]) + ')';
+                    hasBgImage = true;
+                    update();
+                }
+            });
+            // Dùng id: tag helper checkbox sinh thêm <input hidden> cùng name nên form.elements[name] là danh sách
+            var removeBg = document.getElementById('RemoveBackground');
+            if (removeBg) removeBg.addEventListener('change', function () {
+                hasBgImage = !this.checked;
+                bg.style.backgroundImage = this.checked ? '' : bg.dataset.orig || bg.style.backgroundImage;
+                update();
+            });
+            if (hasBgImage) bg.dataset.orig = bg.style.backgroundImage;
+            document.getElementById('logoFile').addEventListener('change', function () {
+                if (this.files && this.files[0]) { logo.src = URL.createObjectURL(this.files[0]); logo.hidden = false; }
+            });
+            var removeLogo = document.getElementById('RemoveLogo');
+            if (removeLogo) removeLogo.addEventListener('change', function () { logo.hidden = this.checked; });
+
+            form.addEventListener('input', update);
+            form.addEventListener('change', update);
+            update();
+        })();
+    </script>
+}

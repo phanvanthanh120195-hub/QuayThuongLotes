@@ -1,0 +1,92 @@
+@model ImportPreviewViewModel
+@{
+    var p = Model.Preview;
+    var typeLabel = p.Type switch
+    {
+        ImportType.Participants => L["Người tham dự"],
+        ImportType.Prizes => L["Giải thưởng"],
+        _ => L["Bộ phận"]
+    };
+    ViewData["Title"] = L["Xem trước import"];
+    var modeLabel = (p.Type, Model.Overwrite) switch
+    {
+        (ImportType.Prizes, true) => L["Thay toàn bộ giải cũ"],
+        (ImportType.Prizes, false) => L["Thêm vào cuối danh sách"],
+        (_, true) => L["Ghi đè dòng trùng mã"],
+        _ => L["Bỏ qua dòng trùng mã"]
+    };
+}
+<div class="page-head">
+    <div>
+        <div class="crumb"><a asp-action="Index">@L["Import Excel"]</a> / @typeLabel</div>
+        <h1>@L["Xem trước import"]: @typeLabel</h1>
+        <p class="sub">@L["Chế độ"]: <b>@modeLabel</b></p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-light" asp-action="Index">@Html.Icon("arrow-left") @L["Chọn file khác"]</a>
+        @if (p.CanCommit)
+        {
+            <form method="post" asp-action="Commit" data-confirm="@L["Ghi {0} dòng vào cơ sở dữ liệu?", p.Rows.Count]">
+                <input type="hidden" name="token" value="@Model.Token" />
+                <input type="hidden" name="type" value="@p.Type" />
+                <input type="hidden" name="overwrite" value="@Model.Overwrite.ToString().ToLowerInvariant()" />
+                <button class="btn btn-primary" type="submit">@Html.Icon("check") @L["Xác nhận import {0} dòng", p.Rows.Count]</button>
+            </form>
+        }
+    </div>
+</div>
+
+@if (p.FileErrors.Count > 0)
+{
+    <div class="flash err">
+        @Html.Icon("alert")
+        <div>@foreach (var e in p.FileErrors) { <div>@e</div> }</div>
+    </div>
+}
+
+@if (p.Rows.Count > 0)
+{
+    <div class="row g-3 mb-3">
+        <div class="col-sm-4"><div class="card-ld stat"><div class="stat-icon blue">@Html.Icon("sheet")</div><div><div class="num">@p.Rows.Count</div><div class="lbl">@L["Dòng dữ liệu"]</div></div></div></div>
+        <div class="col-sm-4"><div class="card-ld stat"><div class="stat-icon green">@Html.Icon("check")</div><div><div class="num">@(p.Rows.Count - p.ErrorRowCount)</div><div class="lbl">@L["Dòng hợp lệ"]</div></div></div></div>
+        <div class="col-sm-4"><div class="card-ld stat"><div class="stat-icon red">@Html.Icon("alert")</div><div><div class="num">@p.ErrorRowCount</div><div class="lbl">@L["Dòng lỗi"]</div></div></div></div>
+    </div>
+
+    @if (p.ErrorRowCount > 0)
+    {
+        <div class="flash err">@Html.Icon("alert") <span>@L["Còn {0} dòng lỗi. Sửa trong file Excel rồi upload lại; chưa có dữ liệu nào được ghi.", p.ErrorRowCount]</span></div>
+    }
+
+    <div class="card-ld">
+        <div class="table-wrap" style="max-height:62vh;overflow:auto">
+            <table class="table table-ld">
+                <thead style="position:sticky;top:0;z-index:1">
+                    <tr>
+                        <th>@L["Dòng"]</th>
+                        @foreach (var c in p.Columns) { <th class="mono" style="text-transform:none">@c</th> }
+                        <th>@L["Kiểm tra"]</th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var r in p.Rows.OrderByDescending(r => r.Errors.Count > 0).ThenBy(r => r.RowNumber))
+                {
+                    <tr style="@(r.Errors.Count > 0 ? "background:var(--ld-red-50)" : "")">
+                        <td class="muted">@r.RowNumber</td>
+                        @foreach (var v in r.Values) { <td>@v</td> }
+                        <td>
+                            @if (r.Errors.Count == 0)
+                            {
+                                <span class="tag green">@Html.Icon("check") OK</span>
+                            }
+                            else
+                            {
+                                foreach (var e in r.Errors) { <div class="small text-danger">@e</div> }
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    </div>
+}

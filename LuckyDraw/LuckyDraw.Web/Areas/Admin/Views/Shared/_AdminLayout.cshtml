@@ -1,0 +1,117 @@
+@using System.Globalization
+@using System.Security.Claims
+@inject AdminEventContext EventContext
+@{
+    var controller = ViewContext.RouteData.Values["controller"]?.ToString();
+    var working = await EventContext.GetAsync();
+    var events = await EventContext.ListAsync();
+    var displayName = User.FindFirstValue("display_name") ?? User.Identity?.Name ?? "";
+    var initials = string.Concat(displayName.Split(' ', StringSplitOptions.RemoveEmptyEntries).TakeLast(2).Select(w => char.ToUpperInvariant(w[0])));
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+
+    string Active(params string[] names) => names.Contains(controller) ? "active" : "";
+}
+<!DOCTYPE html>
+<html lang="@CultureInfo.CurrentUICulture.Name">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] · LuckyDraw Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    @await RenderSectionAsync("Head", required: false)
+</head>
+<body>
+    <partial name="_Icons" />
+
+    <aside class="sidebar" id="sidebar">
+        <a class="brand" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">
+            <span class="brand-mark">@Html.Icon("gift")</span>
+            <span class="brand-text">LuckyDraw<small>Admin</small></span>
+        </a>
+        <nav class="side-nav" aria-label="@L["Menu quản trị"]">
+            <a class="side-link @Active("Dashboard")" asp-area="Admin" asp-controller="Dashboard" asp-action="Index">@Html.Icon("dashboard") @L["Tổng quan"]</a>
+
+            <div class="nav-label">@L["Thiết lập"]</div>
+            <a class="side-link @Active("Events")" asp-area="Admin" asp-controller="Events" asp-action="Index">@Html.Icon("calendar") @L["Sự kiện"]</a>
+            <a class="side-link @Active("Prizes")" asp-area="Admin" asp-controller="Prizes" asp-action="Index">@Html.Icon("gift") @L["Giải thưởng"]</a>
+            <a class="side-link @Active("Participants")" asp-area="Admin" asp-controller="Participants" asp-action="Index">@Html.Icon("users") @L["Người tham dự"]</a>
+            @* Bộ phận: đã gộp vào thông tin người tham dự – ẩn khỏi menu, trang /admin/departments vẫn còn *@
+            <a class="side-link @Active("Import")" asp-area="Admin" asp-controller="Import" asp-action="Index">@Html.Icon("upload") @L["Import Excel"]</a>
+
+            <div class="nav-label">@L["Màn chiếu"]</div>
+            <a class="side-link @Active("Theme")" asp-area="Admin" asp-controller="Theme" asp-action="Index">@Html.Icon("palette") @L["Giao diện"]</a>
+            <a class="side-link @Active("Sound")" asp-area="Admin" asp-controller="Sound" asp-action="Index">@Html.Icon("music") @L["Âm thanh"]</a>
+            <a class="side-link @Active("Results")" asp-area="Admin" asp-controller="Results" asp-action="Index">@Html.Icon("trophy") @L["Kết quả"]</a>
+
+            <div class="nav-label">@L["Hệ thống"]</div>
+            <a class="side-link @Active("Users")" asp-area="Admin" asp-controller="Users" asp-action="Index">@Html.Icon("shield") @L["Tài khoản"]</a>
+            <a class="side-link @Active("Audit")" asp-area="Admin" asp-controller="Audit" asp-action="Index">@Html.Icon("list") @L["Nhật ký"]</a>
+        </nav>
+        <div class="side-foot">
+            <a class="btn btn-gold" href="/" target="_blank" rel="noopener">@Html.Icon("monitor") @L["Mở màn hình quay"]</a>
+        </div>
+    </aside>
+    <div class="side-backdrop"></div>
+
+    <div class="main">
+        <header class="topbar">
+            <button class="btn btn-ghost btn-icon menu-toggle" type="button" data-sidebar-toggle aria-label="@L["Mở menu"]">@Html.Icon("menu")</button>
+
+            @if (events.Count > 0)
+            {
+                <form method="post" asp-area="Admin" asp-controller="Events" asp-action="Use" class="event-switch">
+                    <label for="eventSwitch">@L["Sự kiện"]</label>
+                    <select id="eventSwitch" name="id" class="form-select form-select-sm" data-autosubmit>
+                        @foreach (var e in events)
+                        {
+                            <option value="@e.EventId" selected="@(e.EventId == working?.EventId)">@LocalizedName.Get(e) · @e.EventDate.ToString("dd/MM/yyyy")</option>
+                        }
+                    </select>
+                    <input type="hidden" name="returnUrl" value="@returnUrl" />
+                    @if (working?.IsActive == true)
+                    {
+                        <span class="tag red live live-badge" title="@L["Sự kiện này đang được chiếu trên màn hình chính"]">@L["Đang chiếu"]</span>
+                    }
+                </form>
+            }
+
+            <div class="topbar-right">
+                <partial name="_LanguageSwitcher" />
+                <div class="dropdown">
+                    <button class="btn btn-ghost user-chip" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <span class="avatar">@(initials.Length > 0 ? initials : "?")</span>
+                        <span class="who">@displayName<small>@User.FindFirstValue(ClaimTypes.Role)</small></span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end">
+                        <span class="dropdown-item-text small-note">@L["Đăng nhập với"] <b>@User.Identity?.Name</b></span>
+                        <div class="dropdown-divider"></div>
+                        <form method="post" asp-area="" asp-controller="Account" asp-action="Logout">
+                            <button class="dropdown-item" type="submit">@Html.Icon("logout") @L["Đăng xuất"]</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="content">
+            @if (TempData["flash.success"] is string ok)
+            {
+                <div class="flash ok" role="status">@Html.Icon("check-circle") <span>@ok</span><button type="button" class="btn-close" onclick="this.parentElement.remove()" aria-label="@L["Đóng"]"></button></div>
+            }
+            @if (TempData["flash.error"] is string err)
+            {
+                <div class="flash err" role="alert">@Html.Icon("alert") <span>@err</span><button type="button" class="btn-close" onclick="this.parentElement.remove()" aria-label="@L["Đóng"]"></button></div>
+            }
+            @RenderBody()
+        </main>
+    </div>
+
+    <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/admin/admin.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

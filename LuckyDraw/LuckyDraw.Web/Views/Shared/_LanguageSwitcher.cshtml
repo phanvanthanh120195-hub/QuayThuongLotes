@@ -1,0 +1,21 @@
+@using System.Globalization
+@{
+    var current = CultureInfo.CurrentUICulture.Name;
+    var currentLabel = SupportedCultures.Options.FirstOrDefault(o => o.Code == current).Label ?? "Tiếng Việt";
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+}
+<div class="dropdown">
+    <button class="btn btn-ghost btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="@L["Ngôn ngữ"]">
+        @Html.Icon("globe") <span class="d-none d-sm-inline">@currentLabel</span>
+    </button>
+    <form method="post" asp-area="" asp-controller="Account" asp-action="SetLanguage" class="dropdown-menu dropdown-menu-end">
+        <input type="hidden" name="returnUrl" value="@returnUrl" />
+        @foreach (var (code, label) in SupportedCultures.Options)
+        {
+            <button type="submit" name="culture" value="@code" class="dropdown-item @(code == current ? "active" : "")" lang="@code">
+                @if (code == current) { @Html.Icon("check") } else { <span style="width:18px"></span> }
+                @label
+            </button>
+        }
+    </form>
+</div>

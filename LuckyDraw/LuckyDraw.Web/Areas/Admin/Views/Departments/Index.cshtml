@@ -1,0 +1,64 @@
+@model IReadOnlyList<Department>
+@{
+    ViewData["Title"] = L["Bộ phận"];
+}
+<div class="page-head">
+    <div>
+        <h1>@L["Bộ phận"]</h1>
+        <p class="sub">@L["Danh sách bộ phận dùng chung cho mọi sự kiện. Mã bộ phận dùng khi import người tham dự."]</p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-light" asp-controller="Import" asp-action="Index">@Html.Icon("upload") @L["Import Excel"]</a>
+        <a class="btn btn-primary" asp-action="Create">@Html.Icon("plus") @L["Thêm bộ phận"]</a>
+    </div>
+</div>
+
+<div class="card-ld">
+    @if (Model.Count == 0)
+    {
+        <div class="empty">
+            @Html.Icon("building")
+            <h3>@L["Chưa có bộ phận"]</h3>
+            <a class="btn btn-primary" asp-action="Create">@Html.Icon("plus") @L["Thêm bộ phận"]</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-wrap">
+            <table class="table table-ld">
+                <thead>
+                    <tr>
+                        <th>@L["Thứ tự"]</th>
+                        <th>@L["Mã"]</th>
+                        <th><span class="lang-flag">VI</span></th>
+                        <th><span class="lang-flag">繁</span></th>
+                        <th><span class="lang-flag">简</span></th>
+                        <th><span class="lang-flag">EN</span></th>
+                        <th class="text-center">@L["Người tham dự"]</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var d in Model)
+                {
+                    <tr>
+                        <td class="muted">@d.SortOrder</td>
+                        <td><span class="tag mono">@d.Code</span></td>
+                        <td class="fw-semibold">@d.NameVi</td>
+                        <td lang="zh-TW">@d.NameZhTw</td>
+                        <td lang="zh-CN">@d.NameZhCn</td>
+                        <td>@d.NameEn</td>
+                        <td class="text-center">@d.ParticipantCount</td>
+                        <td class="actions-cell">
+                            <a class="btn btn-ghost btn-icon" asp-action="Edit" asp-route-id="@d.DepartmentId" title="@L["Sửa"]">@Html.Icon("edit")</a>
+                            <form method="post" asp-action="Delete" asp-route-id="@d.DepartmentId" data-confirm="@L["Xoá bộ phận {0}?", d.Code]">
+                                <button class="btn btn-ghost btn-icon danger" type="submit" title="@L["Xoá"]" disabled="@(d.ParticipantCount > 0)">@Html.Icon("trash")</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>

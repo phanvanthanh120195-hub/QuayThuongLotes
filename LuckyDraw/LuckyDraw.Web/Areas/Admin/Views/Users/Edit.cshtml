@@ -1,0 +1,42 @@
+@model UserEditModel
+@{
+    ViewData["Title"] = L["Sửa tài khoản"];
+}
+<div class="page-head">
+    <div>
+        <div class="crumb"><a asp-action="Index">@L["Tài khoản"]</a> / @Model.UserName</div>
+        <h1>@ViewData["Title"]: <span class="mono">@Model.UserName</span></h1>
+    </div>
+</div>
+<div class="row g-3">
+    <div class="col-xl-7">
+<form method="post" asp-action="Edit" asp-route-id="@Model.UserId" class="card-ld" novalidate>
+    <div asp-validation-summary="ModelOnly" class="flash err m-3 mb-0"></div>
+    <div class="form-section">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="DisplayName" class="form-label"></label>
+                <input asp-for="DisplayName" class="form-control" />
+                <span asp-validation-for="DisplayName"></span>
+            </div>
+            <div class="col-12">
+                <label class="form-label">@Html.DisplayNameFor(m => m.Role)</label>
+                <partial name="_RolePicker" model="Model.Role" />
+            </div>
+            <div class="col-12">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" asp-for="IsActive" />
+                    <label class="form-check-label fw-semibold" asp-for="IsActive"></label>
+                </div>
+                <div class="form-text">@L["Tài khoản bị khoá không đăng nhập được."]</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-foot">
+        <a class="btn btn-light" asp-action="Index">@L["Huỷ"]</a>
+        <button type="submit" class="btn btn-primary">@Html.Icon("check") @L["Lưu"]</button>
+    </div>
+</form>
+    </div>
+    <div class="col-xl-5"><partial name="_UserSide" /></div>
+</div>

@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- File sinh tự động từ translations.tsv bằng tools/build_resx.py. Đừng sửa tay. -->
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="0 = ô vuông, 50 = ô tròn." xml:space="preserve"><value>0 = square, 50 = circle.</value></data>
+  <data name="100% = tốc độ thật. Kéo nhỏ để pháo bay và nổ chậm lại (quay chậm), kéo lớn để nhanh hơn." xml:space="preserve"><value>100% = real speed. Drag lower for slow-motion fireworks, higher for faster ones.</value></data>
+  <data name="Admin hãy vào trang quản trị và bấm “Chiếu sự kiện này”." xml:space="preserve"><value>An admin should open the admin panel and click “Show this event”.</value></data>
+  <data name="Admin xoá" xml:space="preserve"><value>Deleted by admin</value></data>
+  <data name="Admin: toàn quyền trang quản trị. Operator (MC): chỉ bấm quay và đánh dấu vắng mặt trên màn hình chính." xml:space="preserve"><value>Admin: full access to the admin panel. Operator (MC): can only draw and mark absentees on the main screen.</value></data>
+  <data name="Bo góc" xml:space="preserve"><value>Corner radius</value></data>
+  <data name="Bên phải" xml:space="preserve"><value>Right</value></data>
+  <data name="Bên trái" xml:space="preserve"><value>Left</value></data>
+  <data name="Bạn" xml:space="preserve"><value>You</value></data>
+  <data name="Bản xem trước gần đúng; màn chiếu thật sẽ có hiệu ứng động và bảng kết quả." xml:space="preserve"><value>Approximate preview; the real stage screen has animations and a results panel.</value></data>
+  <data name="Bấm Bắt đầu, rồi bấm Dừng khi muốn" xml:space="preserve"><value>Press Start, then press Stop when ready</value></data>
+  <data name="Bấm Bắt đầu, tự dừng sau thời gian quay" xml:space="preserve"><value>Press Start, stops automatically after the spin time</value></data>
+  <data name="Bấm Enter hoặc chạm vào màn hình để tiếp tục" xml:space="preserve"><value>Press Enter or tap the screen to continue</value></data>
+  <data name="Bấm nút" xml:space="preserve"><value>Button click</value></data>
+  <data name="Bấm quay, Vắng mặt – quay lại" xml:space="preserve"><value>Draw, Absent – redraw</value></data>
+  <data name="Bấm quay, đánh dấu vắng mặt – quay lại" xml:space="preserve"><value>Draw, mark absent and redraw</value></data>
+  <data name="Bấm “Chiếu” để đưa sự kiện lên màn hình chính." xml:space="preserve"><value>Click “Show” to put the event on the main screen.</value></data>
+  <data name="Bật" xml:space="preserve"><value>Enable</value></data>
+  <data name="Bật âm thanh" xml:space="preserve"><value>Turn sound on</value></data>
+  <data name="Bắt đầu" xml:space="preserve"><value>Start</value></data>
+  <data name="Bắt đầu bằng việc tạo sự kiện, sau đó thêm giải thưởng và người tham dự." xml:space="preserve"><value>Start by creating an event, then add prizes and participants.</value></data>
+  <data name="Bỏ lọc" xml:space="preserve"><value>Clear filters</value></data>
+  <data name="Bỏ qua" xml:space="preserve"><value>Skip</value></data>
+  <data name="Bỏ qua bộ phận trùng mã" xml:space="preserve"><value>Skip departments with existing codes</value></data>
+  <data name="Bỏ qua dòng trùng mã" xml:space="preserve"><value>Skip rows with existing codes</value></data>
+  <data name="Bỏ qua người trùng mã" xml:space="preserve"><value>Skip participants with existing codes</value></data>
+  <data name="Bộ phận" xml:space="preserve"><value>Departments</value></data>
+  <data name="Bộ phận còn người tham dự thì không xoá được." xml:space="preserve"><value>A department that still has participants cannot be deleted.</value></data>
+  <data name="Bộ phận dùng chung cho mọi sự kiện, chỉ cần tạo một lần." xml:space="preserve"><value>Departments are shared by all events; create them once.</value></data>
+  <data name="Bộ phận tiếng Trung (現任單位)" xml:space="preserve"><value>Department in Chinese (現任單位)</value></data>
+  <data name="Bộ phận đang có người tham dự nên không xoá được." xml:space="preserve"><value>This department still has participants and cannot be deleted.</value></data>
+  <data name="Chi tiết" xml:space="preserve"><value>Details</value></data>
+  <data name="Chiếu" xml:space="preserve"><value>Show</value></data>
+  <data name="Chiếu sự kiện lên màn hình chính" xml:space="preserve"><value>Show the event on the main screen</value></data>
+  <data name="Chiếu sự kiện này" xml:space="preserve"><value>Show this event</value></data>
+  <data name="Chiếu sự kiện này lên màn hình chính? Sự kiện đang chiếu (nếu có) sẽ bị thay." xml:space="preserve"><value>Show this event on the main screen? The event currently shown (if any) will be replaced.</value></data>
+  <data name="Chào mừng đến LuckyDraw" xml:space="preserve"><value>Welcome to LuckyDraw</value></data>
+  <data name="Chúc mừng" xml:space="preserve"><value>Congratulations</value></data>
+  <data name="Chưa chiếu" xml:space="preserve"><value>Not shown</value></data>
+  <data name="Chưa chọn ảnh." xml:space="preserve"><value>No photos selected.</value></data>
+  <data name="Chưa có bộ phận" xml:space="preserve"><value>No departments yet</value></data>
+  <data name="Chưa có file âm thanh nào." xml:space="preserve"><value>No audio files yet.</value></data>
+  <data name="Chưa có giải thưởng" xml:space="preserve"><value>No prizes yet</value></data>
+  <data name="Chưa có giải thưởng." xml:space="preserve"><value>No prizes yet.</value></data>
+  <data name="Chưa có hoạt động." xml:space="preserve"><value>No activity yet.</value></data>
+  <data name="Chưa có kết quả" xml:space="preserve"><value>No results yet</value></data>
+  <data name="Chưa có kết quả nào." xml:space="preserve"><value>No results yet.</value></data>
+  <data name="Chưa có kết quả." xml:space="preserve"><value>No results yet.</value></data>
+  <data name="Chưa có lượt quay nào." xml:space="preserve"><value>No draws yet.</value></data>
+  <data name="Chưa có người tham dự" xml:space="preserve"><value>No participants yet</value></data>
+  <data name="Chưa có người trúng giải này." xml:space="preserve"><value>No winners for this prize yet.</value></data>
+  <data name="Chưa có nhật ký" xml:space="preserve"><value>No log entries yet</value></data>
+  <data name="Chưa có sự kiện nào" xml:space="preserve"><value>No events yet</value></data>
+  <data name="Chưa có sự kiện nào đang chiếu" xml:space="preserve"><value>No event is being shown</value></data>
+  <data name="Chưa có sự kiện nào. Hãy tạo sự kiện trước." xml:space="preserve"><value>There are no events yet. Please create an event first.</value></data>
+  <data name="Chưa trúng" xml:space="preserve"><value>Not won yet</value></data>
+  <data name="Chạm vào màn hình để bật nhạc" xml:space="preserve"><value>Tap the screen to start the music</value></data>
+  <data name="Chế độ" xml:space="preserve"><value>Mode</value></data>
+  <data name="Chế độ xem – đăng nhập MC để quay" xml:space="preserve"><value>View only – sign in as MC to draw</value></data>
+  <data name="Chỉ còn {0} người đủ điều kiện" xml:space="preserve"><value>Only {0} eligible people left</value></data>
+  <data name="Chỉ có hiệu ứng âm thanh (nếu chọn)" xml:space="preserve"><value>Sound effects only (if selected)</value></data>
+  <data name="Chỉ nhận file .xlsx." xml:space="preserve"><value>Only .xlsx files are accepted.</value></data>
+  <data name="Chỉ nhận file âm thanh .mp3." xml:space="preserve"><value>Only .mp3 audio files are accepted.</value></data>
+  <data name="Chỉ nhận ảnh .jpg, .jpeg, .png, .webp." xml:space="preserve"><value>Only .jpg, .jpeg, .png and .webp images are accepted.</value></data>
+  <data name="Chỉ đọc sheet đầu tiên. Dòng 1 là tiêu đề, giữ đúng tên cột như file mẫu (cột có * là bắt buộc)." xml:space="preserve"><value>Only the first sheet is read. Row 1 is the header; keep the column names from the template (columns marked * are required).</value></data>
+  <data name="Chỉnh giao diện màn chiếu" xml:space="preserve"><value>Customize the stage screen</value></data>
+  <data name="Chọn file .xlsx" xml:space="preserve"><value>Choose an .xlsx file</value></data>
+  <data name="Chọn file khác" xml:space="preserve"><value>Choose another file</value></data>
+  <data name="Chọn file trong thư viện cho từng thời điểm." xml:space="preserve"><value>Pick a file from the library for each moment.</value></data>
+  <data name="Chọn giao diện màn chiếu và âm thanh." xml:space="preserve"><value>Choose the stage screen appearance and sound.</value></data>
+  <data name="Chọn nhiều ảnh hoặc một file .zip" xml:space="preserve"><value>Choose several photos or one .zip file</value></data>
+  <data name="Chủ đề có sẵn" xml:space="preserve"><value>Preset themes</value></data>
+  <data name="Chủ đề, ảnh nền, logo, ô quay số và nút bắt đầu của màn hình quay. Bản xem trước bên phải cập nhật ngay khi bạn chỉnh." xml:space="preserve"><value>Theme, background, logo, digit boxes and start button of the draw screen. The preview on the right updates as you edit.</value></data>
+  <data name="Chức vụ" xml:space="preserve"><value>Position</value></data>
+  <data name="Chữ mờ: ngôn ngữ đó đang để trống, màn chiếu sẽ dùng tên dự phòng." xml:space="preserve"><value>Faded text: that language is empty, the stage screen uses the fallback name.</value></data>
+  <data name="Các bước chuẩn bị" xml:space="preserve"><value>Setup checklist</value></data>
+  <data name="Cách phát nhạc nền trong suốt chương trình." xml:space="preserve"><value>How background music plays during the show.</value></data>
+  <data name="Còn có thể trúng" xml:space="preserve"><value>Still eligible</value></data>
+  <data name="Còn lại" xml:space="preserve"><value>Remaining</value></data>
+  <data name="Còn {0} dòng lỗi. Sửa trong file Excel rồi upload lại; chưa có dữ liệu nào được ghi." xml:space="preserve"><value>{0} rows still have errors. Fix them in Excel and upload again; nothing has been saved.</value></data>
+  <data name="Công cụ" xml:space="preserve"><value>Tools</value></data>
+  <data name="Cột có dấu * là bắt buộc. Giữ nguyên dòng tiêu đề, không gộp ô, chỉ dùng sheet đầu tiên." xml:space="preserve"><value>Columns marked * are required. Keep the header row, do not merge cells, use only the first sheet.</value></data>
+  <data name="Cột department_code trong file Excel người tham dự phải khớp đúng mã này." xml:space="preserve"><value>The department_code column in the participants Excel file must match this code exactly.</value></data>
+  <data name="Cỡ chữ" xml:space="preserve"><value>Font size</value></data>
+  <data name="Danh sách bộ phận dùng chung cho mọi sự kiện. Mã bộ phận dùng khi import người tham dự." xml:space="preserve"><value>Departments are shared by all events. Department codes are used when importing participants.</value></data>
+  <data name="Danh sách giải, số lượng và tiến độ quay" xml:space="preserve"><value>Prizes, quantities and draw progress</value></data>
+  <data name="Danh sách người được quay của sự kiện" xml:space="preserve"><value>Everyone in the draw for this event</value></data>
+  <data name="Danh sách người được quay của sự kiện đang quản lý. Người vắng mặt không được quay." xml:space="preserve"><value>People who can be drawn in the current event. Absent people are excluded.</value></data>
+  <data name="Danh sách phát" xml:space="preserve"><value>Playlist</value></data>
+  <data name="Danh sách trúng giải" xml:space="preserve"><value>Winners list</value></data>
+  <data name="Dành cho Admin và MC (Operator)." xml:space="preserve"><value>For admins and MCs (operators).</value></data>
+  <data name="Dòng" xml:space="preserve"><value>Row</value></data>
+  <data name="Dòng dữ liệu" xml:space="preserve"><value>Data rows</value></data>
+  <data name="Dòng hợp lệ" xml:space="preserve"><value>Valid rows</value></data>
+  <data name="Dòng lỗi" xml:space="preserve"><value>Rows with errors</value></data>
+  <data name="Dùng thẳng file nhân sự: Mã số thẻ, Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ." xml:space="preserve"><value>Use the HR file as is: card no., join date, full name, 姓名, department, 現任單位, position.</value></data>
+  <data name="Dùng để tính thâm niên theo điều kiện của từng giải." xml:space="preserve"><value>Used to compute seniority for each prize's conditions.</value></data>
+  <data name="Dưới {0} tháng" xml:space="preserve"><value>Under {0} months</value></data>
+  <data name="Dưới ô quay số" xml:space="preserve"><value>Below the digit boxes</value></data>
+  <data name="Dải ngân hà" xml:space="preserve"><value>Galaxy</value></data>
+  <data name="Dừng" xml:space="preserve"><value>Stop</value></data>
+  <data name="File còn lỗi, chưa ghi dữ liệu nào." xml:space="preserve"><value>The file still has errors; nothing has been saved.</value></data>
+  <data name="File không có dữ liệu." xml:space="preserve"><value>The file has no data.</value></data>
+  <data name="File mẫu" xml:space="preserve"><value>Template</value></data>
+  <data name="File rỗng." xml:space="preserve"><value>The file is empty.</value></data>
+  <data name="File tạm đã hết hạn, vui lòng upload lại." xml:space="preserve"><value>The temporary file has expired, please upload again.</value></data>
+  <data name="File vượt quá {0} MB." xml:space="preserve"><value>The file exceeds {0} MB.</value></data>
+  <data name="Ghi {0} dòng vào cơ sở dữ liệu?" xml:space="preserve"><value>Save {0} rows to the database?</value></data>
+  <data name="Ghi đè bộ phận trùng mã" xml:space="preserve"><value>Overwrite departments with existing codes</value></data>
+  <data name="Ghi đè dòng trùng mã" xml:space="preserve"><value>Overwrite rows with existing codes</value></data>
+  <data name="Ghi đè người trùng mã" xml:space="preserve"><value>Overwrite participants with existing codes</value></data>
+  <data name="Giao diện" xml:space="preserve"><value>Appearance</value></data>
+  <data name="Giao diện màn chiếu" xml:space="preserve"><value>Stage screen appearance</value></data>
+  <data name="Giá trị '{0}' không hợp lệ cho {1}." xml:space="preserve"><value>The value '{0}' is not valid for {1}.</value></data>
+  <data name="Giá trị '{0}' không hợp lệ." xml:space="preserve"><value>The value '{0}' is not valid.</value></data>
+  <data name="Giá trị không hợp lệ cho {0}." xml:space="preserve"><value>Invalid value for {0}.</value></data>
+  <data name="Giá trị không hợp lệ." xml:space="preserve"><value>Invalid value.</value></data>
+  <data name="Giá trị phải là số." xml:space="preserve"><value>The value must be a number.</value></data>
+  <data name="Giải" xml:space="preserve"><value>Prizes</value></data>
+  <data name="Giải không tồn tại, đã tắt hoặc sự kiện không còn được chiếu." xml:space="preserve"><value>The prize does not exist, is disabled, or the event is no longer on screen.</value></data>
+  <data name="Giải người này đủ điều kiện" xml:space="preserve"><value>Prizes this person is eligible for</value></data>
+  <data name="Giải nhất" xml:space="preserve"><value>First Prize</value></data>
+  <data name="Giải này đã đủ người, không khôi phục được." xml:space="preserve"><value>This prize is already full; the result cannot be restored.</value></data>
+  <data name="Giải này đã đủ người." xml:space="preserve"><value>This prize is already full.</value></data>
+  <data name="Giải sau" xml:space="preserve"><value>Next prize</value></data>
+  <data name="Giải thưởng" xml:space="preserve"><value>Prizes</value></data>
+  <data name="Giải tiếp theo" xml:space="preserve"><value>Next prize</value></data>
+  <data name="Giải trước" xml:space="preserve"><value>Previous prize</value></data>
+  <data name="Giải đã có kết quả quay (kể cả đã xoá) nên không xoá được. Hãy tắt giải thay vì xoá." xml:space="preserve"><value>This prize has draw results (including deleted ones) and cannot be deleted. Disable it instead.</value></data>
+  <data name="Giải đã tắt sẽ không hiện trên màn chiếu và không quay được." xml:space="preserve"><value>Disabled prizes are hidden on the stage screen and cannot be drawn.</value></data>
+  <data name="Giảm nhạc nền khi quay &amp; chúc mừng" xml:space="preserve"><value>Lower background music while drawing &amp; celebrating</value></data>
+  <data name="Giấy màu" xml:space="preserve"><value>Confetti</value></data>
+  <data name="Gõ XOA để xác nhận" xml:space="preserve"><value>Type XOA to confirm</value></data>
+  <data name="Gõ XOA để xác nhận." xml:space="preserve"><value>Type XOA to confirm.</value></data>
+  <data name="Gõ lại tên sự kiện (tiếng Việt) để xác nhận" xml:space="preserve"><value>Type the event name (Vietnamese) to confirm</value></data>
+  <data name="Hiển thị trên màn chiếu khi có người trúng." xml:space="preserve"><value>Shown on the stage screen when someone wins.</value></data>
+  <data name="Hiện trên màn chiếu khi người này trúng giải." xml:space="preserve"><value>Shown on the stage screen when this person wins.</value></data>
+  <data name="Hiệu ứng &amp; kết quả" xml:space="preserve"><value>Effects &amp; results</value></data>
+  <data name="Hiệu ứng chúc mừng" xml:space="preserve"><value>Celebration effect</value></data>
+  <data name="Hiệu ứng khi đang quay" xml:space="preserve"><value>Effect while spinning</value></data>
+  <data name="Hiệu ứng sân khấu" xml:space="preserve"><value>Stage effect</value></data>
+  <data name="Hiệu ứng âm thanh" xml:space="preserve"><value>Sound effects</value></data>
+  <data name="Hoạt động" xml:space="preserve"><value>Active</value></data>
+  <data name="Hoạt động gần đây" xml:space="preserve"><value>Recent activity</value></data>
+  <data name="Huỷ" xml:space="preserve"><value>Cancel</value></data>
+  <data name="Huỷ thay đổi" xml:space="preserve"><value>Discard changes</value></data>
+  <data name="Hãy chọn file .mp3." xml:space="preserve"><value>Please choose an .mp3 file.</value></data>
+  <data name="Hãy chọn file Excel (.xlsx)." xml:space="preserve"><value>Please choose an Excel file (.xlsx).</value></data>
+  <data name="Hướng dẫn" xml:space="preserve"><value>Instructions</value></data>
+  <data name="Hệ thống" xml:space="preserve"><value>System</value></data>
+  <data name="Họ tên" xml:space="preserve"><value>Full name</value></data>
+  <data name="Họ tên tối đa 200 ký tự" xml:space="preserve"><value>Full name is limited to 200 characters</value></data>
+  <data name="Họ và tên" xml:space="preserve"><value>Full name</value></data>
+  <data name="Import Excel" xml:space="preserve"><value>Import Excel</value></data>
+  <data name="Import danh sách người tham dự từ Excel." xml:space="preserve"><value>Import the participant list from Excel.</value></data>
+  <data name="Import danh sách từ Excel để nhanh hơn." xml:space="preserve"><value>Import the list from Excel to save time.</value></data>
+  <data name="Import xong: thêm mới {0}, cập nhật {1}, bỏ qua {2}." xml:space="preserve"><value>Import finished: {0} added, {1} updated, {2} skipped.</value></data>
+  <data name="JPG, PNG hoặc WEBP, tối đa 5 MB. Nên dùng tỉ lệ 16:9 (1920×1080). Để trống thì dùng màu của chủ đề." xml:space="preserve"><value>JPG, PNG or WEBP, up to 5 MB. 16:9 (1920×1080) recommended. Leave empty to use the theme colors.</value></data>
+  <data name="JPG, PNG, WEBP tối đa 5 MB mỗi ảnh. Nên dùng ảnh vuông, mặt ở giữa." xml:space="preserve"><value>JPG, PNG, WEBP up to 5 MB each. Square photos with the face centered work best.</value></data>
+  <data name="Khi hiện kết quả" xml:space="preserve"><value>When the result appears</value></data>
+  <data name="Khi hết danh sách" xml:space="preserve"><value>When the playlist ends</value></data>
+  <data name="Khi trùng dữ liệu" xml:space="preserve"><value>When data already exists</value></data>
+  <data name="Khi trúng giải trên màn chiếu" xml:space="preserve"><value>When winning on the stage screen</value></data>
+  <data name="Khi đang quay" xml:space="preserve"><value>While drawing</value></data>
+  <data name="Khôi phục" xml:space="preserve"><value>Restore</value></data>
+  <data name="Khôi phục / reset kết quả" xml:space="preserve"><value>Restore / reset results</value></data>
+  <data name="Khôi phục kết quả của {0}?" xml:space="preserve"><value>Restore the result of {0}?</value></data>
+  <data name="Không" xml:space="preserve"><value>None</value></data>
+  <data name="Không có bộ phận mã {0}" xml:space="preserve"><value>No department with code {0}</value></data>
+  <data name="Không có kết quả phù hợp" xml:space="preserve"><value>No matching results</value></data>
+  <data name="Không có kết quả đã xoá" xml:space="preserve"><value>No deleted results</value></data>
+  <data name="Không có quyền" xml:space="preserve"><value>Access denied</value></data>
+  <data name="Không có quyền truy cập" xml:space="preserve"><value>You don't have access</value></data>
+  <data name="Không có ảnh nào hợp lệ." xml:space="preserve"><value>No valid photos.</value></data>
+  <data name="Không giới hạn" xml:space="preserve"><value>No limit</value></data>
+  <data name="Không gộp ô. Ngày vào làm dạng yyyy-MM-dd (ví dụ 2024-03-15) hoặc dd/MM/yyyy." xml:space="preserve"><value>Do not merge cells. Join date as yyyy-MM-dd (e.g. 2024-03-15) or dd/MM/yyyy.</value></data>
+  <data name="Không phát nhạc" xml:space="preserve"><value>No music</value></data>
+  <data name="Không thay thế được: đã có kết quả quay gắn với giải cũ. Hãy chọn chế độ thêm vào cuối." xml:space="preserve"><value>Cannot replace: the old prizes already have draw results. Choose append mode instead.</value></data>
+  <data name="Không thể tự hạ quyền hoặc khoá tài khoản của chính mình." xml:space="preserve"><value>You cannot demote or lock your own account.</value></data>
+  <data name="Không thể xoá tài khoản đang đăng nhập." xml:space="preserve"><value>You cannot delete the account you are signed in with.</value></data>
+  <data name="Không xoá được sự kiện đang chiếu. Hãy ngừng chiếu trước." xml:space="preserve"><value>The event on screen cannot be deleted. Stop showing it first.</value></data>
+  <data name="Không đọc được file .zip." xml:space="preserve"><value>Cannot read the .zip file.</value></data>
+  <data name="Không đọc được file. Hãy lưu lại dưới dạng .xlsx." xml:space="preserve"><value>Cannot read the file. Please save it as .xlsx.</value></data>
+  <data name="Không đủ" xml:space="preserve"><value>Not eligible</value></data>
+  <data name="Không đủ người hợp lệ để quay hết số suất còn lại" xml:space="preserve"><value>Not enough eligible people to fill the remaining slots</value></data>
+  <data name="Không đủ người hợp lệ: cần {0}, chỉ còn {1}." xml:space="preserve"><value>Not enough eligible people: need {0}, only {1} left.</value></data>
+  <data name="Kiểm tra" xml:space="preserve"><value>Check</value></data>
+  <data name="Kiểu quay" xml:space="preserve"><value>Draw mode</value></data>
+  <data name="Kiểu {0}" xml:space="preserve"><value>Style {0}</value></data>
+  <data name="Kính đỏ" xml:space="preserve"><value>Red glass</value></data>
+  <data name="Ký tự chờ" xml:space="preserve"><value>Placeholder</value></data>
+  <data name="Kết quả" xml:space="preserve"><value>Results</value></data>
+  <data name="Kết quả của người này sẽ bị huỷ và họ không được quay nữa. Suất giải được trả lại để quay người khác." xml:space="preserve"><value>This person's result will be cancelled and they will not be drawn again. The prize slot is returned so someone else can be drawn.</value></data>
+  <data name="Kết quả này đang có hiệu lực." xml:space="preserve"><value>This result is still active.</value></data>
+  <data name="Kết quả này đã được xử lý rồi." xml:space="preserve"><value>This result has already been handled.</value></data>
+  <data name="Kết quả quay" xml:space="preserve"><value>Draw results</value></data>
+  <data name="Kết quả quay số" xml:space="preserve"><value>Draw results</value></data>
+  <data name="Kết quả sẽ hiện ở đây khi MC bấm quay trên màn hình chính." xml:space="preserve"><value>Results appear here when the MC draws on the main screen.</value></data>
+  <data name="Kết quả tổng" xml:space="preserve"><value>All results</value></data>
+  <data name="Kết quả vừa quay" xml:space="preserve"><value>Latest draw</value></data>
+  <data name="Kết quả đã xoá" xml:space="preserve"><value>Deleted results</value></data>
+  <data name="Kết quả được quyết định ở máy chủ trước, màn chiếu chỉ diễn hiệu ứng. Mọi thao tác đều được ghi nhật ký." xml:space="preserve"><value>Results are decided on the server first; the stage screen only plays the animation. Every action is logged.</value></data>
+  <data name="Logo" xml:space="preserve"><value>Logo</value></data>
+  <data name="Làm mờ" xml:space="preserve"><value>Blur</value></data>
+  <data name="Lên" xml:space="preserve"><value>Move up</value></data>
+  <data name="Lúc" xml:space="preserve"><value>Time</value></data>
+  <data name="Lý do xoá" xml:space="preserve"><value>Reason</value></data>
+  <data name="Lưu" xml:space="preserve"><value>Save</value></data>
+  <data name="Lưu giao diện" xml:space="preserve"><value>Save appearance</value></data>
+  <data name="Lưu âm thanh" xml:space="preserve"><value>Save sound</value></data>
+  <data name="Lưu ý khi chuẩn bị file" xml:space="preserve"><value>Tips for preparing the file</value></data>
+  <data name="Lưu ý về mật khẩu" xml:space="preserve"><value>Password tips</value></data>
+  <data name="Lấp lánh" xml:space="preserve"><value>Sparkles</value></data>
+  <data name="Lặp lại" xml:space="preserve"><value>Repeat</value></data>
+  <data name="Lọc" xml:space="preserve"><value>Filter</value></data>
+  <data name="Lỗi" xml:space="preserve"><value>Error</value></data>
+  <data name="Lời chúc mừng" xml:space="preserve"><value>Congratulations text</value></data>
+  <data name="Menu quản trị" xml:space="preserve"><value>Admin menu</value></data>
+  <data name="Màn chiếu" xml:space="preserve"><value>Stage screen</value></data>
+  <data name="Màn chiếu hiển thị tên theo ngôn ngữ người xem chọn. Ô nào để trống sẽ dùng tên tiếng Việt." xml:space="preserve"><value>The stage screen shows names in the viewer's chosen language. Empty fields fall back to Vietnamese.</value></data>
+  <data name="Màn chúc mừng" xml:space="preserve"><value>Congratulations screen</value></data>
+  <data name="Màn hình chính đang chiếu sự kiện này." xml:space="preserve"><value>The main screen is now showing this event.</value></data>
+  <data name="Màn hình quay số" xml:space="preserve"><value>Draw screen</value></data>
+  <data name="Màn hình quay số sẽ được dựng ở bước tiếp theo." xml:space="preserve"><value>The draw screen will be built in the next step.</value></data>
+  <data name="Màu chữ" xml:space="preserve"><value>Text color</value></data>
+  <data name="Màu nền và màu nhấn mặc định của màn chiếu." xml:space="preserve"><value>Default background and accent colors of the stage screen.</value></data>
+  <data name="Mã" xml:space="preserve"><value>Code</value></data>
+  <data name="Mã NV" xml:space="preserve"><value>Emp. code</value></data>
+  <data name="Mã bộ phận" xml:space="preserve"><value>Department code</value></data>
+  <data name="Mã bộ phận bị trùng trong file" xml:space="preserve"><value>Duplicate department code in the file</value></data>
+  <data name="Mã bộ phận dùng để làm gì?" xml:space="preserve"><value>What is the department code for?</value></data>
+  <data name="Mã bộ phận tối đa 30 ký tự" xml:space="preserve"><value>Department code is limited to 30 characters</value></data>
+  <data name="Mã bộ phận và tên 4 ngôn ngữ (dùng chung mọi sự kiện)." xml:space="preserve"><value>Department code and names in 4 languages (shared by all events).</value></data>
+  <data name="Mã bộ phận đã tồn tại." xml:space="preserve"><value>This department code already exists.</value></data>
+  <data name="Mã nhân viên" xml:space="preserve"><value>Employee code</value></data>
+  <data name="Mã nhân viên bị trùng trong file" xml:space="preserve"><value>Duplicate employee code in the file</value></data>
+  <data name="Mã nhân viên tối đa 30 ký tự" xml:space="preserve"><value>Employee code is limited to 30 characters</value></data>
+  <data name="Mã nhân viên đã có trong sự kiện này." xml:space="preserve"><value>This employee code already exists in this event.</value></data>
+  <data name="Mã nhân viên, họ tên, mã bộ phận, ngày vào làm." xml:space="preserve"><value>Employee code, full name, department code, join date.</value></data>
+  <data name="Mã số thẻ: mã nhân viên, không trùng trong file" xml:space="preserve"><value>Card no.: employee code, unique within the file</value></data>
+  <data name="Mã trúng thưởng" xml:space="preserve"><value>Winning code</value></data>
+  <data name="Mất kết nối máy chủ, vui lòng thử lại." xml:space="preserve"><value>Lost connection to the server, please try again.</value></data>
+  <data name="Mật khẩu" xml:space="preserve"><value>Password</value></data>
+  <data name="Mật khẩu mới" xml:space="preserve"><value>New password</value></data>
+  <data name="Mật khẩu nhập lại không khớp." xml:space="preserve"><value>Passwords do not match.</value></data>
+  <data name="Mật khẩu được băm (có salt), Admin cũng không xem lại được – chỉ đặt mật khẩu mới." xml:space="preserve"><value>Passwords are hashed with salt; even admins cannot view them – only set a new one.</value></data>
+  <data name="Mọi sự kiện" xml:space="preserve"><value>All events</value></data>
+  <data name="Mọi thao tác thay đổi dữ liệu đều được ghi lại và không thể sửa hay xoá." xml:space="preserve"><value>Every data change is recorded and cannot be edited or deleted.</value></data>
+  <data name="Mỗi MC nên có tài khoản riêng để nhật ký ghi đúng người bấm quay." xml:space="preserve"><value>Each MC should have their own account so the log records who drew.</value></data>
+  <data name="Mỗi giải một bài" xml:space="preserve"><value>One track per prize</value></data>
+  <data name="Mỗi lượt" xml:space="preserve"><value>Per draw</value></data>
+  <data name="Mỗi sự kiện có giải thưởng, người tham dự, giao diện và kết quả riêng. Chỉ một sự kiện được chiếu tại một thời điểm." xml:space="preserve"><value>Each event has its own prizes, participants, appearance and results. Only one event can be on screen at a time.</value></data>
+  <data name="Một danh sách cho cả chương trình" xml:space="preserve"><value>One playlist for the whole show</value></data>
+  <data name="Mở menu" xml:space="preserve"><value>Open menu</value></data>
+  <data name="Mở màn hình quay" xml:space="preserve"><value>Open draw screen</value></data>
+  <data name="Ngày" xml:space="preserve"><value>Date</value></data>
+  <data name="Ngày diễn ra" xml:space="preserve"><value>Event date</value></data>
+  <data name="Ngày diễn ra dùng để tính thâm niên của người tham dự (điều kiện của từng giải)." xml:space="preserve"><value>The event date is used to compute participants' seniority (prize conditions).</value></data>
+  <data name="Ngày vào làm" xml:space="preserve"><value>Join date</value></data>
+  <data name="Ngày vào làm không hợp lệ (yyyy-MM-dd)" xml:space="preserve"><value>Invalid join date (yyyy-MM-dd)</value></data>
+  <data name="Ngày vào làm sau ngày sự kiện" xml:space="preserve"><value>Join date is after the event date</value></data>
+  <data name="Ngày vào làm: ô ngày của Excel, hoặc chữ dạng yyyy-MM-dd / dd/MM/yyyy" xml:space="preserve"><value>Join date: an Excel date cell, or text as yyyy-MM-dd / dd/MM/yyyy</value></data>
+  <data name="Ngôn ngữ" xml:space="preserve"><value>Language</value></data>
+  <data name="Người này đã có kết quả quay (kể cả đã xoá) nên không xoá được. Có thể đánh dấu vắng mặt." xml:space="preserve"><value>This person has draw results (including deleted ones) and cannot be deleted. Mark them absent instead.</value></data>
+  <data name="Người này đã trúng giải khác, không khôi phục được." xml:space="preserve"><value>This person already won another prize; cannot restore.</value></data>
+  <data name="Người quay" xml:space="preserve"><value>Drawn by</value></data>
+  <data name="Người tham dự" xml:space="preserve"><value>Participants</value></data>
+  <data name="Người tham dự và giải thưởng sẽ được import vào sự kiện:" xml:space="preserve"><value>Participants and prizes will be imported into the event:</value></data>
+  <data name="Người tham dự: nhận luôn file nhân sự có tiêu đề song ngữ (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ). Cột STT và 工齡 được bỏ qua, thâm niên tự tính theo ngày sự kiện." xml:space="preserve"><value>Participants: the bilingual HR file is accepted directly (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ). STT and 工齡 columns are ignored; seniority is calculated from the event date.</value></data>
+  <data name="Người thao tác" xml:space="preserve"><value>User</value></data>
+  <data name="Người trúng giải" xml:space="preserve"><value>Winners</value></data>
+  <data name="Người vắng mặt sẽ không được quay ở các lượt sau." xml:space="preserve"><value>Absent people are excluded from later draws.</value></data>
+  <data name="Người đủ điều kiện" xml:space="preserve"><value>Eligible</value></data>
+  <data name="Ngẫu nhiên" xml:space="preserve"><value>Shuffle</value></data>
+  <data name="Ngọc lục bảo" xml:space="preserve"><value>Emerald</value></data>
+  <data name="Ngừng chiếu" xml:space="preserve"><value>Stop showing</value></data>
+  <data name="Ngừng chiếu sự kiện này? Màn hình chính sẽ không còn sự kiện nào." xml:space="preserve"><value>Stop showing this event? The main screen will have no event.</value></data>
+  <data name="Nhạc cho từng giải" xml:space="preserve"><value>Music per prize</value></data>
+  <data name="Nhạc nền" xml:space="preserve"><value>Background music</value></data>
+  <data name="Nhập lại mật khẩu" xml:space="preserve"><value>Confirm password</value></data>
+  <data name="Nhật ký" xml:space="preserve"><value>Audit log</value></data>
+  <data name="Nhật ký thao tác" xml:space="preserve"><value>Audit log</value></data>
+  <data name="Nên import bộ phận trước để mã bộ phận của người tham dự hợp lệ." xml:space="preserve"><value>Import departments first so participants' department codes are valid.</value></data>
+  <data name="Nút bắt đầu" xml:space="preserve"><value>Start button</value></data>
+  <data name="Nội dung file không đúng định dạng." xml:space="preserve"><value>The file content does not match its format.</value></data>
+  <data name="PNG nền trong suốt là đẹp nhất, tối đa 2 MB. Hiển thị góc trên bên trái." xml:space="preserve"><value>A transparent PNG looks best, up to 2 MB. Shown in the top-left corner.</value></data>
+  <data name="PNG, JPG hoặc WEBP, tối đa 2 MB. Hiển thị trên màn chiếu khi quay giải này." xml:space="preserve"><value>PNG, JPG or WEBP, up to 2 MB. Shown on the stage screen while drawing this prize.</value></data>
+  <data name="Phiên đăng nhập đã hết hạn, hãy đăng nhập lại." xml:space="preserve"><value>Your session has expired, please sign in again.</value></data>
+  <data name="Pháo hoa" xml:space="preserve"><value>Fireworks</value></data>
+  <data name="Phát lần lượt các bài đã chọn" xml:space="preserve"><value>Plays the selected tracks in order</value></data>
+  <data name="Phân trang" xml:space="preserve"><value>Pagination</value></data>
+  <data name="Phông chữ" xml:space="preserve"><value>Font</value></data>
+  <data name="Phông chữ phải có chữ Hán; nếu thiếu, màn chiếu tự dùng Microsoft JhengHei / YaHei." xml:space="preserve"><value>The font needs Chinese glyphs; if missing, the stage screen falls back to Microsoft JhengHei / YaHei.</value></data>
+  <data name="Phông số" xml:space="preserve"><value>Digit font</value></data>
+  <data name="Phải còn ít nhất một Admin đang hoạt động." xml:space="preserve"><value>At least one active admin must remain.</value></data>
+  <data name="Phủ tối" xml:space="preserve"><value>Darken</value></data>
+  <data name="Quay lại người vắng mặt thì chỉ quay 1 người." xml:space="preserve"><value>Redrawing for an absentee draws only 1 person.</value></data>
+  <data name="Quay số trúng thưởng" xml:space="preserve"><value>Lucky draw</value></data>
+  <data name="Quyền của từng vai trò" xml:space="preserve"><value>Permissions by role</value></data>
+  <data name="Quản lý" xml:space="preserve"><value>Manage</value></data>
+  <data name="Quản lý giải" xml:space="preserve"><value>Manage prizes</value></data>
+  <data name="Quản lý tài khoản" xml:space="preserve"><value>Manage accounts</value></data>
+  <data name="Reset" xml:space="preserve"><value>Reset</value></data>
+  <data name="Reset kết quả" xml:space="preserve"><value>Reset results</value></data>
+  <data name="Reset toàn bộ kết quả" xml:space="preserve"><value>Reset all results</value></data>
+  <data name="STT" xml:space="preserve"><value>No.</value></data>
+  <data name="Sai tên đăng nhập hoặc mật khẩu, hoặc tài khoản đã bị khoá." xml:space="preserve"><value>Wrong username or password, or the account is locked.</value></data>
+  <data name="Sau khi tạo sự kiện" xml:space="preserve"><value>After creating the event</value></data>
+  <data name="Sáng tối giản" xml:space="preserve"><value>Minimal light</value></data>
+  <data name="Số kết quả mỗi lượt quay" xml:space="preserve"><value>Winners per draw</value></data>
+  <data name="Số lượng" xml:space="preserve"><value>Quantity</value></data>
+  <data name="Số lượng không được nhỏ hơn số người đã trúng" xml:space="preserve"><value>Quantity cannot be less than the number of winners so far</value></data>
+  <data name="Số lượt quay cần" xml:space="preserve"><value>Draws needed</value></data>
+  <data name="Số người mỗi lượt không được lớn hơn số lượng giải" xml:space="preserve"><value>Winners per draw cannot exceed the prize quantity</value></data>
+  <data name="Số người trúng tối đa" xml:space="preserve"><value>Maximum winners</value></data>
+  <data name="Sửa" xml:space="preserve"><value>Edit</value></data>
+  <data name="Sửa bộ phận" xml:space="preserve"><value>Edit department</value></data>
+  <data name="Sửa giải thưởng" xml:space="preserve"><value>Edit prize</value></data>
+  <data name="Sửa người tham dự" xml:space="preserve"><value>Edit participant</value></data>
+  <data name="Sửa sự kiện" xml:space="preserve"><value>Edit event</value></data>
+  <data name="Sửa tài khoản" xml:space="preserve"><value>Edit account</value></data>
+  <data name="Sự kiện" xml:space="preserve"><value>Events</value></data>
+  <data name="Sự kiện này đang được chiếu trên màn hình chính" xml:space="preserve"><value>This event is on the main screen</value></data>
+  <data name="Sự kiện đã có kết quả quay nên không xoá được (giữ lại để đối chiếu)." xml:space="preserve"><value>The event has draw results and cannot be deleted (kept for reference).</value></data>
+  <data name="Sự kiện đã có kết quả quay sẽ không xoá được." xml:space="preserve"><value>Events with draw results cannot be deleted.</value></data>
+  <data name="Sự kiện đã có kết quả quay. Đổi ngày sẽ đổi cách tính thâm niên cho các lượt quay sau." xml:space="preserve"><value>This event already has results. Changing the date changes seniority for later draws.</value></data>
+  <data name="Thao tác" xml:space="preserve"><value>Action</value></data>
+  <data name="Thay toàn bộ giải cũ" xml:space="preserve"><value>Replace all existing prizes</value></data>
+  <data name="Thiết lập" xml:space="preserve"><value>Setup</value></data>
+  <data name="Thiếu cột bắt buộc: {0}" xml:space="preserve"><value>Missing required column: {0}</value></data>
+  <data name="Thiếu họ tên" xml:space="preserve"><value>Missing full name</value></data>
+  <data name="Thiếu mã bộ phận" xml:space="preserve"><value>Missing department code</value></data>
+  <data name="Thiếu mã nhân viên" xml:space="preserve"><value>Missing employee code</value></data>
+  <data name="Thiếu tên bộ phận" xml:space="preserve"><value>Missing department name</value></data>
+  <data name="Thiếu tên giải" xml:space="preserve"><value>Missing prize name</value></data>
+  <data name="Thiếu {0}" xml:space="preserve"><value>Missing {0}</value></data>
+  <data name="Thâm niên" xml:space="preserve"><value>Seniority</value></data>
+  <data name="Thâm niên &lt; giá trị này" xml:space="preserve"><value>Seniority &lt; this value</value></data>
+  <data name="Thâm niên tính đến ngày sự kiện {0}" xml:space="preserve"><value>Seniority counted up to the event date {0}</value></data>
+  <data name="Thâm niên tại ngày sự kiện" xml:space="preserve"><value>Seniority on the event date</value></data>
+  <data name="Thâm niên tối thiểu (tháng)" xml:space="preserve"><value>Minimum seniority (months)</value></data>
+  <data name="Thâm niên tối đa (tháng)" xml:space="preserve"><value>Maximum seniority (months)</value></data>
+  <data name="Thâm niên tối đa phải lớn hơn tối thiểu" xml:space="preserve"><value>Maximum seniority must be greater than the minimum</value></data>
+  <data name="Thâm niên ≥ giá trị này" xml:space="preserve"><value>Seniority ≥ this value</value></data>
+  <data name="Thêm bộ phận" xml:space="preserve"><value>Add department</value></data>
+  <data name="Thêm file .mp3 (tối đa 15 MB)" xml:space="preserve"><value>Add an .mp3 file (up to 15 MB)</value></data>
+  <data name="Thêm giải thưởng" xml:space="preserve"><value>Add prize</value></data>
+  <data name="Thêm giải thưởng: số lượng, số người mỗi lượt, điều kiện thâm niên." xml:space="preserve"><value>Add prizes: quantity, winners per draw, seniority conditions.</value></data>
+  <data name="Thêm người" xml:space="preserve"><value>Add person</value></data>
+  <data name="Thêm người tham dự" xml:space="preserve"><value>Add participant</value></data>
+  <data name="Thêm từng giải hoặc import nhanh từ file Excel." xml:space="preserve"><value>Add prizes one by one or import them from Excel.</value></data>
+  <data name="Thêm vào cuối danh sách" xml:space="preserve"><value>Append to the list</value></data>
+  <data name="Thông tin giải thưởng" xml:space="preserve"><value>Prize information</value></data>
+  <data name="Thư viện nhạc của sự kiện, nhạc nền và hiệu ứng âm thanh trên màn chiếu." xml:space="preserve"><value>The event's audio library, background music and sound effects on the stage screen.</value></data>
+  <data name="Thư viện âm thanh" xml:space="preserve"><value>Audio library</value></data>
+  <data name="Thời gian" xml:space="preserve"><value>Time</value></data>
+  <data name="Thời gian &amp; địa điểm" xml:space="preserve"><value>Date &amp; venue</value></data>
+  <data name="Thời gian chạy chậm dần trước khi dừng hẳn." xml:space="preserve"><value>Slow-down time before the final stop.</value></data>
+  <data name="Thời gian dừng (giây)" xml:space="preserve"><value>Stop time (seconds)</value></data>
+  <data name="Thời gian quay" xml:space="preserve"><value>Drawn at</value></data>
+  <data name="Thời gian quay (giây)" xml:space="preserve"><value>Spin time (seconds)</value></data>
+  <data name="Thủ công" xml:space="preserve"><value>Manual</value></data>
+  <data name="Thủ công: MC bấm dừng. Tự động: tự dừng sau số giây cài đặt." xml:space="preserve"><value>Manual: the MC presses stop. Automatic: stops after the set number of seconds.</value></data>
+  <data name="Thứ tự" xml:space="preserve"><value>Order</value></data>
+  <data name="Thứ tự trong danh sách là thứ tự quay trên màn chiếu. Người đã trúng sẽ không được quay ở giải khác." xml:space="preserve"><value>The list order is the draw order on the stage screen. Winners cannot win another prize.</value></data>
+  <data name="Tiến độ" xml:space="preserve"><value>Progress</value></data>
+  <data name="Tiến độ từng giải" xml:space="preserve"><value>Progress by prize</value></data>
+  <data name="Tiếp tục" xml:space="preserve"><value>Continue</value></data>
+  <data name="Tiệc tất niên – quay thưởng công bằng, minh bạch" xml:space="preserve"><value>Year-end party – a fair, transparent lucky draw</value></data>
+  <data name="Toàn màn hình" xml:space="preserve"><value>Full screen</value></data>
+  <data name="Toàn quyền trang quản trị" xml:space="preserve"><value>Full access to the admin panel</value></data>
+  <data name="Trang quản trị" xml:space="preserve"><value>Admin panel</value></data>
+  <data name="Trang quản trị (giải, người, giao diện…)" xml:space="preserve"><value>Admin panel (prizes, people, appearance…)</value></data>
+  <data name="Trang trước" xml:space="preserve"><value>Previous page</value></data>
+  <data name="Trạng thái" xml:space="preserve"><value>Status</value></data>
+  <data name="Tuyết rơi" xml:space="preserve"><value>Snow</value></data>
+  <data name="Tài khoản" xml:space="preserve"><value>Accounts</value></data>
+  <data name="Tài khoản bị khoá không đăng nhập được." xml:space="preserve"><value>Locked accounts cannot sign in.</value></data>
+  <data name="Tài khoản của bạn không được phép mở trang này. Trang quản trị chỉ dành cho Admin." xml:space="preserve"><value>Your account cannot open this page. The admin panel is for admins only.</value></data>
+  <data name="Tên (English)" xml:space="preserve"><value>Name (English)</value></data>
+  <data name="Tên (Tiếng Việt)" xml:space="preserve"><value>Name (Vietnamese)</value></data>
+  <data name="Tên (简体中文)" xml:space="preserve"><value>Name (Simplified Chinese)</value></data>
+  <data name="Tên (繁體中文)" xml:space="preserve"><value>Name (Traditional Chinese)</value></data>
+  <data name="Tên 4 ngôn ngữ, số lượng, số người mỗi lượt, kiểu quay, thâm niên." xml:space="preserve"><value>Names in 4 languages, quantity, winners per draw, draw mode, seniority.</value></data>
+  <data name="Tên bộ phận" xml:space="preserve"><value>Department name</value></data>
+  <data name="Tên giải bị trùng trong file" xml:space="preserve"><value>Duplicate prize name in the file</value></data>
+  <data name="Tên giải thưởng" xml:space="preserve"><value>Prize name</value></data>
+  <data name="Tên giải tối đa 200 ký tự" xml:space="preserve"><value>Prize name is limited to 200 characters</value></data>
+  <data name="Tên hiển thị" xml:space="preserve"><value>Display name</value></data>
+  <data name="Tên hiển thị (không bắt buộc)" xml:space="preserve"><value>Display name (optional)</value></data>
+  <data name="Tên hiển thị trên màn chiếu" xml:space="preserve"><value>Name on the stage screen</value></data>
+  <data name="Tên sự kiện" xml:space="preserve"><value>Event name</value></data>
+  <data name="Tên sự kiện nhập lại không khớp, chưa reset." xml:space="preserve"><value>The event name does not match; nothing was reset.</value></data>
+  <data name="Tên sự kiện nhập lại không khớp." xml:space="preserve"><value>The event name does not match.</value></data>
+  <data name="Tên tiếng Trung" xml:space="preserve"><value>Chinese name</value></data>
+  <data name="Tên tiếng Trung (姓名)" xml:space="preserve"><value>Chinese name (姓名)</value></data>
+  <data name="Tên tối đa 200 ký tự" xml:space="preserve"><value>Names are limited to 200 characters</value></data>
+  <data name="Tên đăng nhập" xml:space="preserve"><value>Username</value></data>
+  <data name="Tên đăng nhập đã tồn tại." xml:space="preserve"><value>This username already exists.</value></data>
+  <data name="Tìm kiếm kết quả…" xml:space="preserve"><value>Search results…</value></data>
+  <data name="Tìm theo mã hoặc tên…" xml:space="preserve"><value>Search by code or name…</value></data>
+  <data name="Tính đến ngày sự kiện. Để trống = không giới hạn. Ví dụ giải khuyến khích cho người dưới 6 tháng: tối đa = 6." xml:space="preserve"><value>Counted up to the event date. Empty = no limit. E.g. a consolation prize for people under 6 months: maximum = 6.</value></data>
+  <data name="Tính đến {0}" xml:space="preserve"><value>As of {0}</value></data>
+  <data name="Tạo sự kiện" xml:space="preserve"><value>Create event</value></data>
+  <data name="Tạo tài khoản" xml:space="preserve"><value>Create account</value></data>
+  <data name="Tải danh sách (.xlsx)" xml:space="preserve"><value>Download list (.xlsx)</value></data>
+  <data name="Tải file lên thư viện trước." xml:space="preserve"><value>Upload files to the library first.</value></data>
+  <data name="Tải file mẫu → điền dữ liệu → upload → xem trước và sửa lỗi → xác nhận. Dữ liệu chỉ được ghi khi không còn dòng lỗi." xml:space="preserve"><value>Download the template → fill in → upload → preview and fix errors → confirm. Data is saved only when no rows have errors.</value></data>
+  <data name="Tải kết quả" xml:space="preserve"><value>Download results</value></data>
+  <data name="Tải kết quả trên màn chiếu" xml:space="preserve"><value>Download results on the stage screen</value></data>
+  <data name="Tải lên" xml:space="preserve"><value>Upload</value></data>
+  <data name="Tải về danh sách" xml:space="preserve"><value>Download list</value></data>
+  <data name="Tải ảnh hàng loạt" xml:space="preserve"><value>Bulk upload photos</value></data>
+  <data name="Tất cả" xml:space="preserve"><value>All</value></data>
+  <data name="Tất cả bộ phận" xml:space="preserve"><value>All departments</value></data>
+  <data name="Tất cả giải" xml:space="preserve"><value>All prizes</value></data>
+  <data name="Tất cả kết quả" xml:space="preserve"><value>All results</value></data>
+  <data name="Tất cả thao tác" xml:space="preserve"><value>All actions</value></data>
+  <data name="Tất cả {0} kết quả hiện tại sẽ bị xoá (xoá mềm) và mọi người được quay lại từ đầu. Cờ vắng mặt cũng được bỏ. Thường dùng sau khi quay thử." xml:space="preserve"><value>All {0} current results will be (soft) deleted and everyone can be drawn again. Absent flags are cleared too. Usually used after a test run.</value></data>
+  <data name="Tắt" xml:space="preserve"><value>Disable</value></data>
+  <data name="Tắt âm thanh" xml:space="preserve"><value>Mute</value></data>
+  <data name="Tết Bính Ngọ 2026" xml:space="preserve"><value>Year of the Horse 2026</value></data>
+  <data name="Tết đỏ vàng" xml:space="preserve"><value>Lunar New Year red &amp; gold</value></data>
+  <data name="Tốc độ bay của pháo hoa" xml:space="preserve"><value>Firework speed</value></data>
+  <data name="Tối thiểu 8 ký tự, nên có chữ hoa, chữ thường, số và ký tự đặc biệt." xml:space="preserve"><value>At least 8 characters; mix upper and lower case, digits and symbols.</value></data>
+  <data name="Tối đa 5.000 dòng và 5 MB mỗi lần. Toàn bộ file được ghi trong một giao dịch: lỗi một dòng thì không ghi dòng nào." xml:space="preserve"><value>Up to 5,000 rows and 5 MB per upload. The whole file is saved in one transaction: one bad row means nothing is saved.</value></data>
+  <data name="Tối đa {0} dòng mỗi lần import." xml:space="preserve"><value>Up to {0} rows per import.</value></data>
+  <data name="Tổng cộng: {0} người trúng trong {1} giải" xml:space="preserve"><value>Total: {0} winners in {1} prizes</value></data>
+  <data name="Tổng cộng: {0} người · trang {1}/{2}" xml:space="preserve"><value>Total: {0} people · page {1}/{2}</value></data>
+  <data name="Tổng cộng: {0} suất trong {1} giải · đã quay {2}" xml:space="preserve"><value>Total: {0} slots in {1} prizes · {2} drawn</value></data>
+  <data name="Tổng quan" xml:space="preserve"><value>Dashboard</value></data>
+  <data name="Tổng {0} dòng · Trang {1}/{2}" xml:space="preserve"><value>{0} rows · Page {1}/{2}</value></data>
+  <data name="Tổng {0} giải · {1} suất" xml:space="preserve"><value>{0} prizes · {1} slots</value></data>
+  <data name="Tổng {0} người" xml:space="preserve"><value>{0} people in total</value></data>
+  <data name="Từ {0} tháng" xml:space="preserve"><value>From {0} months</value></data>
+  <data name="Từ {0} đến dưới {1} tháng" xml:space="preserve"><value>{0} to under {1} months</value></data>
+  <data name="Tự động" xml:space="preserve"><value>Automatic</value></data>
+  <data name="Upload &amp; xem trước" xml:space="preserve"><value>Upload &amp; preview</value></data>
+  <data name="Vai trò" xml:space="preserve"><value>Role</value></data>
+  <data name="Vai trò không hợp lệ." xml:space="preserve"><value>Invalid role.</value></data>
+  <data name="Vui lòng nhập {0}." xml:space="preserve"><value>Please enter {0}.</value></data>
+  <data name="Vui lòng thử lại. Nếu lỗi lặp lại, kiểm tra kết nối cơ sở dữ liệu và nhật ký máy chủ." xml:space="preserve"><value>Please try again. If it keeps happening, check the database connection and server logs.</value></data>
+  <data name="Vàng" xml:space="preserve"><value>Gold</value></data>
+  <data name="Ví dụ 100 người trúng, mỗi lượt quay 20 người → MC bấm quay 5 lần." xml:space="preserve"><value>E.g. 100 winners, 20 per draw → the MC draws 5 times.</value></data>
+  <data name="Ví dụ: Giải nhất, Giải đặc biệt." xml:space="preserve"><value>E.g. First Prize, Grand Prize.</value></data>
+  <data name="Vắng mặt" xml:space="preserve"><value>Absent</value></data>
+  <data name="Vắng mặt – huỷ kết quả để quay người khác" xml:space="preserve"><value>Absent – cancel this result to draw someone else</value></data>
+  <data name="Về trang chính" xml:space="preserve"><value>Back to main page</value></data>
+  <data name="Về trang quản trị" xml:space="preserve"><value>Back to admin panel</value></data>
+  <data name="Vị trí bảng kết quả" xml:space="preserve"><value>Results panel position</value></data>
+  <data name="Xanh hoàng gia" xml:space="preserve"><value>Royal blue</value></data>
+  <data name="Xem màn hình quay số" xml:space="preserve"><value>View draw screen</value></data>
+  <data name="Xem thêm" xml:space="preserve"><value>Show more</value></data>
+  <data name="Xem toàn bộ người trúng theo từng giải" xml:space="preserve"><value>All winners by prize</value></data>
+  <data name="Xem trước" xml:space="preserve"><value>Preview</value></data>
+  <data name="Xem trước import" xml:space="preserve"><value>Import preview</value></data>
+  <data name="Xem tất cả" xml:space="preserve"><value>View all</value></data>
+  <data name="Xoá" xml:space="preserve"><value>Delete</value></data>
+  <data name="Xoá bài {0}?" xml:space="preserve"><value>Delete track {0}?</value></data>
+  <data name="Xoá bộ phận {0}?" xml:space="preserve"><value>Delete department {0}?</value></data>
+  <data name="Xoá danh sách" xml:space="preserve"><value>Clear list</value></data>
+  <data name="Xoá danh sách người tham dự" xml:space="preserve"><value>Clear participant list</value></data>
+  <data name="Xoá giải {0}? Thao tác không thể hoàn tác." xml:space="preserve"><value>Delete prize {0}? This cannot be undone.</value></data>
+  <data name="Xoá kết quả của {0}? Người này có thể được quay lại." xml:space="preserve"><value>Delete the result of {0}? This person can be drawn again.</value></data>
+  <data name="Xoá kết quả là xoá mềm: luôn khôi phục được ở tab Kết quả đã xoá." xml:space="preserve"><value>Deleting a result is a soft delete: it can always be restored from the Deleted results tab.</value></data>
+  <data name="Xoá logo hiện tại" xml:space="preserve"><value>Remove current logo</value></data>
+  <data name="Xoá sự kiện" xml:space="preserve"><value>Delete event</value></data>
+  <data name="Xoá sự kiện sẽ xoá luôn toàn bộ giải thưởng và người tham dự của sự kiện. Không thể hoàn tác." xml:space="preserve"><value>Deleting the event also deletes all of its prizes and participants. This cannot be undone.</value></data>
+  <data name="Xoá tài khoản {0}?" xml:space="preserve"><value>Delete account {0}?</value></data>
+  <data name="Xoá tất cả người tham dự của sự kiện này, trừ những người đã có kết quả quay. Dùng khi muốn import lại danh sách từ đầu." xml:space="preserve"><value>Delete all participants of this event except those with draw results. Use this before re-importing the list.</value></data>
+  <data name="Xoá vĩnh viễn" xml:space="preserve"><value>Delete permanently</value></data>
+  <data name="Xoá {0} – {1}?" xml:space="preserve"><value>Delete {0} – {1}?</value></data>
+  <data name="Xoá ảnh hiện tại" xml:space="preserve"><value>Remove current image</value></data>
+  <data name="Xoá ảnh nền hiện tại" xml:space="preserve"><value>Remove current background</value></data>
+  <data name="Xuất lúc" xml:space="preserve"><value>Exported at</value></data>
+  <data name="Xuống" xml:space="preserve"><value>Move down</value></data>
+  <data name="Xác nhận" xml:space="preserve"><value>Confirm</value></data>
+  <data name="Xác nhận import {0} dòng" xml:space="preserve"><value>Confirm import of {0} rows</value></data>
+  <data name="Xác nhận vắng mặt" xml:space="preserve"><value>Confirm absence</value></data>
+  <data name="Xác nhận {0} vắng mặt? Kết quả của người này bị huỷ và họ không được quay nữa." xml:space="preserve"><value>Confirm {0} is absent? Their result will be cancelled and they will not be drawn again.</value></data>
+  <data name="code: mã bộ phận, không trùng" xml:space="preserve"><value>code: department code, must be unique</value></data>
+  <data name="department_code: mã bộ phận đã có trong mục Bộ phận (có thể để trống)" xml:space="preserve"><value>department_code: an existing department code (optional)</value></data>
+  <data name="draw_per_turn: số người mỗi lượt quay (mặc định 1)" xml:space="preserve"><value>draw_per_turn: winners per draw (default 1)</value></data>
+  <data name="draw_type: 1 = Thủ công, 2 = Tự động (mặc định 1)" xml:space="preserve"><value>draw_type: 1 = Manual, 2 = Automatic (default 1)</value></data>
+  <data name="dừng {0}s" xml:space="preserve"><value>stop {0}s</value></data>
+  <data name="employee_code: mã nhân viên, không trùng trong file" xml:space="preserve"><value>employee_code: employee code, unique within the file</value></data>
+  <data name="join_date: ngày vào làm, dạng yyyy-MM-dd hoặc dd/MM/yyyy" xml:space="preserve"><value>join_date: join date, as yyyy-MM-dd or dd/MM/yyyy</value></data>
+  <data name="min/max_seniority_months: thâm niên tối thiểu / tối đa (tháng), để trống = không giới hạn" xml:space="preserve"><value>min/max_seniority_months: minimum / maximum seniority (months), empty = no limit</value></data>
+  <data name="{0} chỉ gồm chữ, số và ký tự . _ -" xml:space="preserve"><value>{0} may contain only letters, digits and . _ -</value></data>
+  <data name="{0} dài từ {2} đến {1} ký tự." xml:space="preserve"><value>{0} must be {2} to {1} characters long.</value></data>
+  <data name="{0} lượt" xml:space="preserve"><value>{0} draws</value></data>
+  <data name="{0} phải là số nguyên từ {1} đến {2}" xml:space="preserve"><value>{0} must be an integer from {1} to {2}</value></data>
+  <data name="{0} phải là số." xml:space="preserve"><value>{0} must be a number.</value></data>
+  <data name="{0} phải từ {1} đến {2}." xml:space="preserve"><value>{0} must be between {1} and {2}.</value></data>
+  <data name="{0} suất" xml:space="preserve"><value>{0} slots</value></data>
+  <data name="{0} suất · mỗi lượt {1} người" xml:space="preserve"><value>{0} slots · {1} per draw</value></data>
+  <data name="{0} tháng" xml:space="preserve"><value>{0} months</value></data>
+  <data name="{0} tối đa {1} ký tự." xml:space="preserve"><value>{0} is limited to {1} characters.</value></data>
+  <data name="{0} vắng mặt" xml:space="preserve"><value>{0} absent</value></data>
+  <data name="{0} ảnh không dùng được: {1}" xml:space="preserve"><value>{0} photos could not be used: {1}</value></data>
+  <data name="{0}: không có mã số thẻ này" xml:space="preserve"><value>{0}: no such card number</value></data>
+  <data name="{0}–{1} tháng" xml:space="preserve"><value>{0}–{1} months</value></data>
+  <data name="Âm lượng" xml:space="preserve"><value>Volume</value></data>
+  <data name="Âm thanh" xml:space="preserve"><value>Sound</value></data>
+  <data name="Ô quay số" xml:space="preserve"><value>Digit boxes</value></data>
+  <data name="Đang chiếu" xml:space="preserve"><value>On screen</value></data>
+  <data name="Đang dùng" xml:space="preserve"><value>Enabled</value></data>
+  <data name="Đang hoạt động" xml:space="preserve"><value>Active</value></data>
+  <data name="Đang quay…" xml:space="preserve"><value>Drawing…</value></data>
+  <data name="Đang quản lý" xml:space="preserve"><value>Managing</value></data>
+  <data name="Đang đánh dấu vắng mặt: sẽ không được quay." xml:space="preserve"><value>Marked absent: will not be drawn.</value></data>
+  <data name="Điều kiện thâm niên" xml:space="preserve"><value>Seniority condition</value></data>
+  <data name="Đánh dấu có mặt" xml:space="preserve"><value>Mark present</value></data>
+  <data name="Đánh dấu vắng mặt" xml:space="preserve"><value>Mark absent</value></data>
+  <data name="Đã có lỗi xảy ra" xml:space="preserve"><value>Something went wrong</value></data>
+  <data name="Đã có {0} người trúng giải này." xml:space="preserve"><value>{0} people have already won this prize.</value></data>
+  <data name="Đã cập nhật ảnh cho {0} người." xml:space="preserve"><value>Updated photos for {0} people.</value></data>
+  <data name="Đã huỷ kết quả. Bấm Bắt đầu để quay người thay thế." xml:space="preserve"><value>Result cancelled. Press Start to draw a replacement.</value></data>
+  <data name="Đã khoá" xml:space="preserve"><value>Locked</value></data>
+  <data name="Đã khôi phục kết quả." xml:space="preserve"><value>Result restored.</value></data>
+  <data name="Đã lưu bộ phận." xml:space="preserve"><value>Department saved.</value></data>
+  <data name="Đã lưu giao diện." xml:space="preserve"><value>Appearance saved.</value></data>
+  <data name="Đã lưu giải thưởng." xml:space="preserve"><value>Prize saved.</value></data>
+  <data name="Đã lưu người tham dự." xml:space="preserve"><value>Participant saved.</value></data>
+  <data name="Đã lưu sự kiện." xml:space="preserve"><value>Event saved.</value></data>
+  <data name="Đã lưu tài khoản." xml:space="preserve"><value>Account saved.</value></data>
+  <data name="Đã lưu âm thanh." xml:space="preserve"><value>Sound settings saved.</value></data>
+  <data name="Đã ngừng chiếu sự kiện." xml:space="preserve"><value>The event is no longer shown.</value></data>
+  <data name="Đã quay" xml:space="preserve"><value>Drawn</value></data>
+  <data name="Đã quay xong tất cả giải" xml:space="preserve"><value>All prizes have been drawn</value></data>
+  <data name="Đã quay {0} / {1} người trúng giải này" xml:space="preserve"><value>{0} / {1} winners drawn for this prize</value></data>
+  <data name="Đã quay {0}/{1}" xml:space="preserve"><value>Drawn {0}/{1}</value></data>
+  <data name="Đã reset {0} kết quả." xml:space="preserve"><value>{0} results reset.</value></data>
+  <data name="Đã thêm bài “{0}”." xml:space="preserve"><value>Track “{0}” added.</value></data>
+  <data name="Đã thêm bộ phận." xml:space="preserve"><value>Department added.</value></data>
+  <data name="Đã thêm giải thưởng." xml:space="preserve"><value>Prize added.</value></data>
+  <data name="Đã thêm người tham dự." xml:space="preserve"><value>Participant added.</value></data>
+  <data name="Đã trúng" xml:space="preserve"><value>Won</value></data>
+  <data name="Đã tạo sự kiện. Tiếp theo: thêm giải thưởng và người tham dự." xml:space="preserve"><value>Event created. Next: add prizes and participants.</value></data>
+  <data name="Đã tạo tài khoản." xml:space="preserve"><value>Account created.</value></data>
+  <data name="Đã tắt" xml:space="preserve"><value>Disabled</value></data>
+  <data name="Đã xong" xml:space="preserve"><value>Done</value></data>
+  <data name="Đã xoá bài “{0}”." xml:space="preserve"><value>Track “{0}” deleted.</value></data>
+  <data name="Đã xoá bộ phận." xml:space="preserve"><value>Department deleted.</value></data>
+  <data name="Đã xoá giải thưởng." xml:space="preserve"><value>Prize deleted.</value></data>
+  <data name="Đã xoá kết quả. Có thể khôi phục ở tab Kết quả đã xoá." xml:space="preserve"><value>Result deleted. It can be restored from the Deleted results tab.</value></data>
+  <data name="Đã xoá người tham dự." xml:space="preserve"><value>Participant deleted.</value></data>
+  <data name="Đã xoá sự kiện." xml:space="preserve"><value>Event deleted.</value></data>
+  <data name="Đã xoá tài khoản {0}." xml:space="preserve"><value>Account {0} deleted.</value></data>
+  <data name="Đã xoá {0} người (giữ lại người đã có kết quả quay)." xml:space="preserve"><value>Deleted {0} people (kept those with draw results).</value></data>
+  <data name="Đã đổi mật khẩu cho {0}." xml:space="preserve"><value>Password changed for {0}.</value></data>
+  <data name="Đóng" xml:space="preserve"><value>Close</value></data>
+  <data name="Đăng nhập" xml:space="preserve"><value>Sign in</value></data>
+  <data name="Đăng nhập MC" xml:space="preserve"><value>MC sign in</value></data>
+  <data name="Đăng nhập gần nhất" xml:space="preserve"><value>Last sign-in</value></data>
+  <data name="Đăng nhập tài khoản khác" xml:space="preserve"><value>Sign in with another account</value></data>
+  <data name="Đăng nhập với" xml:space="preserve"><value>Signed in as</value></data>
+  <data name="Đăng xuất" xml:space="preserve"><value>Sign out</value></data>
+  <data name="Đặt tên file ảnh theo mã số thẻ, ví dụ VN000032.jpg (hoặc “VN000032 - Tô Văn Thọ.jpg”). Ảnh sẽ tự gắn vào đúng người; ảnh trùng mã thay ảnh cũ." xml:space="preserve"><value>Name each photo file by card number, e.g. VN000032.jpg (or “VN000032 - Tô Văn Thọ.jpg”). Photos are matched to the right person automatically; a new photo replaces the old one.</value></data>
+  <data name="Để trống thì màn chiếu tạm dùng tên phồn thể. Chuyển phồn → giản tự động chỉ đổi từng chữ, nên xem lại từ vựng." xml:space="preserve"><value>If empty, the stage screen uses the Traditional name. Automatic conversion is character-by-character, so review the wording.</value></data>
+  <data name="Địa điểm" xml:space="preserve"><value>Venue</value></data>
+  <data name="Đối tượng" xml:space="preserve"><value>Target</value></data>
+  <data name="Đổi giải thì đổi nhạc" xml:space="preserve"><value>Music changes with each prize</value></data>
+  <data name="Đổi mật khẩu" xml:space="preserve"><value>Change password</value></data>
+  <data name="Đủ điều kiện" xml:space="preserve"><value>Eligible</value></data>
+  <data name="Ảnh chân dung" xml:space="preserve"><value>Portrait photo</value></data>
+  <data name="Ảnh nền" xml:space="preserve"><value>Background image</value></data>
+  <data name="Ảnh phần thưởng" xml:space="preserve"><value>Prize image</value></data>
+  <data name="— Không chọn —" xml:space="preserve"><value>— None —</value></data>
+  <data name="— Không phát —" xml:space="preserve"><value>— No music —</value></data>
+  <data name="— Không —" xml:space="preserve"><value>— None —</value></data>
+  <data name="姓名, Bộ phận, 現任單位, Chức vụ: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名, department, 現任單位, position: optional. You can paste the HR file directly (STT, 工齡 columns are ignored).</value></data>
+</root>

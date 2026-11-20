@@ -1,0 +1,580 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- File sinh tự động từ translations.tsv bằng tools/build_resx.py. Đừng sửa tay. -->
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="0 = ô vuông, 50 = ô tròn." xml:space="preserve"><value>0 = 方形，50 = 圓形。</value></data>
+  <data name="100% = tốc độ thật. Kéo nhỏ để pháo bay và nổ chậm lại (quay chậm), kéo lớn để nhanh hơn." xml:space="preserve"><value>100% = 實際速度。調低可讓煙火放慢（慢動作），調高則加快。</value></data>
+  <data name="Admin hãy vào trang quản trị và bấm “Chiếu sự kiện này”." xml:space="preserve"><value>請管理員進入後台並按「投影此活動」。</value></data>
+  <data name="Admin xoá" xml:space="preserve"><value>管理員刪除</value></data>
+  <data name="Admin: toàn quyền trang quản trị. Operator (MC): chỉ bấm quay và đánh dấu vắng mặt trên màn hình chính." xml:space="preserve"><value>Admin：後台所有權限。Operator（主持人）：只能在主畫面抽獎及標記缺席。</value></data>
+  <data name="Bo góc" xml:space="preserve"><value>圓角</value></data>
+  <data name="Bên phải" xml:space="preserve"><value>右側</value></data>
+  <data name="Bên trái" xml:space="preserve"><value>左側</value></data>
+  <data name="Bạn" xml:space="preserve"><value>您</value></data>
+  <data name="Bản xem trước gần đúng; màn chiếu thật sẽ có hiệu ứng động và bảng kết quả." xml:space="preserve"><value>此為近似預覽；實際投影畫面會有動畫及結果面板。</value></data>
+  <data name="Bấm Bắt đầu, rồi bấm Dừng khi muốn" xml:space="preserve"><value>按「開始」，想停時再按「停止」</value></data>
+  <data name="Bấm Bắt đầu, tự dừng sau thời gian quay" xml:space="preserve"><value>按「開始」，到時間自動停止</value></data>
+  <data name="Bấm Enter hoặc chạm vào màn hình để tiếp tục" xml:space="preserve"><value>按 Enter 或點擊畫面繼續</value></data>
+  <data name="Bấm nút" xml:space="preserve"><value>按下按鈕</value></data>
+  <data name="Bấm quay, Vắng mặt – quay lại" xml:space="preserve"><value>抽獎、缺席－重抽</value></data>
+  <data name="Bấm quay, đánh dấu vắng mặt – quay lại" xml:space="preserve"><value>抽獎、標記缺席並重抽</value></data>
+  <data name="Bấm “Chiếu” để đưa sự kiện lên màn hình chính." xml:space="preserve"><value>按「投影」將活動顯示在主畫面。</value></data>
+  <data name="Bật" xml:space="preserve"><value>啟用</value></data>
+  <data name="Bật âm thanh" xml:space="preserve"><value>開啟聲音</value></data>
+  <data name="Bắt đầu" xml:space="preserve"><value>開始</value></data>
+  <data name="Bắt đầu bằng việc tạo sự kiện, sau đó thêm giải thưởng và người tham dự." xml:space="preserve"><value>請先建立活動，再新增獎項與參加者。</value></data>
+  <data name="Bỏ lọc" xml:space="preserve"><value>清除篩選</value></data>
+  <data name="Bỏ qua" xml:space="preserve"><value>略過</value></data>
+  <data name="Bỏ qua bộ phận trùng mã" xml:space="preserve"><value>略過代碼重複的部門</value></data>
+  <data name="Bỏ qua dòng trùng mã" xml:space="preserve"><value>略過代碼重複的資料</value></data>
+  <data name="Bỏ qua người trùng mã" xml:space="preserve"><value>略過工號重複的人員</value></data>
+  <data name="Bộ phận" xml:space="preserve"><value>部門</value></data>
+  <data name="Bộ phận còn người tham dự thì không xoá được." xml:space="preserve"><value>仍有參加者的部門無法刪除。</value></data>
+  <data name="Bộ phận dùng chung cho mọi sự kiện, chỉ cần tạo một lần." xml:space="preserve"><value>部門供所有活動共用，只需建立一次。</value></data>
+  <data name="Bộ phận tiếng Trung (現任單位)" xml:space="preserve"><value>現任單位（中文）</value></data>
+  <data name="Bộ phận đang có người tham dự nên không xoá được." xml:space="preserve"><value>此部門仍有參加者，無法刪除。</value></data>
+  <data name="Chi tiết" xml:space="preserve"><value>詳細內容</value></data>
+  <data name="Chiếu" xml:space="preserve"><value>投影</value></data>
+  <data name="Chiếu sự kiện lên màn hình chính" xml:space="preserve"><value>將活動投影到主畫面</value></data>
+  <data name="Chiếu sự kiện này" xml:space="preserve"><value>投影此活動</value></data>
+  <data name="Chiếu sự kiện này lên màn hình chính? Sự kiện đang chiếu (nếu có) sẽ bị thay." xml:space="preserve"><value>要將此活動投影到主畫面嗎？目前投影中的活動（如有）將被取代。</value></data>
+  <data name="Chào mừng đến LuckyDraw" xml:space="preserve"><value>歡迎使用 LuckyDraw</value></data>
+  <data name="Chúc mừng" xml:space="preserve"><value>恭喜</value></data>
+  <data name="Chưa chiếu" xml:space="preserve"><value>未投影</value></data>
+  <data name="Chưa chọn ảnh." xml:space="preserve"><value>尚未選擇照片。</value></data>
+  <data name="Chưa có bộ phận" xml:space="preserve"><value>尚無部門</value></data>
+  <data name="Chưa có file âm thanh nào." xml:space="preserve"><value>尚無音訊檔案。</value></data>
+  <data name="Chưa có giải thưởng" xml:space="preserve"><value>尚無獎項</value></data>
+  <data name="Chưa có giải thưởng." xml:space="preserve"><value>尚無獎項。</value></data>
+  <data name="Chưa có hoạt động." xml:space="preserve"><value>尚無活動紀錄。</value></data>
+  <data name="Chưa có kết quả" xml:space="preserve"><value>尚無結果</value></data>
+  <data name="Chưa có kết quả nào." xml:space="preserve"><value>尚無任何結果。</value></data>
+  <data name="Chưa có kết quả." xml:space="preserve"><value>尚無結果。</value></data>
+  <data name="Chưa có lượt quay nào." xml:space="preserve"><value>尚未進行任何抽獎。</value></data>
+  <data name="Chưa có người tham dự" xml:space="preserve"><value>尚無參加者</value></data>
+  <data name="Chưa có người trúng giải này." xml:space="preserve"><value>此獎項尚無得獎者。</value></data>
+  <data name="Chưa có nhật ký" xml:space="preserve"><value>尚無日誌</value></data>
+  <data name="Chưa có sự kiện nào" xml:space="preserve"><value>尚無活動</value></data>
+  <data name="Chưa có sự kiện nào đang chiếu" xml:space="preserve"><value>目前沒有投影中的活動</value></data>
+  <data name="Chưa có sự kiện nào. Hãy tạo sự kiện trước." xml:space="preserve"><value>尚無活動，請先建立活動。</value></data>
+  <data name="Chưa trúng" xml:space="preserve"><value>尚未中獎</value></data>
+  <data name="Chạm vào màn hình để bật nhạc" xml:space="preserve"><value>點擊畫面以播放音樂</value></data>
+  <data name="Chế độ" xml:space="preserve"><value>模式</value></data>
+  <data name="Chế độ xem – đăng nhập MC để quay" xml:space="preserve"><value>僅供觀看－主持人登入後才能抽獎</value></data>
+  <data name="Chỉ còn {0} người đủ điều kiện" xml:space="preserve"><value>僅剩 {0} 人符合資格</value></data>
+  <data name="Chỉ có hiệu ứng âm thanh (nếu chọn)" xml:space="preserve"><value>僅播放音效（如有選擇）</value></data>
+  <data name="Chỉ nhận file .xlsx." xml:space="preserve"><value>僅接受 .xlsx 檔案。</value></data>
+  <data name="Chỉ nhận file âm thanh .mp3." xml:space="preserve"><value>僅接受 .mp3 音訊檔。</value></data>
+  <data name="Chỉ nhận ảnh .jpg, .jpeg, .png, .webp." xml:space="preserve"><value>僅接受 .jpg、.jpeg、.png、.webp 圖片。</value></data>
+  <data name="Chỉ đọc sheet đầu tiên. Dòng 1 là tiêu đề, giữ đúng tên cột như file mẫu (cột có * là bắt buộc)." xml:space="preserve"><value>只讀取第一個工作表。第 1 列為標題，欄位名稱須與範本相同（標 * 為必填）。</value></data>
+  <data name="Chỉnh giao diện màn chiếu" xml:space="preserve"><value>調整投影畫面外觀</value></data>
+  <data name="Chọn file .xlsx" xml:space="preserve"><value>選擇 .xlsx 檔案</value></data>
+  <data name="Chọn file khác" xml:space="preserve"><value>選擇其他檔案</value></data>
+  <data name="Chọn file trong thư viện cho từng thời điểm." xml:space="preserve"><value>為每個時機從音效庫選擇檔案。</value></data>
+  <data name="Chọn giao diện màn chiếu và âm thanh." xml:space="preserve"><value>選擇投影畫面外觀與音效。</value></data>
+  <data name="Chọn nhiều ảnh hoặc một file .zip" xml:space="preserve"><value>選擇多張照片或一個 .zip 檔</value></data>
+  <data name="Chủ đề có sẵn" xml:space="preserve"><value>預設主題</value></data>
+  <data name="Chủ đề, ảnh nền, logo, ô quay số và nút bắt đầu của màn hình quay. Bản xem trước bên phải cập nhật ngay khi bạn chỉnh." xml:space="preserve"><value>抽獎畫面的主題、背景、Logo、號碼框與開始按鈕。右側預覽會即時更新。</value></data>
+  <data name="Chức vụ" xml:space="preserve"><value>職務</value></data>
+  <data name="Chữ mờ: ngôn ngữ đó đang để trống, màn chiếu sẽ dùng tên dự phòng." xml:space="preserve"><value>淡色文字：該語言留空，投影畫面會使用備用名稱。</value></data>
+  <data name="Các bước chuẩn bị" xml:space="preserve"><value>準備步驟</value></data>
+  <data name="Cách phát nhạc nền trong suốt chương trình." xml:space="preserve"><value>整場活動的背景音樂播放方式。</value></data>
+  <data name="Còn có thể trúng" xml:space="preserve"><value>仍可中獎</value></data>
+  <data name="Còn lại" xml:space="preserve"><value>剩餘</value></data>
+  <data name="Còn {0} dòng lỗi. Sửa trong file Excel rồi upload lại; chưa có dữ liệu nào được ghi." xml:space="preserve"><value>仍有 {0} 列錯誤。請在 Excel 修正後重新上傳；尚未寫入任何資料。</value></data>
+  <data name="Công cụ" xml:space="preserve"><value>工具</value></data>
+  <data name="Cột có dấu * là bắt buộc. Giữ nguyên dòng tiêu đề, không gộp ô, chỉ dùng sheet đầu tiên." xml:space="preserve"><value>標 * 的欄位為必填。保留標題列、不要合併儲存格、只使用第一個工作表。</value></data>
+  <data name="Cột department_code trong file Excel người tham dự phải khớp đúng mã này." xml:space="preserve"><value>參加者 Excel 檔的 department_code 欄必須與此代碼完全相同。</value></data>
+  <data name="Cỡ chữ" xml:space="preserve"><value>字級</value></data>
+  <data name="Danh sách bộ phận dùng chung cho mọi sự kiện. Mã bộ phận dùng khi import người tham dự." xml:space="preserve"><value>部門清單供所有活動共用。匯入參加者時使用部門代碼。</value></data>
+  <data name="Danh sách giải, số lượng và tiến độ quay" xml:space="preserve"><value>獎項、數量與抽獎進度</value></data>
+  <data name="Danh sách người được quay của sự kiện" xml:space="preserve"><value>本活動的抽獎名單</value></data>
+  <data name="Danh sách người được quay của sự kiện đang quản lý. Người vắng mặt không được quay." xml:space="preserve"><value>目前管理活動的抽獎名單。缺席者不會被抽中。</value></data>
+  <data name="Danh sách phát" xml:space="preserve"><value>播放清單</value></data>
+  <data name="Danh sách trúng giải" xml:space="preserve"><value>得獎名單</value></data>
+  <data name="Dành cho Admin và MC (Operator)." xml:space="preserve"><value>供管理員與主持人（Operator）使用。</value></data>
+  <data name="Dòng" xml:space="preserve"><value>列</value></data>
+  <data name="Dòng dữ liệu" xml:space="preserve"><value>資料列</value></data>
+  <data name="Dòng hợp lệ" xml:space="preserve"><value>有效列</value></data>
+  <data name="Dòng lỗi" xml:space="preserve"><value>錯誤列</value></data>
+  <data name="Dùng thẳng file nhân sự: Mã số thẻ, Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ." xml:space="preserve"><value>直接使用人事檔：工號、進廠日期、越文姓名、姓名、部門、現任單位、職務。</value></data>
+  <data name="Dùng để tính thâm niên theo điều kiện của từng giải." xml:space="preserve"><value>用於依各獎項條件計算年資。</value></data>
+  <data name="Dưới {0} tháng" xml:space="preserve"><value>未滿 {0} 個月</value></data>
+  <data name="Dưới ô quay số" xml:space="preserve"><value>號碼框下方</value></data>
+  <data name="Dải ngân hà" xml:space="preserve"><value>銀河</value></data>
+  <data name="Dừng" xml:space="preserve"><value>停止</value></data>
+  <data name="File còn lỗi, chưa ghi dữ liệu nào." xml:space="preserve"><value>檔案仍有錯誤，尚未寫入任何資料。</value></data>
+  <data name="File không có dữ liệu." xml:space="preserve"><value>檔案沒有資料。</value></data>
+  <data name="File mẫu" xml:space="preserve"><value>範本</value></data>
+  <data name="File rỗng." xml:space="preserve"><value>檔案是空的。</value></data>
+  <data name="File tạm đã hết hạn, vui lòng upload lại." xml:space="preserve"><value>暫存檔已過期，請重新上傳。</value></data>
+  <data name="File vượt quá {0} MB." xml:space="preserve"><value>檔案超過 {0} MB。</value></data>
+  <data name="Ghi {0} dòng vào cơ sở dữ liệu?" xml:space="preserve"><value>要將 {0} 列寫入資料庫嗎？</value></data>
+  <data name="Ghi đè bộ phận trùng mã" xml:space="preserve"><value>覆寫代碼重複的部門</value></data>
+  <data name="Ghi đè dòng trùng mã" xml:space="preserve"><value>覆寫代碼重複的資料</value></data>
+  <data name="Ghi đè người trùng mã" xml:space="preserve"><value>覆寫工號重複的人員</value></data>
+  <data name="Giao diện" xml:space="preserve"><value>外觀</value></data>
+  <data name="Giao diện màn chiếu" xml:space="preserve"><value>投影畫面外觀</value></data>
+  <data name="Giá trị '{0}' không hợp lệ cho {1}." xml:space="preserve"><value>「{0}」不是 {1} 的有效值。</value></data>
+  <data name="Giá trị '{0}' không hợp lệ." xml:space="preserve"><value>「{0}」不是有效值。</value></data>
+  <data name="Giá trị không hợp lệ cho {0}." xml:space="preserve"><value>{0} 的值無效。</value></data>
+  <data name="Giá trị không hợp lệ." xml:space="preserve"><value>值無效。</value></data>
+  <data name="Giá trị phải là số." xml:space="preserve"><value>必須是數字。</value></data>
+  <data name="Giải" xml:space="preserve"><value>獎項</value></data>
+  <data name="Giải không tồn tại, đã tắt hoặc sự kiện không còn được chiếu." xml:space="preserve"><value>獎項不存在、已停用，或活動已不在投影中。</value></data>
+  <data name="Giải người này đủ điều kiện" xml:space="preserve"><value>此人符合資格的獎項</value></data>
+  <data name="Giải nhất" xml:space="preserve"><value>頭獎</value></data>
+  <data name="Giải này đã đủ người, không khôi phục được." xml:space="preserve"><value>此獎項名額已滿，無法還原。</value></data>
+  <data name="Giải này đã đủ người." xml:space="preserve"><value>此獎項名額已滿。</value></data>
+  <data name="Giải sau" xml:space="preserve"><value>下一個獎項</value></data>
+  <data name="Giải thưởng" xml:space="preserve"><value>獎項</value></data>
+  <data name="Giải tiếp theo" xml:space="preserve"><value>下一個獎項</value></data>
+  <data name="Giải trước" xml:space="preserve"><value>上一個獎項</value></data>
+  <data name="Giải đã có kết quả quay (kể cả đã xoá) nên không xoá được. Hãy tắt giải thay vì xoá." xml:space="preserve"><value>此獎項已有抽獎結果（含已刪除），無法刪除。請改為停用。</value></data>
+  <data name="Giải đã tắt sẽ không hiện trên màn chiếu và không quay được." xml:space="preserve"><value>停用的獎項不會顯示於投影畫面，也無法抽獎。</value></data>
+  <data name="Giảm nhạc nền khi quay &amp; chúc mừng" xml:space="preserve"><value>抽獎與恭喜時降低背景音樂</value></data>
+  <data name="Giấy màu" xml:space="preserve"><value>彩紙</value></data>
+  <data name="Gõ XOA để xác nhận" xml:space="preserve"><value>輸入 XOA 以確認</value></data>
+  <data name="Gõ XOA để xác nhận." xml:space="preserve"><value>請輸入 XOA 以確認。</value></data>
+  <data name="Gõ lại tên sự kiện (tiếng Việt) để xác nhận" xml:space="preserve"><value>輸入活動名稱（越南文）以確認</value></data>
+  <data name="Hiển thị trên màn chiếu khi có người trúng." xml:space="preserve"><value>有人中獎時顯示於投影畫面。</value></data>
+  <data name="Hiện trên màn chiếu khi người này trúng giải." xml:space="preserve"><value>此人中獎時會顯示在投影畫面上。</value></data>
+  <data name="Hiệu ứng &amp; kết quả" xml:space="preserve"><value>效果與結果</value></data>
+  <data name="Hiệu ứng chúc mừng" xml:space="preserve"><value>恭喜特效</value></data>
+  <data name="Hiệu ứng khi đang quay" xml:space="preserve"><value>抽獎中特效</value></data>
+  <data name="Hiệu ứng sân khấu" xml:space="preserve"><value>舞台特效</value></data>
+  <data name="Hiệu ứng âm thanh" xml:space="preserve"><value>音效</value></data>
+  <data name="Hoạt động" xml:space="preserve"><value>啟用中</value></data>
+  <data name="Hoạt động gần đây" xml:space="preserve"><value>最近動態</value></data>
+  <data name="Huỷ" xml:space="preserve"><value>取消</value></data>
+  <data name="Huỷ thay đổi" xml:space="preserve"><value>放棄變更</value></data>
+  <data name="Hãy chọn file .mp3." xml:space="preserve"><value>請選擇 .mp3 檔案。</value></data>
+  <data name="Hãy chọn file Excel (.xlsx)." xml:space="preserve"><value>請選擇 Excel 檔案（.xlsx）。</value></data>
+  <data name="Hướng dẫn" xml:space="preserve"><value>說明</value></data>
+  <data name="Hệ thống" xml:space="preserve"><value>系統</value></data>
+  <data name="Họ tên" xml:space="preserve"><value>姓名</value></data>
+  <data name="Họ tên tối đa 200 ký tự" xml:space="preserve"><value>姓名最多 200 個字元</value></data>
+  <data name="Họ và tên" xml:space="preserve"><value>姓名</value></data>
+  <data name="Import Excel" xml:space="preserve"><value>Excel 匯入</value></data>
+  <data name="Import danh sách người tham dự từ Excel." xml:space="preserve"><value>從 Excel 匯入參加者名單。</value></data>
+  <data name="Import danh sách từ Excel để nhanh hơn." xml:space="preserve"><value>從 Excel 匯入名單會更快。</value></data>
+  <data name="Import xong: thêm mới {0}, cập nhật {1}, bỏ qua {2}." xml:space="preserve"><value>匯入完成：新增 {0}、更新 {1}、略過 {2}。</value></data>
+  <data name="JPG, PNG hoặc WEBP, tối đa 5 MB. Nên dùng tỉ lệ 16:9 (1920×1080). Để trống thì dùng màu của chủ đề." xml:space="preserve"><value>JPG、PNG 或 WEBP，最大 5 MB。建議 16:9（1920×1080）。留空則使用主題顏色。</value></data>
+  <data name="JPG, PNG, WEBP tối đa 5 MB mỗi ảnh. Nên dùng ảnh vuông, mặt ở giữa." xml:space="preserve"><value>JPG、PNG、WEBP，每張最多 5 MB。建議使用正方形、臉部置中的照片。</value></data>
+  <data name="Khi hiện kết quả" xml:space="preserve"><value>顯示結果時</value></data>
+  <data name="Khi hết danh sách" xml:space="preserve"><value>播放清單結束時</value></data>
+  <data name="Khi trùng dữ liệu" xml:space="preserve"><value>資料重複時</value></data>
+  <data name="Khi trúng giải trên màn chiếu" xml:space="preserve"><value>中獎時的投影畫面</value></data>
+  <data name="Khi đang quay" xml:space="preserve"><value>抽獎進行中</value></data>
+  <data name="Khôi phục" xml:space="preserve"><value>還原</value></data>
+  <data name="Khôi phục / reset kết quả" xml:space="preserve"><value>還原／重設結果</value></data>
+  <data name="Khôi phục kết quả của {0}?" xml:space="preserve"><value>要還原 {0} 的結果嗎？</value></data>
+  <data name="Không" xml:space="preserve"><value>無</value></data>
+  <data name="Không có bộ phận mã {0}" xml:space="preserve"><value>找不到代碼 {0} 的部門</value></data>
+  <data name="Không có kết quả phù hợp" xml:space="preserve"><value>沒有符合的結果</value></data>
+  <data name="Không có kết quả đã xoá" xml:space="preserve"><value>沒有已刪除的結果</value></data>
+  <data name="Không có quyền" xml:space="preserve"><value>無權限</value></data>
+  <data name="Không có quyền truy cập" xml:space="preserve"><value>您沒有存取權限</value></data>
+  <data name="Không có ảnh nào hợp lệ." xml:space="preserve"><value>沒有有效的照片。</value></data>
+  <data name="Không giới hạn" xml:space="preserve"><value>不限</value></data>
+  <data name="Không gộp ô. Ngày vào làm dạng yyyy-MM-dd (ví dụ 2024-03-15) hoặc dd/MM/yyyy." xml:space="preserve"><value>不要合併儲存格。到職日格式為 yyyy-MM-dd（例如 2024-03-15）或 dd/MM/yyyy。</value></data>
+  <data name="Không phát nhạc" xml:space="preserve"><value>不播放音樂</value></data>
+  <data name="Không thay thế được: đã có kết quả quay gắn với giải cũ. Hãy chọn chế độ thêm vào cuối." xml:space="preserve"><value>無法取代：舊獎項已有抽獎結果。請改用「加到最後」模式。</value></data>
+  <data name="Không thể tự hạ quyền hoặc khoá tài khoản của chính mình." xml:space="preserve"><value>不能降低自己的權限或鎖定自己的帳號。</value></data>
+  <data name="Không thể xoá tài khoản đang đăng nhập." xml:space="preserve"><value>不能刪除目前登入的帳號。</value></data>
+  <data name="Không xoá được sự kiện đang chiếu. Hãy ngừng chiếu trước." xml:space="preserve"><value>無法刪除投影中的活動，請先停止投影。</value></data>
+  <data name="Không đọc được file .zip." xml:space="preserve"><value>無法讀取 .zip 檔。</value></data>
+  <data name="Không đọc được file. Hãy lưu lại dưới dạng .xlsx." xml:space="preserve"><value>無法讀取檔案，請另存為 .xlsx。</value></data>
+  <data name="Không đủ" xml:space="preserve"><value>不符合</value></data>
+  <data name="Không đủ người hợp lệ để quay hết số suất còn lại" xml:space="preserve"><value>符合資格的人數不足以抽完剩餘名額</value></data>
+  <data name="Không đủ người hợp lệ: cần {0}, chỉ còn {1}." xml:space="preserve"><value>符合資格的人數不足：需要 {0} 人，僅剩 {1} 人。</value></data>
+  <data name="Kiểm tra" xml:space="preserve"><value>檢查</value></data>
+  <data name="Kiểu quay" xml:space="preserve"><value>抽獎方式</value></data>
+  <data name="Kiểu {0}" xml:space="preserve"><value>樣式 {0}</value></data>
+  <data name="Kính đỏ" xml:space="preserve"><value>紅色玻璃</value></data>
+  <data name="Ký tự chờ" xml:space="preserve"><value>佔位字元</value></data>
+  <data name="Kết quả" xml:space="preserve"><value>結果</value></data>
+  <data name="Kết quả của người này sẽ bị huỷ và họ không được quay nữa. Suất giải được trả lại để quay người khác." xml:space="preserve"><value>此人的結果將被取消，且不會再被抽中。名額將退回，可重新抽出其他人。</value></data>
+  <data name="Kết quả này đang có hiệu lực." xml:space="preserve"><value>此結果仍有效。</value></data>
+  <data name="Kết quả này đã được xử lý rồi." xml:space="preserve"><value>此結果已處理過。</value></data>
+  <data name="Kết quả quay" xml:space="preserve"><value>抽獎結果</value></data>
+  <data name="Kết quả quay số" xml:space="preserve"><value>抽獎結果</value></data>
+  <data name="Kết quả sẽ hiện ở đây khi MC bấm quay trên màn hình chính." xml:space="preserve"><value>主持人在主畫面抽獎後，結果會顯示在此。</value></data>
+  <data name="Kết quả tổng" xml:space="preserve"><value>總結果</value></data>
+  <data name="Kết quả vừa quay" xml:space="preserve"><value>最新抽獎結果</value></data>
+  <data name="Kết quả đã xoá" xml:space="preserve"><value>已刪除的結果</value></data>
+  <data name="Kết quả được quyết định ở máy chủ trước, màn chiếu chỉ diễn hiệu ứng. Mọi thao tác đều được ghi nhật ký." xml:space="preserve"><value>結果先由伺服器決定，投影畫面只播放動畫。所有操作皆有日誌。</value></data>
+  <data name="Logo" xml:space="preserve"><value>Logo</value></data>
+  <data name="Làm mờ" xml:space="preserve"><value>模糊</value></data>
+  <data name="Lên" xml:space="preserve"><value>上移</value></data>
+  <data name="Lúc" xml:space="preserve"><value>時間</value></data>
+  <data name="Lý do xoá" xml:space="preserve"><value>刪除原因</value></data>
+  <data name="Lưu" xml:space="preserve"><value>儲存</value></data>
+  <data name="Lưu giao diện" xml:space="preserve"><value>儲存外觀</value></data>
+  <data name="Lưu âm thanh" xml:space="preserve"><value>儲存音效設定</value></data>
+  <data name="Lưu ý khi chuẩn bị file" xml:space="preserve"><value>準備檔案注意事項</value></data>
+  <data name="Lưu ý về mật khẩu" xml:space="preserve"><value>密碼注意事項</value></data>
+  <data name="Lấp lánh" xml:space="preserve"><value>閃爍</value></data>
+  <data name="Lặp lại" xml:space="preserve"><value>重複播放</value></data>
+  <data name="Lọc" xml:space="preserve"><value>篩選</value></data>
+  <data name="Lỗi" xml:space="preserve"><value>錯誤</value></data>
+  <data name="Lời chúc mừng" xml:space="preserve"><value>恭喜文字</value></data>
+  <data name="Menu quản trị" xml:space="preserve"><value>管理選單</value></data>
+  <data name="Màn chiếu" xml:space="preserve"><value>投影畫面</value></data>
+  <data name="Màn chiếu hiển thị tên theo ngôn ngữ người xem chọn. Ô nào để trống sẽ dùng tên tiếng Việt." xml:space="preserve"><value>投影畫面依觀看者選擇的語言顯示名稱。留空的欄位會使用越南文名稱。</value></data>
+  <data name="Màn chúc mừng" xml:space="preserve"><value>恭喜畫面</value></data>
+  <data name="Màn hình chính đang chiếu sự kiện này." xml:space="preserve"><value>主畫面正在投影此活動。</value></data>
+  <data name="Màn hình quay số" xml:space="preserve"><value>抽獎畫面</value></data>
+  <data name="Màn hình quay số sẽ được dựng ở bước tiếp theo." xml:space="preserve"><value>抽獎畫面將在下一階段製作。</value></data>
+  <data name="Màu chữ" xml:space="preserve"><value>文字顏色</value></data>
+  <data name="Màu nền và màu nhấn mặc định của màn chiếu." xml:space="preserve"><value>投影畫面的預設背景色與強調色。</value></data>
+  <data name="Mã" xml:space="preserve"><value>代碼</value></data>
+  <data name="Mã NV" xml:space="preserve"><value>工號</value></data>
+  <data name="Mã bộ phận" xml:space="preserve"><value>部門代碼</value></data>
+  <data name="Mã bộ phận bị trùng trong file" xml:space="preserve"><value>檔案內部門代碼重複</value></data>
+  <data name="Mã bộ phận dùng để làm gì?" xml:space="preserve"><value>部門代碼的用途？</value></data>
+  <data name="Mã bộ phận tối đa 30 ký tự" xml:space="preserve"><value>部門代碼最多 30 個字元</value></data>
+  <data name="Mã bộ phận và tên 4 ngôn ngữ (dùng chung mọi sự kiện)." xml:space="preserve"><value>部門代碼及 4 種語言名稱（所有活動共用）。</value></data>
+  <data name="Mã bộ phận đã tồn tại." xml:space="preserve"><value>部門代碼已存在。</value></data>
+  <data name="Mã nhân viên" xml:space="preserve"><value>工號</value></data>
+  <data name="Mã nhân viên bị trùng trong file" xml:space="preserve"><value>檔案內工號重複</value></data>
+  <data name="Mã nhân viên tối đa 30 ký tự" xml:space="preserve"><value>工號最多 30 個字元</value></data>
+  <data name="Mã nhân viên đã có trong sự kiện này." xml:space="preserve"><value>此工號已存在於本活動。</value></data>
+  <data name="Mã nhân viên, họ tên, mã bộ phận, ngày vào làm." xml:space="preserve"><value>工號、姓名、部門代碼、到職日。</value></data>
+  <data name="Mã số thẻ: mã nhân viên, không trùng trong file" xml:space="preserve"><value>工號：員工編號，檔案內不可重複</value></data>
+  <data name="Mã trúng thưởng" xml:space="preserve"><value>得獎編號</value></data>
+  <data name="Mất kết nối máy chủ, vui lòng thử lại." xml:space="preserve"><value>與伺服器的連線中斷，請再試一次。</value></data>
+  <data name="Mật khẩu" xml:space="preserve"><value>密碼</value></data>
+  <data name="Mật khẩu mới" xml:space="preserve"><value>新密碼</value></data>
+  <data name="Mật khẩu nhập lại không khớp." xml:space="preserve"><value>兩次輸入的密碼不一致。</value></data>
+  <data name="Mật khẩu được băm (có salt), Admin cũng không xem lại được – chỉ đặt mật khẩu mới." xml:space="preserve"><value>密碼經雜湊（含 salt）處理，管理員也無法查看，只能設定新密碼。</value></data>
+  <data name="Mọi sự kiện" xml:space="preserve"><value>所有活動</value></data>
+  <data name="Mọi thao tác thay đổi dữ liệu đều được ghi lại và không thể sửa hay xoá." xml:space="preserve"><value>所有資料變更都會被記錄，且無法修改或刪除。</value></data>
+  <data name="Mỗi MC nên có tài khoản riêng để nhật ký ghi đúng người bấm quay." xml:space="preserve"><value>每位主持人應有自己的帳號，日誌才能記錄正確的抽獎人。</value></data>
+  <data name="Mỗi giải một bài" xml:space="preserve"><value>每個獎項一首</value></data>
+  <data name="Mỗi lượt" xml:space="preserve"><value>每次抽出</value></data>
+  <data name="Mỗi sự kiện có giải thưởng, người tham dự, giao diện và kết quả riêng. Chỉ một sự kiện được chiếu tại một thời điểm." xml:space="preserve"><value>每個活動都有各自的獎項、參加者、外觀與結果。同一時間只能投影一個活動。</value></data>
+  <data name="Một danh sách cho cả chương trình" xml:space="preserve"><value>整場活動一份播放清單</value></data>
+  <data name="Mở menu" xml:space="preserve"><value>開啟選單</value></data>
+  <data name="Mở màn hình quay" xml:space="preserve"><value>開啟抽獎畫面</value></data>
+  <data name="Ngày" xml:space="preserve"><value>日期</value></data>
+  <data name="Ngày diễn ra" xml:space="preserve"><value>活動日期</value></data>
+  <data name="Ngày diễn ra dùng để tính thâm niên của người tham dự (điều kiện của từng giải)." xml:space="preserve"><value>活動日期用於計算參加者年資（各獎項條件）。</value></data>
+  <data name="Ngày vào làm" xml:space="preserve"><value>到職日</value></data>
+  <data name="Ngày vào làm không hợp lệ (yyyy-MM-dd)" xml:space="preserve"><value>到職日無效（yyyy-MM-dd）</value></data>
+  <data name="Ngày vào làm sau ngày sự kiện" xml:space="preserve"><value>到職日晚於活動日期</value></data>
+  <data name="Ngày vào làm: ô ngày của Excel, hoặc chữ dạng yyyy-MM-dd / dd/MM/yyyy" xml:space="preserve"><value>進廠日期：Excel 日期儲存格，或文字格式 yyyy-MM-dd / dd/MM/yyyy</value></data>
+  <data name="Ngôn ngữ" xml:space="preserve"><value>語言</value></data>
+  <data name="Người này đã có kết quả quay (kể cả đã xoá) nên không xoá được. Có thể đánh dấu vắng mặt." xml:space="preserve"><value>此人已有抽獎結果（含已刪除），無法刪除。可改為標記缺席。</value></data>
+  <data name="Người này đã trúng giải khác, không khôi phục được." xml:space="preserve"><value>此人已中其他獎項，無法還原。</value></data>
+  <data name="Người quay" xml:space="preserve"><value>抽獎人</value></data>
+  <data name="Người tham dự" xml:space="preserve"><value>參加者</value></data>
+  <data name="Người tham dự và giải thưởng sẽ được import vào sự kiện:" xml:space="preserve"><value>參加者與獎項將匯入活動：</value></data>
+  <data name="Người tham dự: nhận luôn file nhân sự có tiêu đề song ngữ (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ). Cột STT và 工齡 được bỏ qua, thâm niên tự tính theo ngày sự kiện." xml:space="preserve"><value>參加者：可直接匯入雙語人事檔（工號、進廠日期、Họ và tên、姓名、Bộ phận、現任單位、職務）。STT 與工齡欄位會略過，年資依活動日期自動計算。</value></data>
+  <data name="Người thao tác" xml:space="preserve"><value>操作者</value></data>
+  <data name="Người trúng giải" xml:space="preserve"><value>得獎者</value></data>
+  <data name="Người vắng mặt sẽ không được quay ở các lượt sau." xml:space="preserve"><value>缺席者不會在之後的抽獎中被抽中。</value></data>
+  <data name="Người đủ điều kiện" xml:space="preserve"><value>符合資格</value></data>
+  <data name="Ngẫu nhiên" xml:space="preserve"><value>隨機播放</value></data>
+  <data name="Ngọc lục bảo" xml:space="preserve"><value>翡翠綠</value></data>
+  <data name="Ngừng chiếu" xml:space="preserve"><value>停止投影</value></data>
+  <data name="Ngừng chiếu sự kiện này? Màn hình chính sẽ không còn sự kiện nào." xml:space="preserve"><value>要停止投影此活動嗎？主畫面將沒有任何活動。</value></data>
+  <data name="Nhạc cho từng giải" xml:space="preserve"><value>各獎項音樂</value></data>
+  <data name="Nhạc nền" xml:space="preserve"><value>背景音樂</value></data>
+  <data name="Nhập lại mật khẩu" xml:space="preserve"><value>再次輸入密碼</value></data>
+  <data name="Nhật ký" xml:space="preserve"><value>操作日誌</value></data>
+  <data name="Nhật ký thao tác" xml:space="preserve"><value>操作日誌</value></data>
+  <data name="Nên import bộ phận trước để mã bộ phận của người tham dự hợp lệ." xml:space="preserve"><value>建議先匯入部門，參加者的部門代碼才會有效。</value></data>
+  <data name="Nút bắt đầu" xml:space="preserve"><value>開始按鈕</value></data>
+  <data name="Nội dung file không đúng định dạng." xml:space="preserve"><value>檔案內容與格式不符。</value></data>
+  <data name="PNG nền trong suốt là đẹp nhất, tối đa 2 MB. Hiển thị góc trên bên trái." xml:space="preserve"><value>透明背景的 PNG 效果最佳，最大 2 MB。顯示於左上角。</value></data>
+  <data name="PNG, JPG hoặc WEBP, tối đa 2 MB. Hiển thị trên màn chiếu khi quay giải này." xml:space="preserve"><value>PNG、JPG 或 WEBP，最大 2 MB。抽此獎項時顯示於投影畫面。</value></data>
+  <data name="Phiên đăng nhập đã hết hạn, hãy đăng nhập lại." xml:space="preserve"><value>登入已逾時，請重新登入。</value></data>
+  <data name="Pháo hoa" xml:space="preserve"><value>煙火</value></data>
+  <data name="Phát lần lượt các bài đã chọn" xml:space="preserve"><value>依序播放已選的曲目</value></data>
+  <data name="Phân trang" xml:space="preserve"><value>分頁</value></data>
+  <data name="Phông chữ" xml:space="preserve"><value>字型</value></data>
+  <data name="Phông chữ phải có chữ Hán; nếu thiếu, màn chiếu tự dùng Microsoft JhengHei / YaHei." xml:space="preserve"><value>字型需支援中文；若不支援，投影畫面會改用微軟正黑體／雅黑。</value></data>
+  <data name="Phông số" xml:space="preserve"><value>數字字型</value></data>
+  <data name="Phải còn ít nhất một Admin đang hoạt động." xml:space="preserve"><value>至少須保留一個啟用中的管理員。</value></data>
+  <data name="Phủ tối" xml:space="preserve"><value>暗化</value></data>
+  <data name="Quay lại người vắng mặt thì chỉ quay 1 người." xml:space="preserve"><value>為缺席者重抽時只抽 1 人。</value></data>
+  <data name="Quay số trúng thưởng" xml:space="preserve"><value>幸運抽獎</value></data>
+  <data name="Quyền của từng vai trò" xml:space="preserve"><value>各角色權限</value></data>
+  <data name="Quản lý" xml:space="preserve"><value>管理</value></data>
+  <data name="Quản lý giải" xml:space="preserve"><value>管理獎項</value></data>
+  <data name="Quản lý tài khoản" xml:space="preserve"><value>管理帳號</value></data>
+  <data name="Reset" xml:space="preserve"><value>重設</value></data>
+  <data name="Reset kết quả" xml:space="preserve"><value>重設結果</value></data>
+  <data name="Reset toàn bộ kết quả" xml:space="preserve"><value>重設所有結果</value></data>
+  <data name="STT" xml:space="preserve"><value>序號</value></data>
+  <data name="Sai tên đăng nhập hoặc mật khẩu, hoặc tài khoản đã bị khoá." xml:space="preserve"><value>帳號或密碼錯誤，或帳號已被鎖定。</value></data>
+  <data name="Sau khi tạo sự kiện" xml:space="preserve"><value>建立活動之後</value></data>
+  <data name="Sáng tối giản" xml:space="preserve"><value>簡約淺色</value></data>
+  <data name="Số kết quả mỗi lượt quay" xml:space="preserve"><value>每次抽出人數</value></data>
+  <data name="Số lượng" xml:space="preserve"><value>數量</value></data>
+  <data name="Số lượng không được nhỏ hơn số người đã trúng" xml:space="preserve"><value>數量不可少於已中獎人數</value></data>
+  <data name="Số lượt quay cần" xml:space="preserve"><value>需抽獎次數</value></data>
+  <data name="Số người mỗi lượt không được lớn hơn số lượng giải" xml:space="preserve"><value>每次抽出人數不可大於獎項數量</value></data>
+  <data name="Số người trúng tối đa" xml:space="preserve"><value>中獎名額</value></data>
+  <data name="Sửa" xml:space="preserve"><value>編輯</value></data>
+  <data name="Sửa bộ phận" xml:space="preserve"><value>編輯部門</value></data>
+  <data name="Sửa giải thưởng" xml:space="preserve"><value>編輯獎項</value></data>
+  <data name="Sửa người tham dự" xml:space="preserve"><value>編輯參加者</value></data>
+  <data name="Sửa sự kiện" xml:space="preserve"><value>編輯活動</value></data>
+  <data name="Sửa tài khoản" xml:space="preserve"><value>編輯帳號</value></data>
+  <data name="Sự kiện" xml:space="preserve"><value>活動</value></data>
+  <data name="Sự kiện này đang được chiếu trên màn hình chính" xml:space="preserve"><value>此活動正投影於主畫面</value></data>
+  <data name="Sự kiện đã có kết quả quay nên không xoá được (giữ lại để đối chiếu)." xml:space="preserve"><value>此活動已有抽獎結果，無法刪除（保留以供核對）。</value></data>
+  <data name="Sự kiện đã có kết quả quay sẽ không xoá được." xml:space="preserve"><value>已有抽獎結果的活動無法刪除。</value></data>
+  <data name="Sự kiện đã có kết quả quay. Đổi ngày sẽ đổi cách tính thâm niên cho các lượt quay sau." xml:space="preserve"><value>此活動已有抽獎結果。變更日期會影響之後抽獎的年資計算。</value></data>
+  <data name="Thao tác" xml:space="preserve"><value>操作</value></data>
+  <data name="Thay toàn bộ giải cũ" xml:space="preserve"><value>取代所有舊獎項</value></data>
+  <data name="Thiết lập" xml:space="preserve"><value>設定</value></data>
+  <data name="Thiếu cột bắt buộc: {0}" xml:space="preserve"><value>缺少必填欄位：{0}</value></data>
+  <data name="Thiếu họ tên" xml:space="preserve"><value>缺少姓名</value></data>
+  <data name="Thiếu mã bộ phận" xml:space="preserve"><value>缺少部門代碼</value></data>
+  <data name="Thiếu mã nhân viên" xml:space="preserve"><value>缺少工號</value></data>
+  <data name="Thiếu tên bộ phận" xml:space="preserve"><value>缺少部門名稱</value></data>
+  <data name="Thiếu tên giải" xml:space="preserve"><value>缺少獎項名稱</value></data>
+  <data name="Thiếu {0}" xml:space="preserve"><value>缺少 {0}</value></data>
+  <data name="Thâm niên" xml:space="preserve"><value>年資</value></data>
+  <data name="Thâm niên &lt; giá trị này" xml:space="preserve"><value>年資 &lt; 此值</value></data>
+  <data name="Thâm niên tính đến ngày sự kiện {0}" xml:space="preserve"><value>年資計算至活動日期 {0}</value></data>
+  <data name="Thâm niên tại ngày sự kiện" xml:space="preserve"><value>活動當日年資</value></data>
+  <data name="Thâm niên tối thiểu (tháng)" xml:space="preserve"><value>最低年資（月）</value></data>
+  <data name="Thâm niên tối đa (tháng)" xml:space="preserve"><value>最高年資（月）</value></data>
+  <data name="Thâm niên tối đa phải lớn hơn tối thiểu" xml:space="preserve"><value>最高年資必須大於最低年資</value></data>
+  <data name="Thâm niên ≥ giá trị này" xml:space="preserve"><value>年資 ≥ 此值</value></data>
+  <data name="Thêm bộ phận" xml:space="preserve"><value>新增部門</value></data>
+  <data name="Thêm file .mp3 (tối đa 15 MB)" xml:space="preserve"><value>新增 .mp3 檔案（最大 15 MB）</value></data>
+  <data name="Thêm giải thưởng" xml:space="preserve"><value>新增獎項</value></data>
+  <data name="Thêm giải thưởng: số lượng, số người mỗi lượt, điều kiện thâm niên." xml:space="preserve"><value>新增獎項：數量、每次抽出人數、年資條件。</value></data>
+  <data name="Thêm người" xml:space="preserve"><value>新增人員</value></data>
+  <data name="Thêm người tham dự" xml:space="preserve"><value>新增參加者</value></data>
+  <data name="Thêm từng giải hoặc import nhanh từ file Excel." xml:space="preserve"><value>逐一新增獎項，或從 Excel 快速匯入。</value></data>
+  <data name="Thêm vào cuối danh sách" xml:space="preserve"><value>加到清單最後</value></data>
+  <data name="Thông tin giải thưởng" xml:space="preserve"><value>獎項資訊</value></data>
+  <data name="Thư viện nhạc của sự kiện, nhạc nền và hiệu ứng âm thanh trên màn chiếu." xml:space="preserve"><value>活動的音效庫、背景音樂及投影畫面音效。</value></data>
+  <data name="Thư viện âm thanh" xml:space="preserve"><value>音效庫</value></data>
+  <data name="Thời gian" xml:space="preserve"><value>時間</value></data>
+  <data name="Thời gian &amp; địa điểm" xml:space="preserve"><value>時間與地點</value></data>
+  <data name="Thời gian chạy chậm dần trước khi dừng hẳn." xml:space="preserve"><value>完全停止前的減速時間。</value></data>
+  <data name="Thời gian dừng (giây)" xml:space="preserve"><value>停止時間（秒）</value></data>
+  <data name="Thời gian quay" xml:space="preserve"><value>抽獎時間</value></data>
+  <data name="Thời gian quay (giây)" xml:space="preserve"><value>轉動時間（秒）</value></data>
+  <data name="Thủ công" xml:space="preserve"><value>手動</value></data>
+  <data name="Thủ công: MC bấm dừng. Tự động: tự dừng sau số giây cài đặt." xml:space="preserve"><value>手動：由主持人按停止。自動：到設定秒數自動停止。</value></data>
+  <data name="Thứ tự" xml:space="preserve"><value>順序</value></data>
+  <data name="Thứ tự trong danh sách là thứ tự quay trên màn chiếu. Người đã trúng sẽ không được quay ở giải khác." xml:space="preserve"><value>清單順序即投影畫面的抽獎順序。已中獎者不會再抽中其他獎項。</value></data>
+  <data name="Tiến độ" xml:space="preserve"><value>進度</value></data>
+  <data name="Tiến độ từng giải" xml:space="preserve"><value>各獎項進度</value></data>
+  <data name="Tiếp tục" xml:space="preserve"><value>繼續</value></data>
+  <data name="Tiệc tất niên – quay thưởng công bằng, minh bạch" xml:space="preserve"><value>尾牙抽獎－公平、透明</value></data>
+  <data name="Toàn màn hình" xml:space="preserve"><value>全螢幕</value></data>
+  <data name="Toàn quyền trang quản trị" xml:space="preserve"><value>後台所有權限</value></data>
+  <data name="Trang quản trị" xml:space="preserve"><value>管理後台</value></data>
+  <data name="Trang quản trị (giải, người, giao diện…)" xml:space="preserve"><value>管理後台（獎項、人員、外觀…）</value></data>
+  <data name="Trang trước" xml:space="preserve"><value>上一頁</value></data>
+  <data name="Trạng thái" xml:space="preserve"><value>狀態</value></data>
+  <data name="Tuyết rơi" xml:space="preserve"><value>下雪</value></data>
+  <data name="Tài khoản" xml:space="preserve"><value>帳號</value></data>
+  <data name="Tài khoản bị khoá không đăng nhập được." xml:space="preserve"><value>被鎖定的帳號無法登入。</value></data>
+  <data name="Tài khoản của bạn không được phép mở trang này. Trang quản trị chỉ dành cho Admin." xml:space="preserve"><value>您的帳號無權開啟此頁。管理後台僅限管理員使用。</value></data>
+  <data name="Tên (English)" xml:space="preserve"><value>名稱（English）</value></data>
+  <data name="Tên (Tiếng Việt)" xml:space="preserve"><value>名稱（越南文）</value></data>
+  <data name="Tên (简体中文)" xml:space="preserve"><value>名稱（簡體中文）</value></data>
+  <data name="Tên (繁體中文)" xml:space="preserve"><value>名稱（繁體中文）</value></data>
+  <data name="Tên 4 ngôn ngữ, số lượng, số người mỗi lượt, kiểu quay, thâm niên." xml:space="preserve"><value>4 種語言名稱、數量、每次抽出人數、抽獎方式、年資。</value></data>
+  <data name="Tên bộ phận" xml:space="preserve"><value>部門名稱</value></data>
+  <data name="Tên giải bị trùng trong file" xml:space="preserve"><value>檔案內獎項名稱重複</value></data>
+  <data name="Tên giải thưởng" xml:space="preserve"><value>獎項名稱</value></data>
+  <data name="Tên giải tối đa 200 ký tự" xml:space="preserve"><value>獎項名稱最多 200 個字元</value></data>
+  <data name="Tên hiển thị" xml:space="preserve"><value>顯示名稱</value></data>
+  <data name="Tên hiển thị (không bắt buộc)" xml:space="preserve"><value>顯示名稱（選填）</value></data>
+  <data name="Tên hiển thị trên màn chiếu" xml:space="preserve"><value>投影畫面顯示名稱</value></data>
+  <data name="Tên sự kiện" xml:space="preserve"><value>活動名稱</value></data>
+  <data name="Tên sự kiện nhập lại không khớp, chưa reset." xml:space="preserve"><value>活動名稱不符，未執行重設。</value></data>
+  <data name="Tên sự kiện nhập lại không khớp." xml:space="preserve"><value>活動名稱不符。</value></data>
+  <data name="Tên tiếng Trung" xml:space="preserve"><value>中文姓名</value></data>
+  <data name="Tên tiếng Trung (姓名)" xml:space="preserve"><value>中文姓名（姓名）</value></data>
+  <data name="Tên tối đa 200 ký tự" xml:space="preserve"><value>名稱最多 200 個字元</value></data>
+  <data name="Tên đăng nhập" xml:space="preserve"><value>帳號</value></data>
+  <data name="Tên đăng nhập đã tồn tại." xml:space="preserve"><value>帳號已存在。</value></data>
+  <data name="Tìm kiếm kết quả…" xml:space="preserve"><value>搜尋結果…</value></data>
+  <data name="Tìm theo mã hoặc tên…" xml:space="preserve"><value>依工號或姓名搜尋…</value></data>
+  <data name="Tính đến ngày sự kiện. Để trống = không giới hạn. Ví dụ giải khuyến khích cho người dưới 6 tháng: tối đa = 6." xml:space="preserve"><value>計算至活動日期。留空 = 不限。例如：未滿 6 個月者的鼓勵獎，最高 = 6。</value></data>
+  <data name="Tính đến {0}" xml:space="preserve"><value>計算至 {0}</value></data>
+  <data name="Tạo sự kiện" xml:space="preserve"><value>建立活動</value></data>
+  <data name="Tạo tài khoản" xml:space="preserve"><value>建立帳號</value></data>
+  <data name="Tải danh sách (.xlsx)" xml:space="preserve"><value>下載名單（.xlsx）</value></data>
+  <data name="Tải file lên thư viện trước." xml:space="preserve"><value>請先上傳檔案到音效庫。</value></data>
+  <data name="Tải file mẫu → điền dữ liệu → upload → xem trước và sửa lỗi → xác nhận. Dữ liệu chỉ được ghi khi không còn dòng lỗi." xml:space="preserve"><value>下載範本 → 填寫資料 → 上傳 → 預覽並修正錯誤 → 確認。沒有錯誤列時才會寫入資料。</value></data>
+  <data name="Tải kết quả" xml:space="preserve"><value>下載結果</value></data>
+  <data name="Tải kết quả trên màn chiếu" xml:space="preserve"><value>在投影畫面下載結果</value></data>
+  <data name="Tải lên" xml:space="preserve"><value>上傳</value></data>
+  <data name="Tải về danh sách" xml:space="preserve"><value>下載名單</value></data>
+  <data name="Tải ảnh hàng loạt" xml:space="preserve"><value>批次上傳照片</value></data>
+  <data name="Tất cả" xml:space="preserve"><value>全部</value></data>
+  <data name="Tất cả bộ phận" xml:space="preserve"><value>所有部門</value></data>
+  <data name="Tất cả giải" xml:space="preserve"><value>所有獎項</value></data>
+  <data name="Tất cả kết quả" xml:space="preserve"><value>所有結果</value></data>
+  <data name="Tất cả thao tác" xml:space="preserve"><value>所有操作</value></data>
+  <data name="Tất cả {0} kết quả hiện tại sẽ bị xoá (xoá mềm) và mọi người được quay lại từ đầu. Cờ vắng mặt cũng được bỏ. Thường dùng sau khi quay thử." xml:space="preserve"><value>目前全部 {0} 筆結果將被刪除（軟刪除），所有人可重新抽獎，缺席標記也會清除。通常用於試抽之後。</value></data>
+  <data name="Tắt" xml:space="preserve"><value>停用</value></data>
+  <data name="Tắt âm thanh" xml:space="preserve"><value>關閉聲音</value></data>
+  <data name="Tết Bính Ngọ 2026" xml:space="preserve"><value>2026 丙午馬年</value></data>
+  <data name="Tết đỏ vàng" xml:space="preserve"><value>新春紅金</value></data>
+  <data name="Tốc độ bay của pháo hoa" xml:space="preserve"><value>煙火飛行速度</value></data>
+  <data name="Tối thiểu 8 ký tự, nên có chữ hoa, chữ thường, số và ký tự đặc biệt." xml:space="preserve"><value>至少 8 個字元，建議包含大小寫字母、數字與符號。</value></data>
+  <data name="Tối đa 5.000 dòng và 5 MB mỗi lần. Toàn bộ file được ghi trong một giao dịch: lỗi một dòng thì không ghi dòng nào." xml:space="preserve"><value>每次最多 5,000 列、5 MB。整個檔案以單一交易寫入：任何一列錯誤就不寫入。</value></data>
+  <data name="Tối đa {0} dòng mỗi lần import." xml:space="preserve"><value>每次匯入最多 {0} 列。</value></data>
+  <data name="Tổng cộng: {0} người trúng trong {1} giải" xml:space="preserve"><value>總計：{1} 個獎項共 {0} 位得獎者</value></data>
+  <data name="Tổng cộng: {0} người · trang {1}/{2}" xml:space="preserve"><value>總計：{0} 人 · 第 {1}/{2} 頁</value></data>
+  <data name="Tổng cộng: {0} suất trong {1} giải · đã quay {2}" xml:space="preserve"><value>總計：{1} 個獎項共 {0} 名額 · 已抽 {2}</value></data>
+  <data name="Tổng quan" xml:space="preserve"><value>總覽</value></data>
+  <data name="Tổng {0} dòng · Trang {1}/{2}" xml:space="preserve"><value>共 {0} 筆 · 第 {1}/{2} 頁</value></data>
+  <data name="Tổng {0} giải · {1} suất" xml:space="preserve"><value>共 {0} 個獎項 · {1} 個名額</value></data>
+  <data name="Tổng {0} người" xml:space="preserve"><value>共 {0} 人</value></data>
+  <data name="Từ {0} tháng" xml:space="preserve"><value>滿 {0} 個月以上</value></data>
+  <data name="Từ {0} đến dưới {1} tháng" xml:space="preserve"><value>{0} 至未滿 {1} 個月</value></data>
+  <data name="Tự động" xml:space="preserve"><value>自動</value></data>
+  <data name="Upload &amp; xem trước" xml:space="preserve"><value>上傳並預覽</value></data>
+  <data name="Vai trò" xml:space="preserve"><value>角色</value></data>
+  <data name="Vai trò không hợp lệ." xml:space="preserve"><value>角色無效。</value></data>
+  <data name="Vui lòng nhập {0}." xml:space="preserve"><value>請輸入{0}。</value></data>
+  <data name="Vui lòng thử lại. Nếu lỗi lặp lại, kiểm tra kết nối cơ sở dữ liệu và nhật ký máy chủ." xml:space="preserve"><value>請再試一次。若持續發生，請檢查資料庫連線與伺服器日誌。</value></data>
+  <data name="Vàng" xml:space="preserve"><value>金色</value></data>
+  <data name="Ví dụ 100 người trúng, mỗi lượt quay 20 người → MC bấm quay 5 lần." xml:space="preserve"><value>例如 100 個名額、每次抽 20 人 → 主持人抽 5 次。</value></data>
+  <data name="Ví dụ: Giải nhất, Giải đặc biệt." xml:space="preserve"><value>例如：頭獎、特別獎。</value></data>
+  <data name="Vắng mặt" xml:space="preserve"><value>缺席</value></data>
+  <data name="Vắng mặt – huỷ kết quả để quay người khác" xml:space="preserve"><value>缺席－取消此結果並改抽他人</value></data>
+  <data name="Về trang chính" xml:space="preserve"><value>回到主頁</value></data>
+  <data name="Về trang quản trị" xml:space="preserve"><value>回到管理後台</value></data>
+  <data name="Vị trí bảng kết quả" xml:space="preserve"><value>結果面板位置</value></data>
+  <data name="Xanh hoàng gia" xml:space="preserve"><value>皇家藍</value></data>
+  <data name="Xem màn hình quay số" xml:space="preserve"><value>查看抽獎畫面</value></data>
+  <data name="Xem thêm" xml:space="preserve"><value>顯示更多</value></data>
+  <data name="Xem toàn bộ người trúng theo từng giải" xml:space="preserve"><value>依獎項查看所有得獎者</value></data>
+  <data name="Xem trước" xml:space="preserve"><value>預覽</value></data>
+  <data name="Xem trước import" xml:space="preserve"><value>匯入預覽</value></data>
+  <data name="Xem tất cả" xml:space="preserve"><value>查看全部</value></data>
+  <data name="Xoá" xml:space="preserve"><value>刪除</value></data>
+  <data name="Xoá bài {0}?" xml:space="preserve"><value>要刪除曲目 {0} 嗎？</value></data>
+  <data name="Xoá bộ phận {0}?" xml:space="preserve"><value>要刪除部門 {0} 嗎？</value></data>
+  <data name="Xoá danh sách" xml:space="preserve"><value>清空名單</value></data>
+  <data name="Xoá danh sách người tham dự" xml:space="preserve"><value>清空參加者名單</value></data>
+  <data name="Xoá giải {0}? Thao tác không thể hoàn tác." xml:space="preserve"><value>要刪除獎項 {0} 嗎？此操作無法復原。</value></data>
+  <data name="Xoá kết quả của {0}? Người này có thể được quay lại." xml:space="preserve"><value>要刪除 {0} 的結果嗎？此人可再次被抽中。</value></data>
+  <data name="Xoá kết quả là xoá mềm: luôn khôi phục được ở tab Kết quả đã xoá." xml:space="preserve"><value>刪除結果為軟刪除：隨時可在「已刪除的結果」分頁還原。</value></data>
+  <data name="Xoá logo hiện tại" xml:space="preserve"><value>移除目前的 Logo</value></data>
+  <data name="Xoá sự kiện" xml:space="preserve"><value>刪除活動</value></data>
+  <data name="Xoá sự kiện sẽ xoá luôn toàn bộ giải thưởng và người tham dự của sự kiện. Không thể hoàn tác." xml:space="preserve"><value>刪除活動會一併刪除其所有獎項與參加者，且無法復原。</value></data>
+  <data name="Xoá tài khoản {0}?" xml:space="preserve"><value>要刪除帳號 {0} 嗎？</value></data>
+  <data name="Xoá tất cả người tham dự của sự kiện này, trừ những người đã có kết quả quay. Dùng khi muốn import lại danh sách từ đầu." xml:space="preserve"><value>刪除本活動所有參加者（已有抽獎結果者除外）。用於重新匯入名單前。</value></data>
+  <data name="Xoá vĩnh viễn" xml:space="preserve"><value>永久刪除</value></data>
+  <data name="Xoá {0} – {1}?" xml:space="preserve"><value>要刪除 {0} – {1} 嗎？</value></data>
+  <data name="Xoá ảnh hiện tại" xml:space="preserve"><value>移除目前的圖片</value></data>
+  <data name="Xoá ảnh nền hiện tại" xml:space="preserve"><value>移除目前的背景</value></data>
+  <data name="Xuất lúc" xml:space="preserve"><value>匯出時間</value></data>
+  <data name="Xuống" xml:space="preserve"><value>下移</value></data>
+  <data name="Xác nhận" xml:space="preserve"><value>確認</value></data>
+  <data name="Xác nhận import {0} dòng" xml:space="preserve"><value>確認匯入 {0} 列</value></data>
+  <data name="Xác nhận vắng mặt" xml:space="preserve"><value>確認缺席</value></data>
+  <data name="Xác nhận {0} vắng mặt? Kết quả của người này bị huỷ và họ không được quay nữa." xml:space="preserve"><value>確認 {0} 缺席？此人的結果將被取消，且不會再被抽中。</value></data>
+  <data name="code: mã bộ phận, không trùng" xml:space="preserve"><value>code：部門代碼，不可重複</value></data>
+  <data name="department_code: mã bộ phận đã có trong mục Bộ phận (có thể để trống)" xml:space="preserve"><value>department_code：已存在於「部門」的代碼（可留空）</value></data>
+  <data name="draw_per_turn: số người mỗi lượt quay (mặc định 1)" xml:space="preserve"><value>draw_per_turn：每次抽出人數（預設 1）</value></data>
+  <data name="draw_type: 1 = Thủ công, 2 = Tự động (mặc định 1)" xml:space="preserve"><value>draw_type：1 = 手動，2 = 自動（預設 1）</value></data>
+  <data name="dừng {0}s" xml:space="preserve"><value>停止 {0} 秒</value></data>
+  <data name="employee_code: mã nhân viên, không trùng trong file" xml:space="preserve"><value>employee_code：工號，檔案內不可重複</value></data>
+  <data name="join_date: ngày vào làm, dạng yyyy-MM-dd hoặc dd/MM/yyyy" xml:space="preserve"><value>join_date：到職日，格式 yyyy-MM-dd 或 dd/MM/yyyy</value></data>
+  <data name="min/max_seniority_months: thâm niên tối thiểu / tối đa (tháng), để trống = không giới hạn" xml:space="preserve"><value>min/max_seniority_months：最低／最高年資（月），留空 = 不限</value></data>
+  <data name="{0} chỉ gồm chữ, số và ký tự . _ -" xml:space="preserve"><value>{0} 只能包含字母、數字及 . _ -</value></data>
+  <data name="{0} dài từ {2} đến {1} ký tự." xml:space="preserve"><value>{0} 長度須為 {2} 至 {1} 個字元。</value></data>
+  <data name="{0} lượt" xml:space="preserve"><value>{0} 次</value></data>
+  <data name="{0} phải là số nguyên từ {1} đến {2}" xml:space="preserve"><value>{0} 必須是 {1} 至 {2} 的整數</value></data>
+  <data name="{0} phải là số." xml:space="preserve"><value>{0} 必須是數字。</value></data>
+  <data name="{0} phải từ {1} đến {2}." xml:space="preserve"><value>{0} 須介於 {1} 與 {2} 之間。</value></data>
+  <data name="{0} suất" xml:space="preserve"><value>{0} 個名額</value></data>
+  <data name="{0} suất · mỗi lượt {1} người" xml:space="preserve"><value>{0} 個名額 · 每次 {1} 人</value></data>
+  <data name="{0} tháng" xml:space="preserve"><value>{0} 個月</value></data>
+  <data name="{0} tối đa {1} ký tự." xml:space="preserve"><value>{0} 最多 {1} 個字元。</value></data>
+  <data name="{0} vắng mặt" xml:space="preserve"><value>{0} 人缺席</value></data>
+  <data name="{0} ảnh không dùng được: {1}" xml:space="preserve"><value>{0} 張照片無法使用：{1}</value></data>
+  <data name="{0}: không có mã số thẻ này" xml:space="preserve"><value>{0}：查無此工號</value></data>
+  <data name="{0}–{1} tháng" xml:space="preserve"><value>{0}–{1} 個月</value></data>
+  <data name="Âm lượng" xml:space="preserve"><value>音量</value></data>
+  <data name="Âm thanh" xml:space="preserve"><value>音效</value></data>
+  <data name="Ô quay số" xml:space="preserve"><value>號碼框</value></data>
+  <data name="Đang chiếu" xml:space="preserve"><value>投影中</value></data>
+  <data name="Đang dùng" xml:space="preserve"><value>啟用</value></data>
+  <data name="Đang hoạt động" xml:space="preserve"><value>啟用中</value></data>
+  <data name="Đang quay…" xml:space="preserve"><value>抽獎中…</value></data>
+  <data name="Đang quản lý" xml:space="preserve"><value>管理中</value></data>
+  <data name="Đang đánh dấu vắng mặt: sẽ không được quay." xml:space="preserve"><value>已標記缺席：不會被抽中。</value></data>
+  <data name="Điều kiện thâm niên" xml:space="preserve"><value>年資條件</value></data>
+  <data name="Đánh dấu có mặt" xml:space="preserve"><value>標記出席</value></data>
+  <data name="Đánh dấu vắng mặt" xml:space="preserve"><value>標記缺席</value></data>
+  <data name="Đã có lỗi xảy ra" xml:space="preserve"><value>發生錯誤</value></data>
+  <data name="Đã có {0} người trúng giải này." xml:space="preserve"><value>此獎項已有 {0} 人中獎。</value></data>
+  <data name="Đã cập nhật ảnh cho {0} người." xml:space="preserve"><value>已更新 {0} 人的照片。</value></data>
+  <data name="Đã huỷ kết quả. Bấm Bắt đầu để quay người thay thế." xml:space="preserve"><value>已取消結果。按「開始」抽出替補者。</value></data>
+  <data name="Đã khoá" xml:space="preserve"><value>已鎖定</value></data>
+  <data name="Đã khôi phục kết quả." xml:space="preserve"><value>已還原結果。</value></data>
+  <data name="Đã lưu bộ phận." xml:space="preserve"><value>已儲存部門。</value></data>
+  <data name="Đã lưu giao diện." xml:space="preserve"><value>已儲存外觀。</value></data>
+  <data name="Đã lưu giải thưởng." xml:space="preserve"><value>已儲存獎項。</value></data>
+  <data name="Đã lưu người tham dự." xml:space="preserve"><value>已儲存參加者。</value></data>
+  <data name="Đã lưu sự kiện." xml:space="preserve"><value>已儲存活動。</value></data>
+  <data name="Đã lưu tài khoản." xml:space="preserve"><value>已儲存帳號。</value></data>
+  <data name="Đã lưu âm thanh." xml:space="preserve"><value>已儲存音效設定。</value></data>
+  <data name="Đã ngừng chiếu sự kiện." xml:space="preserve"><value>已停止投影活動。</value></data>
+  <data name="Đã quay" xml:space="preserve"><value>已抽出</value></data>
+  <data name="Đã quay xong tất cả giải" xml:space="preserve"><value>所有獎項已抽完</value></data>
+  <data name="Đã quay {0} / {1} người trúng giải này" xml:space="preserve"><value>此獎項已抽出 {0} / {1} 位得獎者</value></data>
+  <data name="Đã quay {0}/{1}" xml:space="preserve"><value>已抽出 {0}/{1}</value></data>
+  <data name="Đã reset {0} kết quả." xml:space="preserve"><value>已重設 {0} 筆結果。</value></data>
+  <data name="Đã thêm bài “{0}”." xml:space="preserve"><value>已新增曲目「{0}」。</value></data>
+  <data name="Đã thêm bộ phận." xml:space="preserve"><value>已新增部門。</value></data>
+  <data name="Đã thêm giải thưởng." xml:space="preserve"><value>已新增獎項。</value></data>
+  <data name="Đã thêm người tham dự." xml:space="preserve"><value>已新增參加者。</value></data>
+  <data name="Đã trúng" xml:space="preserve"><value>已中獎</value></data>
+  <data name="Đã tạo sự kiện. Tiếp theo: thêm giải thưởng và người tham dự." xml:space="preserve"><value>已建立活動。下一步：新增獎項與參加者。</value></data>
+  <data name="Đã tạo tài khoản." xml:space="preserve"><value>已建立帳號。</value></data>
+  <data name="Đã tắt" xml:space="preserve"><value>已停用</value></data>
+  <data name="Đã xong" xml:space="preserve"><value>已完成</value></data>
+  <data name="Đã xoá bài “{0}”." xml:space="preserve"><value>已刪除曲目「{0}」。</value></data>
+  <data name="Đã xoá bộ phận." xml:space="preserve"><value>已刪除部門。</value></data>
+  <data name="Đã xoá giải thưởng." xml:space="preserve"><value>已刪除獎項。</value></data>
+  <data name="Đã xoá kết quả. Có thể khôi phục ở tab Kết quả đã xoá." xml:space="preserve"><value>已刪除結果，可在「已刪除的結果」分頁還原。</value></data>
+  <data name="Đã xoá người tham dự." xml:space="preserve"><value>已刪除參加者。</value></data>
+  <data name="Đã xoá sự kiện." xml:space="preserve"><value>已刪除活動。</value></data>
+  <data name="Đã xoá tài khoản {0}." xml:space="preserve"><value>已刪除帳號 {0}。</value></data>
+  <data name="Đã xoá {0} người (giữ lại người đã có kết quả quay)." xml:space="preserve"><value>已刪除 {0} 人（保留已有抽獎結果者）。</value></data>
+  <data name="Đã đổi mật khẩu cho {0}." xml:space="preserve"><value>已變更 {0} 的密碼。</value></data>
+  <data name="Đóng" xml:space="preserve"><value>關閉</value></data>
+  <data name="Đăng nhập" xml:space="preserve"><value>登入</value></data>
+  <data name="Đăng nhập MC" xml:space="preserve"><value>主持人登入</value></data>
+  <data name="Đăng nhập gần nhất" xml:space="preserve"><value>最近登入</value></data>
+  <data name="Đăng nhập tài khoản khác" xml:space="preserve"><value>以其他帳號登入</value></data>
+  <data name="Đăng nhập với" xml:space="preserve"><value>登入身分</value></data>
+  <data name="Đăng xuất" xml:space="preserve"><value>登出</value></data>
+  <data name="Đặt tên file ảnh theo mã số thẻ, ví dụ VN000032.jpg (hoặc “VN000032 - Tô Văn Thọ.jpg”). Ảnh sẽ tự gắn vào đúng người; ảnh trùng mã thay ảnh cũ." xml:space="preserve"><value>照片檔名請用工號，例如 VN000032.jpg（或「VN000032 - Tô Văn Thọ.jpg」）。照片會自動對應到本人，同工號的新照片會取代舊照片。</value></data>
+  <data name="Để trống thì màn chiếu tạm dùng tên phồn thể. Chuyển phồn → giản tự động chỉ đổi từng chữ, nên xem lại từ vựng." xml:space="preserve"><value>留空時投影畫面暫用繁體名稱。繁轉簡自動轉換只逐字轉換，請檢查用詞。</value></data>
+  <data name="Địa điểm" xml:space="preserve"><value>地點</value></data>
+  <data name="Đối tượng" xml:space="preserve"><value>對象</value></data>
+  <data name="Đổi giải thì đổi nhạc" xml:space="preserve"><value>換獎項時換音樂</value></data>
+  <data name="Đổi mật khẩu" xml:space="preserve"><value>變更密碼</value></data>
+  <data name="Đủ điều kiện" xml:space="preserve"><value>符合資格</value></data>
+  <data name="Ảnh chân dung" xml:space="preserve"><value>大頭照</value></data>
+  <data name="Ảnh nền" xml:space="preserve"><value>背景圖片</value></data>
+  <data name="Ảnh phần thưởng" xml:space="preserve"><value>獎品圖片</value></data>
+  <data name="— Không chọn —" xml:space="preserve"><value>— 不選擇 —</value></data>
+  <data name="— Không phát —" xml:space="preserve"><value>— 不播放 —</value></data>
+  <data name="— Không —" xml:space="preserve"><value>— 無 —</value></data>
+  <data name="姓名, Bộ phận, 現任單位, Chức vụ: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名、部門、現任單位、職務：可留空。可直接貼上人事檔（STT、工齡欄位會略過）。</value></data>
+</root>

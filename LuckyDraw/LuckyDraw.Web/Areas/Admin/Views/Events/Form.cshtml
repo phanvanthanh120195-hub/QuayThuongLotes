@@ -1,0 +1,66 @@
+@model EventFormModel
+@{
+    var isNew = Model.EventId == 0;
+    ViewData["Title"] = isNew ? L["Tạo sự kiện"] : L["Sửa sự kiện"];
+}
+<div class="page-head">
+    <div>
+        <div class="crumb"><a asp-action="Index">@L["Sự kiện"]</a> / @ViewData["Title"]</div>
+        <h1>@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-xl-7">
+        <form method="post" asp-action="@(isNew ? "Create" : "Edit")" asp-route-id="@(isNew ? null : Model.EventId)" class="card-ld" novalidate>
+            <div asp-validation-summary="ModelOnly" class="flash err m-3 mb-0"></div>
+            <div class="form-section">
+                <h3>@L["Tên sự kiện"]</h3>
+                <p class="hint">@L["Màn chiếu hiển thị tên theo ngôn ngữ người xem chọn. Ô nào để trống sẽ dùng tên tiếng Việt."]</p>
+                <partial name="_MultiLangFields" model="Model" />
+            </div>
+            <div class="form-section">
+                <h3>@L["Thời gian & địa điểm"]</h3>
+                <p class="hint">@L["Ngày diễn ra dùng để tính thâm niên của người tham dự (điều kiện của từng giải)."]</p>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label asp-for="EventDate" class="form-label"></label>
+                        <input asp-for="EventDate" class="form-control" type="date" />
+                        <span asp-validation-for="EventDate"></span>
+                        @if (Model.HasResults)
+                        {
+                            <div class="form-text text-warning">@Html.Icon("alert") @L["Sự kiện đã có kết quả quay. Đổi ngày sẽ đổi cách tính thâm niên cho các lượt quay sau."]</div>
+                        }
+                    </div>
+                    <div class="col-md-8">
+                        <label asp-for="Location" class="form-label"></label>
+                        <input asp-for="Location" class="form-control" />
+                        <span asp-validation-for="Location"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-foot">
+                <a class="btn btn-light" asp-action="Index">@L["Huỷ"]</a>
+                <button type="submit" class="btn btn-primary">@Html.Icon("check") @(isNew ? L["Tạo sự kiện"] : L["Lưu"])</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-xl-5">
+        <div class="preview-sticky">
+            <partial name="_NamePreview" />
+            <div class="card-ld">
+                <div class="card-head"><h2>@Html.Icon("check-circle") @L["Sau khi tạo sự kiện"]</h2></div>
+                <div class="card-body pt-2 pb-2">
+                    <ul class="side-list">
+                        <li>@Html.Icon("gift") <span>@L["Thêm giải thưởng: số lượng, số người mỗi lượt, điều kiện thâm niên."]</span></li>
+                        <li>@Html.Icon("users") <span>@L["Import danh sách người tham dự từ Excel."]</span></li>
+                        <li>@Html.Icon("palette") <span>@L["Chọn giao diện màn chiếu và âm thanh."]</span></li>
+                        <li>@Html.Icon("broadcast") <span>@L["Bấm “Chiếu” để đưa sự kiện lên màn hình chính."]</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

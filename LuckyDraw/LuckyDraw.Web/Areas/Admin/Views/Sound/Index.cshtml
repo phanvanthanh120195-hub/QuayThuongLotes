@@ -1,0 +1,163 @@
+@model SoundViewModel
+@{
+    ViewData["Title"] = L["Âm thanh"];
+    var s = Model.Sound;
+    var modes = new (string Key, string Title, string Desc)[]
+    {
+        ("none", L["Không phát nhạc"], L["Chỉ có hiệu ứng âm thanh (nếu chọn)"]),
+        ("single", L["Một danh sách cho cả chương trình"], L["Phát lần lượt các bài đã chọn"]),
+        ("perPrize", L["Mỗi giải một bài"], L["Đổi giải thì đổi nhạc"])
+    };
+    var effects = new (string Key, string Label, string? Value)[]
+    {
+        ("Spin", L["Khi đang quay"], s.Effects.Spin),
+        ("Reveal", L["Khi hiện kết quả"], s.Effects.Reveal),
+        ("Congrats", L["Màn chúc mừng"], s.Effects.Congrats),
+        ("Click", L["Bấm nút"], s.Effects.Click)
+    };
+}
+<div class="page-head">
+    <div>
+        <h1>@L["Âm thanh"]</h1>
+        <p class="sub">@L["Thư viện nhạc của sự kiện, nhạc nền và hiệu ứng âm thanh trên màn chiếu."]</p>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-xl-5 order-xl-2">
+        <div class="card-ld preview-sticky">
+            <div class="card-head">
+                <h2>@L["Thư viện âm thanh"]</h2>
+                <span class="tag">@s.Tracks.Count</span>
+            </div>
+            <div class="card-body">
+                <form method="post" asp-action="Upload" enctype="multipart/form-data" class="mb-3">
+                    <label class="form-label">@L["Thêm file .mp3 (tối đa 15 MB)"]</label>
+                    <input type="file" name="file" class="form-control mb-2" accept=".mp3,audio/mpeg" required />
+                    <div class="d-flex gap-2">
+                        <input name="name" class="form-control" maxlength="80" placeholder="@L["Tên hiển thị (không bắt buộc)"]" />
+                        <button class="btn btn-primary text-nowrap" type="submit">@Html.Icon("upload") @L["Tải lên"]</button>
+                    </div>
+                </form>
+                @if (s.Tracks.Count == 0)
+                {
+                    <div class="empty py-4">@Html.Icon("music")<p class="mb-0">@L["Chưa có file âm thanh nào."]</p></div>
+                }
+                @foreach (var t in s.Tracks)
+                {
+                    <div class="track-row">
+                        <span class="stat-icon gold" style="width:34px;height:34px;border-radius:9px">@Html.Icon("music")</span>
+                        <div class="flex-grow-1 min-w-0">
+                            <div class="fw-semibold text-truncate">@t.Name</div>
+                            <audio controls preload="none" src="@t.Path"></audio>
+                        </div>
+                        <form method="post" asp-action="DeleteTrack" asp-route-id="@t.Id" data-confirm="@L["Xoá bài {0}?", t.Name]">
+                            <button class="btn btn-ghost btn-icon danger" type="submit" title="@L["Xoá"]">@Html.Icon("trash")</button>
+                        </form>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-xl-7 order-xl-1">
+        <form method="post" asp-action="Index" class="card-ld">
+            <div class="form-section">
+                <h3>@L["Nhạc nền"]</h3>
+                <p class="hint">@L["Cách phát nhạc nền trong suốt chương trình."]</p>
+                <div class="choice-grid" style="grid-template-columns:repeat(auto-fill,minmax(190px,1fr))">
+                    @foreach (var m in modes)
+                    {
+                        <label class="choice">
+                            <input type="radio" name="Mode" value="@m.Key" checked="@(s.Mode == m.Key)" />
+                            <div class="t">@m.Title</div>
+                            <div class="d">@m.Desc</div>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <div class="form-section" data-show-when="Mode=single">
+                <h3>@L["Danh sách phát"]</h3>
+                @if (s.Tracks.Count == 0)
+                {
+                    <p class="small-note mb-0">@L["Tải file lên thư viện trước."]</p>
+                }
+                else
+                {
+                    @foreach (var t in s.Tracks)
+                    {
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="Playlist" value="@t.Id" id="pl-@t.Id" checked="@s.Playlist.Contains(t.Id)" />
+                            <label class="form-check-label" for="pl-@t.Id">@t.Name</label>
+                        </div>
+                    }
+                    <label class="form-label mt-3">@L["Khi hết danh sách"]</label>
+                    <div class="d-flex gap-3">
+                        <div class="form-check"><input class="form-check-input" type="radio" name="PlaylistEnd" value="repeat" id="end-r" checked="@(s.PlaylistEnd != "shuffle")" /><label class="form-check-label" for="end-r">@L["Lặp lại"]</label></div>
+                        <div class="form-check"><input class="form-check-input" type="radio" name="PlaylistEnd" value="shuffle" id="end-s" checked="@(s.PlaylistEnd == "shuffle")" /><label class="form-check-label" for="end-s">@L["Ngẫu nhiên"]</label></div>
+                    </div>
+                }
+            </div>
+
+            <div class="form-section" data-show-when="Mode=perPrize">
+                <h3>@L["Nhạc cho từng giải"]</h3>
+                @if (Model.Prizes.Count == 0)
+                {
+                    <p class="small-note mb-0">@L["Chưa có giải thưởng."]</p>
+                }
+                @foreach (var p in Model.Prizes)
+                {
+                    var key = p.PrizeId.ToString();
+                    s.PrizeTracks.TryGetValue(key, out var selected);
+                    <div class="row g-2 align-items-center mb-2">
+                        <div class="col-sm-5 fw-semibold">@LocalizedName.Get(p)</div>
+                        <div class="col-sm-7">
+                            <select class="form-select form-select-sm" name="PrizeTracks[@key]">
+                                <option value="">@L["— Không phát —"]</option>
+                                @foreach (var t in s.Tracks) { <option value="@t.Id" selected="@(selected == t.Id)">@t.Name</option> }
+                            </select>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="form-section">
+                <h3>@L["Hiệu ứng âm thanh"]</h3>
+                <p class="hint">@L["Chọn file trong thư viện cho từng thời điểm."]</p>
+                @foreach (var e in effects)
+                {
+                    <div class="row g-2 align-items-center mb-2">
+                        <div class="col-sm-5">@e.Label</div>
+                        <div class="col-sm-7">
+                            <select class="form-select form-select-sm" name="Effects.@e.Key">
+                                <option value="">@L["— Không —"]</option>
+                                @foreach (var t in s.Tracks) { <option value="@t.Id" selected="@(e.Value == t.Id)">@t.Name</option> }
+                            </select>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="form-section">
+                <h3>@L["Âm lượng"]</h3>
+                <div class="row g-3 align-items-center">
+                    <div class="col-md-7">
+                        <input type="range" class="form-range" min="0" max="100" name="Volume" value="@s.Volume" oninput="this.nextElementSibling.textContent=this.value+'%'" />
+                        <span class="small-note">@(s.Volume)%</span>
+                    </div>
+                    <div class="col-md-5">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="DuckOnSpin" value="true" id="duck" checked="@s.DuckOnSpin" />
+                            <label class="form-check-label" for="duck">@L["Giảm nhạc nền khi quay & chúc mừng"]</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-foot">
+                <button type="submit" class="btn btn-primary">@Html.Icon("check") @L["Lưu âm thanh"]</button>
+            </div>
+        </form>
+    </div>
+</div>

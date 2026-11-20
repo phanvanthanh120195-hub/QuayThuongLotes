@@ -1,0 +1,13 @@
+@model string
+<div class="choice-grid" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+    <label class="choice">
+        <input type="radio" name="Role" value="@Roles.Operator" checked="@(Model != Roles.Admin)" />
+        <div class="t">@Html.Icon("monitor") Operator (MC)</div>
+        <div class="d">@L["Bấm quay, đánh dấu vắng mặt – quay lại"]</div>
+    </label>
+    <label class="choice">
+        <input type="radio" name="Role" value="@Roles.Admin" checked="@(Model == Roles.Admin)" />
+        <div class="t">@Html.Icon("shield") Admin</div>
+        <div class="d">@L["Toàn quyền trang quản trị"]</div>
+    </label>
+</div>

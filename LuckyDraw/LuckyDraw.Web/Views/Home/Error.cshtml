@@ -1,0 +1,13 @@
+@model string
+@{
+    ViewData["Title"] = L["Lỗi"];
+}
+<div class="auth-form" style="min-height:100vh">
+    <div class="auth-card text-center">
+        <div class="stat-icon red mx-auto mb-3">@Html.Icon("alert")</div>
+        <h2>@L["Đã có lỗi xảy ra"]</h2>
+        <p class="muted">@L["Vui lòng thử lại. Nếu lỗi lặp lại, kiểm tra kết nối cơ sở dữ liệu và nhật ký máy chủ."]</p>
+        <p class="small-note mono">Request ID: @Model</p>
+        <a class="btn btn-light mt-2" href="/admin">@L["Về trang quản trị"]</a>
+    </div>
+</div>

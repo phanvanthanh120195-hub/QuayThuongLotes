@@ -1,0 +1,9 @@
+## Tài liệu tham khảo dung lượng lớn (video quay màn hình trang mẫu) – không đưa lên git
+video.mp4
+*.mp4
+
+## Hệ điều hành / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

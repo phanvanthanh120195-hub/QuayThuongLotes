@@ -1,0 +1,51 @@
+@model UserCreateModel
+@{
+    ViewData["Title"] = L["Tạo tài khoản"];
+}
+<div class="page-head">
+    <div>
+        <div class="crumb"><a asp-action="Index">@L["Tài khoản"]</a> / @ViewData["Title"]</div>
+        <h1>@ViewData["Title"]</h1>
+    </div>
+</div>
+<div class="row g-3">
+    <div class="col-xl-7">
+<form method="post" asp-action="Create" class="card-ld" novalidate>
+    <div class="form-section">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label asp-for="UserName" class="form-label"></label>
+                <input asp-for="UserName" class="form-control mono" autocomplete="off" />
+                <span asp-validation-for="UserName"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="DisplayName" class="form-label"></label>
+                <input asp-for="DisplayName" class="form-control" />
+                <span asp-validation-for="DisplayName"></span>
+            </div>
+            <div class="col-12">
+                <label class="form-label">@Html.DisplayNameFor(m => m.Role)</label>
+                <partial name="_RolePicker" model="Model.Role" />
+                <span asp-validation-for="Role"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="Password" class="form-label"></label>
+                <input asp-for="Password" class="form-control" autocomplete="new-password" />
+                <span asp-validation-for="Password"></span>
+            </div>
+            <div class="col-md-6">
+                <label asp-for="ConfirmPassword" class="form-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" />
+                <span asp-validation-for="ConfirmPassword"></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-foot">
+        <a class="btn btn-light" asp-action="Index">@L["Huỷ"]</a>
+        <button type="submit" class="btn btn-primary">@Html.Icon("check") @L["Tạo tài khoản"]</button>
+    </div>
+</form>
+    </div>
+    <div class="col-xl-5"><partial name="_UserSide" /></div>
+</div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

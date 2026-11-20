@@ -1,0 +1,58 @@
+@model DepartmentFormModel
+@{
+    var isNew = Model.DepartmentId == 0;
+    ViewData["Title"] = isNew ? L["Thêm bộ phận"] : L["Sửa bộ phận"];
+}
+<div class="page-head">
+    <div>
+        <div class="crumb"><a asp-action="Index">@L["Bộ phận"]</a> / @ViewData["Title"]</div>
+        <h1>@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-xl-7">
+        <form method="post" asp-action="@(isNew ? "Create" : "Edit")" asp-route-id="@(isNew ? null : Model.DepartmentId)" class="card-ld" novalidate>
+            <div class="form-section">
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label asp-for="Code" class="form-label"></label>
+                        <input asp-for="Code" class="form-control mono" placeholder="IT" />
+                        <span asp-validation-for="Code"></span>
+                    </div>
+                    <div class="col-md-3">
+                        <label asp-for="SortOrder" class="form-label"></label>
+                        <input asp-for="SortOrder" class="form-control" type="number" min="0" />
+                        <span asp-validation-for="SortOrder"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-section">
+                <h3>@L["Tên bộ phận"]</h3>
+                <p class="hint">@L["Hiển thị trên màn chiếu khi có người trúng."]</p>
+                <partial name="_MultiLangFields" model="Model" />
+            </div>
+            <div class="form-foot">
+                <a class="btn btn-light" asp-action="Index">@L["Huỷ"]</a>
+                <button type="submit" class="btn btn-primary">@Html.Icon("check") @L["Lưu"]</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-xl-5">
+        <div class="preview-sticky">
+            <partial name="_NamePreview" />
+            <div class="card-ld">
+                <div class="card-head"><h2>@Html.Icon("sheet") @L["Mã bộ phận dùng để làm gì?"]</h2></div>
+                <div class="card-body pt-2 pb-2">
+                    <ul class="side-list">
+                        <li>@Html.Icon("upload") <span>@L["Cột department_code trong file Excel người tham dự phải khớp đúng mã này."]</span></li>
+                        <li>@Html.Icon("globe") <span>@L["Bộ phận dùng chung cho mọi sự kiện, chỉ cần tạo một lần."]</span></li>
+                        <li>@Html.Icon("trash") <span>@L["Bộ phận còn người tham dự thì không xoá được."]</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }

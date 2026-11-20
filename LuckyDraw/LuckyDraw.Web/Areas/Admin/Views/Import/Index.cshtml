@@ -1,0 +1,69 @@
+@model Event
+@{
+    ViewData["Title"] = L["Import Excel"];
+    var cards = new (ImportType Type, string Icon, string Title, string Desc, string OverwriteLabel, string AppendLabel)[]
+    {
+        (ImportType.Participants, "users", L["Người tham dự"], L["Dùng thẳng file nhân sự: Mã số thẻ, Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ."],
+            L["Ghi đè người trùng mã"], L["Bỏ qua người trùng mã"]),
+        (ImportType.Prizes, "gift", L["Giải thưởng"], L["Tên 4 ngôn ngữ, số lượng, số người mỗi lượt, kiểu quay, thâm niên."],
+            L["Thay toàn bộ giải cũ"], L["Thêm vào cuối danh sách"])
+        // Bộ phận: đã gộp vào file người tham dự nên ẩn thẻ import riêng (ImportType.Departments vẫn còn)
+    };
+}
+<div class="page-head">
+    <div>
+        <h1>@L["Import Excel"]</h1>
+        <p class="sub">@L["Tải file mẫu → điền dữ liệu → upload → xem trước và sửa lỗi → xác nhận. Dữ liệu chỉ được ghi khi không còn dòng lỗi."]</p>
+    </div>
+</div>
+
+<div class="alert-soft mb-3">
+    @Html.Icon("calendar") @L["Người tham dự và giải thưởng sẽ được import vào sự kiện:"] <b>@LocalizedName.Get(Model)</b> (@Model.EventDate.ToString("dd/MM/yyyy")).
+</div>
+
+<div class="row g-3">
+    @foreach (var c in cards)
+    {
+        <div class="col-lg-6">
+            <form method="post" asp-action="Upload" enctype="multipart/form-data" class="card-ld h-100 d-flex flex-column">
+                <input type="hidden" name="type" value="@c.Type" />
+                <div class="card-head">
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="stat-icon gold" style="width:36px;height:36px;border-radius:10px">@Html.Icon(c.Icon)</span>
+                        <h2>@c.Title</h2>
+                    </div>
+                    <a class="btn btn-ghost btn-sm" asp-action="Template" asp-route-type="@c.Type">@Html.Icon("download") @L["File mẫu"]</a>
+                </div>
+                <div class="card-body flex-grow-1">
+                    <p class="small-note">@c.Desc</p>
+                    <label class="form-label">@L["Chọn file .xlsx"]</label>
+                    <input type="file" name="file" class="form-control mb-3" accept=".xlsx" required />
+                    <label class="form-label">@L["Khi trùng dữ liệu"]</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="overwrite" value="false" id="ow-@c.Type-0" checked />
+                        <label class="form-check-label" for="ow-@c.Type-0">@c.AppendLabel</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="overwrite" value="true" id="ow-@c.Type-1" />
+                        <label class="form-check-label" for="ow-@c.Type-1">@c.OverwriteLabel</label>
+                    </div>
+                </div>
+                <div class="form-foot">
+                    <button type="submit" class="btn btn-primary">@Html.Icon("upload") @L["Upload & xem trước"]</button>
+                </div>
+            </form>
+        </div>
+    }
+</div>
+
+<div class="card-ld mt-3">
+    <div class="card-head"><h2>@L["Lưu ý khi chuẩn bị file"]</h2></div>
+    <div class="card-body">
+        <ul class="mb-0 small">
+            <li>@L["Chỉ đọc sheet đầu tiên. Dòng 1 là tiêu đề, giữ đúng tên cột như file mẫu (cột có * là bắt buộc)."]</li>
+            <li>@L["Người tham dự: nhận luôn file nhân sự có tiêu đề song ngữ (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ). Cột STT và 工齡 được bỏ qua, thâm niên tự tính theo ngày sự kiện."]</li>
+            <li>@L["Không gộp ô. Ngày vào làm dạng yyyy-MM-dd (ví dụ 2024-03-15) hoặc dd/MM/yyyy."]</li>
+            <li>@L["Tối đa 5.000 dòng và 5 MB mỗi lần. Toàn bộ file được ghi trong một giao dịch: lỗi một dòng thì không ghi dòng nào."]</li>
+        </ul>
+    </div>
+</div>

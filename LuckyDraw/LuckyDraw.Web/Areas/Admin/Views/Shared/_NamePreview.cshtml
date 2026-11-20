@@ -1,0 +1,12 @@
+@* Xem trước tên theo 4 ngôn ngữ, cập nhật khi gõ (admin.js: [data-lang-preview]).
+   Ô để trống thì màn chiếu dùng tên dự phòng: 简 → 繁 → VI, 繁/EN → VI (hiện chữ mờ). *@
+<div class="card-ld">
+    <div class="card-head"><h2>@Html.Icon("globe") @L["Tên hiển thị trên màn chiếu"]</h2></div>
+    <div class="card-body" data-lang-preview>
+        <div class="lang-row"><span class="lang-flag">VI</span><span data-lang="vi"></span></div>
+        <div class="lang-row"><span class="lang-flag">繁</span><span data-lang="zhTW" lang="zh-TW"></span></div>
+        <div class="lang-row"><span class="lang-flag">简</span><span data-lang="zhCN" lang="zh-CN"></span></div>
+        <div class="lang-row"><span class="lang-flag">EN</span><span data-lang="en"></span></div>
+        <p class="small-note mt-3 mb-0">@L["Chữ mờ: ngôn ngữ đó đang để trống, màn chiếu sẽ dùng tên dự phòng."]</p>
+    </div>
+</div>

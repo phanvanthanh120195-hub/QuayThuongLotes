@@ -1,0 +1,12 @@
+## .NET
+bin/
+obj/
+*.user
+.vs/
+
+## File người dùng upload & file import tạm (backup riêng cùng DB)
+LuckyDraw.Web/wwwroot/uploads/
+LuckyDraw.Web/App_Data/
+
+## Bản script có mật khẩu thật
+database/*.local.sql

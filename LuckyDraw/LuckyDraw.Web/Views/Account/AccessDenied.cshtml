@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = L["Không có quyền"];
+}
+<div class="auth-form" style="min-height:100vh">
+    <div class="auth-card text-center">
+        <div class="stat-icon red mx-auto mb-3">@Html.Icon("shield")</div>
+        <h2>@L["Không có quyền truy cập"]</h2>
+        <p class="muted">@L["Tài khoản của bạn không được phép mở trang này. Trang quản trị chỉ dành cho Admin."]</p>
+        <div class="d-flex gap-2 justify-content-center mt-4">
+            <a class="btn btn-light" asp-controller="Home" asp-action="Index">@L["Về trang chính"]</a>
+            <form method="post" asp-controller="Account" asp-action="Logout">
+                <button class="btn btn-primary" type="submit">@L["Đăng nhập tài khoản khác"]</button>
+            </form>
+        </div>
+    </div>
+</div>

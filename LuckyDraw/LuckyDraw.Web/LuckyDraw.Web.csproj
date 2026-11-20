@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>LuckyDraw.Web</RootNamespace>
+    <UserSecretsId>luckydraw-web-5f0b6c2e-8f1a-4c39-9a52-2d7d1f3e7a10</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- File upload & file import tạm không đưa vào publish/git -->
+    <Content Remove="wwwroot\uploads\**" />
+    <None Remove="App_Data\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="ClosedXML" Version="0.105.1" />
+    <PackageReference Include="Dapper" Version="2.1.100" />
+    <PackageReference Include="Npgsql" Version="8.0.6" />
+  </ItemGroup>
+
+</Project>

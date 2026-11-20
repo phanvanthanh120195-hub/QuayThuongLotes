@@ -1,0 +1,138 @@
+@model IReadOnlyList<Prize>
+@{
+    ViewData["Title"] = L["Giải thưởng"];
+    Event ev = ViewBag.Event;
+}
+<div class="page-head">
+    <div>
+        <h1>@L["Giải thưởng"]</h1>
+        <p class="sub">@L["Thứ tự trong danh sách là thứ tự quay trên màn chiếu. Người đã trúng sẽ không được quay ở giải khác."]</p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-light" asp-controller="Import" asp-action="Index">@Html.Icon("upload") @L["Import Excel"]</a>
+        <a class="btn btn-primary" asp-action="Create">@Html.Icon("plus") @L["Thêm giải thưởng"]</a>
+    </div>
+</div>
+
+<div class="card-ld">
+    @if (Model.Count == 0)
+    {
+        <div class="empty">
+            @Html.Icon("gift")
+            <h3>@L["Chưa có giải thưởng"]</h3>
+            <p>@L["Thêm từng giải hoặc import nhanh từ file Excel."]</p>
+            <a class="btn btn-primary" asp-action="Create">@Html.Icon("plus") @L["Thêm giải thưởng"]</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-wrap">
+            <table class="table table-ld">
+                <thead>
+                    <tr>
+                        <th style="width:70px">@L["Thứ tự"]</th>
+                        <th>@L["Giải thưởng"]</th>
+                        <th class="text-center">@L["Số lượng"]</th>
+                        <th class="text-center">@L["Mỗi lượt"]</th>
+                        <th>@L["Kiểu quay"]</th>
+                        <th>@L["Điều kiện thâm niên"]</th>
+                        <th style="min-width:150px">@L["Tiến độ"]</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @for (var i = 0; i < Model.Count; i++)
+                {
+                    var p = Model[i];
+                    var pct = Math.Min(100, p.WonCount * 100 / Math.Max(1, p.Quantity));
+                    var remaining = Math.Max(0, p.Quantity - p.WonCount);
+                    <tr class="@(p.IsActive ? "" : "opacity-50")">
+                        <td>
+                            <div class="d-flex align-items-center gap-1">
+                                <span class="muted fw-semibold" style="width:18px">@(i + 1)</span>
+                                <div class="d-flex flex-column">
+                                    <form method="post" asp-action="Move" asp-route-id="@p.PrizeId" asp-route-direction="-1">
+                                        <button class="btn btn-ghost p-0" style="height:18px" type="submit" disabled="@(i == 0)" title="@L["Lên"]">@Html.Icon("up")</button>
+                                    </form>
+                                    <form method="post" asp-action="Move" asp-route-id="@p.PrizeId" asp-route-direction="1">
+                                        <button class="btn btn-ghost p-0" style="height:18px" type="submit" disabled="@(i == Model.Count - 1)" title="@L["Xuống"]">@Html.Icon("down")</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                @if (p.ImagePath != null)
+                                {
+                                    <img class="thumb" src="@p.ImagePath" alt="" />
+                                }
+                                else
+                                {
+                                    <span class="thumb d-grid" style="place-items:center;color:#c5c8d3">@Html.Icon("gift")</span>
+                                }
+                                <div>
+                                    <div class="fw-semibold">@LocalizedName.Get(p)</div>
+                                    <div class="small-note">@string.Join(" · ", new[] { p.NameEn, p.NameZhTw }.Where(x => !string.IsNullOrEmpty(x)))</div>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="text-center fw-semibold">@p.Quantity</td>
+                        <td class="text-center">@p.DrawPerTurn</td>
+                        <td>
+                            @if (p.DrawType == 2)
+                            {
+                                <span class="tag">@L["Tự động"] · @(p.SpinSeconds)s</span>
+                            }
+                            else
+                            {
+                                <span class="tag">@L["Thủ công"]</span>
+                            }
+                        </td>
+                        <td>
+                            @if (p.MinSeniorityMonths is null && p.MaxSeniorityMonths is null)
+                            {
+                                <span class="muted">@L["Tất cả"]</span>
+                            }
+                            else if (p.MaxSeniorityMonths is null)
+                            {
+                                <span class="tag gold">≥ @L["{0} tháng", p.MinSeniorityMonths!]</span>
+                            }
+                            else if (p.MinSeniorityMonths is null)
+                            {
+                                <span class="tag gold">&lt; @L["{0} tháng", p.MaxSeniorityMonths]</span>
+                            }
+                            else
+                            {
+                                <span class="tag gold">@L["{0}–{1} tháng", p.MinSeniorityMonths, p.MaxSeniorityMonths]</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="progress-ld flex-grow-1 @(pct >= 100 ? "done" : "")"><span style="width:@pct%"></span></div>
+                                <span class="small fw-semibold">@p.WonCount/@p.Quantity</span>
+                            </div>
+                            @if (remaining > 0 && p.EligibleCount < remaining)
+                            {
+                                <div class="small text-warning mt-1">@Html.Icon("alert") @L["Chỉ còn {0} người đủ điều kiện", p.EligibleCount]</div>
+                            }
+                        </td>
+                        <td class="actions-cell">
+                            <form method="post" asp-action="ToggleActive" asp-route-id="@p.PrizeId">
+                                <button class="btn btn-light btn-sm" type="submit">@(p.IsActive ? L["Tắt"] : L["Bật"])</button>
+                            </form>
+                            <a class="btn btn-ghost btn-icon" asp-action="Edit" asp-route-id="@p.PrizeId" title="@L["Sửa"]">@Html.Icon("edit")</a>
+                            <form method="post" asp-action="Delete" asp-route-id="@p.PrizeId" data-confirm="@L["Xoá giải {0}? Thao tác không thể hoàn tác.", p.NameVi]">
+                                <button class="btn btn-ghost btn-icon danger" type="submit" title="@L["Xoá"]">@Html.Icon("trash")</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+        <div class="pager">
+            <span class="small-note">@L["Tổng {0} giải · {1} suất", Model.Count, Model.Where(p => p.IsActive).Sum(p => p.Quantity)]</span>
+            <span class="small-note">@L["Thâm niên tính đến ngày sự kiện {0}", ev.EventDate.ToString("dd/MM/yyyy")]</span>
+        </div>
+    }
+</div>

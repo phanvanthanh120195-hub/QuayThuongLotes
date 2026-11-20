@@ -1,0 +1,23 @@
+@* Cột phải của các trang tài khoản: quyền của từng vai trò + lưu ý mật khẩu *@
+<div class="preview-sticky">
+    <div class="card-ld">
+        <div class="card-head"><h2>@Html.Icon("shield") @L["Quyền của từng vai trò"]</h2></div>
+        <div class="card-body pt-2 pb-2">
+            <div class="elig-row"><span class="fw-semibold">@L["Bấm quay, Vắng mặt – quay lại"]</span><span><span class="tag green">MC</span> <span class="tag red">Admin</span></span></div>
+            <div class="elig-row"><span class="fw-semibold">@L["Tải kết quả trên màn chiếu"]</span><span><span class="tag green">MC</span> <span class="tag red">Admin</span></span></div>
+            <div class="elig-row"><span class="fw-semibold">@L["Trang quản trị (giải, người, giao diện…)"]</span><span><span class="tag red">Admin</span></span></div>
+            <div class="elig-row"><span class="fw-semibold">@L["Khôi phục / reset kết quả"]</span><span><span class="tag red">Admin</span></span></div>
+            <div class="elig-row"><span class="fw-semibold">@L["Quản lý tài khoản"]</span><span><span class="tag red">Admin</span></span></div>
+        </div>
+    </div>
+    <div class="card-ld">
+        <div class="card-head"><h2>@Html.Icon("key") @L["Lưu ý về mật khẩu"]</h2></div>
+        <div class="card-body pt-2 pb-2">
+            <ul class="side-list">
+                <li>@Html.Icon("check") <span>@L["Tối thiểu 8 ký tự, nên có chữ hoa, chữ thường, số và ký tự đặc biệt."]</span></li>
+                <li>@Html.Icon("check") <span>@L["Mật khẩu được băm (có salt), Admin cũng không xem lại được – chỉ đặt mật khẩu mới."]</span></li>
+                <li>@Html.Icon("check") <span>@L["Mỗi MC nên có tài khoản riêng để nhật ký ghi đúng người bấm quay."]</span></li>
+            </ul>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,137 @@
+@model IReadOnlyList<EventSummary>
+@{
+    ViewData["Title"] = L["Sự kiện"];
+    int? workingId = ViewBag.WorkingEventId;
+}
+<div class="page-head">
+    <div>
+        <h1>@L["Sự kiện"]</h1>
+        <p class="sub">@L["Mỗi sự kiện có giải thưởng, người tham dự, giao diện và kết quả riêng. Chỉ một sự kiện được chiếu tại một thời điểm."]</p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-primary" asp-action="Create">@Html.Icon("plus") @L["Tạo sự kiện"]</a>
+    </div>
+</div>
+
+<div class="card-ld">
+    @if (Model.Count == 0)
+    {
+        <div class="empty">
+            @Html.Icon("calendar")
+            <h3>@L["Chưa có sự kiện nào"]</h3>
+            <a class="btn btn-primary" asp-action="Create">@Html.Icon("plus") @L["Tạo sự kiện"]</a>
+        </div>
+    }
+    else
+    {
+        <div class="table-wrap">
+            <table class="table table-ld">
+                <thead>
+                    <tr>
+                        <th>@L["Sự kiện"]</th>
+                        <th>@L["Ngày"]</th>
+                        <th class="text-center">@L["Giải"]</th>
+                        <th class="text-center">@L["Người tham dự"]</th>
+                        <th>@L["Đã quay"]</th>
+                        <th>@L["Trạng thái"]</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var e in Model)
+                {
+                    var pct = e.TotalQuantity == 0 ? 0 : Math.Min(100, e.WinnerCount * 100 / e.TotalQuantity);
+                    <tr>
+                        <td>
+                            <div class="fw-semibold">@LocalizedName.Get(e)</div>
+                            <div class="small-note">@e.Location</div>
+                        </td>
+                        <td class="text-nowrap">@e.EventDate.ToString("dd/MM/yyyy")</td>
+                        <td class="text-center">@e.PrizeCount</td>
+                        <td class="text-center">@e.ParticipantCount</td>
+                        <td style="min-width:140px">
+                            <div class="d-flex align-items-center gap-2">
+                                <div class="progress-ld flex-grow-1 @(pct >= 100 ? "done" : "")"><span style="width:@pct%"></span></div>
+                                <span class="small">@e.WinnerCount/@e.TotalQuantity</span>
+                            </div>
+                        </td>
+                        <td>
+                            @if (e.IsActive) { <span class="tag red live">@L["Đang chiếu"]</span> }
+                            @if (e.EventId == workingId) { <span class="tag gold">@L["Đang quản lý"]</span> }
+                        </td>
+                        <td class="actions-cell">
+                            @if (e.EventId != workingId)
+                            {
+                                <form method="post" asp-action="Use" asp-route-id="@e.EventId">
+                                    <button class="btn btn-light btn-sm" type="submit">@L["Quản lý"]</button>
+                                </form>
+                            }
+                            @if (e.IsActive)
+                            {
+                                <form method="post" asp-action="Deactivate" asp-route-id="@e.EventId" data-confirm="@L["Ngừng chiếu sự kiện này? Màn hình chính sẽ không còn sự kiện nào."]">
+                                    <button class="btn btn-light btn-sm" type="submit">@L["Ngừng chiếu"]</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form method="post" asp-action="Activate" asp-route-id="@e.EventId" data-confirm="@L["Chiếu sự kiện này lên màn hình chính? Sự kiện đang chiếu (nếu có) sẽ bị thay."]">
+                                    <button class="btn btn-light btn-sm" type="submit">@Html.Icon("broadcast") @L["Chiếu"]</button>
+                                </form>
+                            }
+                            <a class="btn btn-ghost btn-icon" asp-action="Edit" asp-route-id="@e.EventId" title="@L["Sửa"]">@Html.Icon("edit")</a>
+                            @if (!e.IsActive)
+                            {
+                                <button class="btn btn-ghost btn-icon danger" type="button" title="@L["Xoá"]"
+                                        data-bs-toggle="modal" data-bs-target="#deleteEvent"
+                                        data-id="@e.EventId" data-name="@e.NameVi" data-winners="@e.WinnerCount">@Html.Icon("trash")</button>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<div class="modal fade" id="deleteEvent" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content" method="post" asp-action="Delete" id="deleteEventForm">
+            <div class="modal-header">
+                <h5 class="modal-title">@L["Xoá sự kiện"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@L["Đóng"]"></button>
+            </div>
+            <div class="modal-body">
+                <p>@L["Xoá sự kiện sẽ xoá luôn toàn bộ giải thưởng và người tham dự của sự kiện. Không thể hoàn tác."]</p>
+                <p class="small-note">@L["Sự kiện đã có kết quả quay sẽ không xoá được."]</p>
+                <label class="form-label" for="confirmName">@L["Gõ lại tên sự kiện (tiếng Việt) để xác nhận"]: <b id="deleteEventName"></b></label>
+                <input class="form-control" id="confirmName" name="confirmName" autocomplete="off" data-confirm-text="" data-confirm-target="#deleteEventBtn" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@L["Huỷ"]</button>
+                <button type="submit" class="btn btn-primary" id="deleteEventBtn" disabled>@Html.Icon("trash") @L["Xoá vĩnh viễn"]</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        (function () {
+            var modal = document.getElementById('deleteEvent');
+            var form = document.getElementById('deleteEventForm');
+            var input = document.getElementById('confirmName');
+            var btn = document.getElementById('deleteEventBtn');
+            var base = form.getAttribute('action');
+            modal.addEventListener('show.bs.modal', function (e) {
+                var b = e.relatedTarget;
+                var name = b.getAttribute('data-name');
+                form.setAttribute('action', base + '/' + b.getAttribute('data-id'));
+                document.getElementById('deleteEventName').textContent = name;
+                input.value = '';
+                input.oninput = function () { btn.disabled = input.value.trim() !== name; };
+                btn.disabled = true;
+            });
+        })();
+    </script>
+}

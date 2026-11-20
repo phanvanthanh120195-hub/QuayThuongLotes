@@ -1,0 +1,37 @@
+@model PagerModel
+@{
+    if (Model.TotalPages <= 1 && Model.Total <= 0) { return; }
+    var from = Math.Max(1, Model.Page - 2);
+    var to = Math.Min(Model.TotalPages, Model.Page + 2);
+    Dictionary<string, string?> R(int page)
+    {
+        var d = new Dictionary<string, string?>(Model.Route) { ["page"] = page.ToString() };
+        return d;
+    }
+}
+<div class="pager">
+    <span class="small-note">@L["Tổng {0} dòng · Trang {1}/{2}", Model.Total, Model.Page, Model.TotalPages]</span>
+    @if (Model.TotalPages > 1)
+    {
+        <nav aria-label="@L["Phân trang"]">
+            <ul class="pagination pagination-sm">
+                <li class="page-item @(Model.Page <= 1 ? "disabled" : "")"><a class="page-link" asp-action="@Model.Action" asp-all-route-data="R(Model.Page - 1)">‹</a></li>
+                @if (from > 1)
+                {
+                    <li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-all-route-data="R(1)">1</a></li>
+                    if (from > 2) { <li class="page-item disabled"><span class="page-link">…</span></li> }
+                }
+                @for (var i = from; i <= to; i++)
+                {
+                    <li class="page-item @(i == Model.Page ? "active" : "")"><a class="page-link" asp-action="@Model.Action" asp-all-route-data="R(i)">@i</a></li>
+                }
+                @if (to < Model.TotalPages)
+                {
+                    if (to < Model.TotalPages - 1) { <li class="page-item disabled"><span class="page-link">…</span></li> }
+                    <li class="page-item"><a class="page-link" asp-action="@Model.Action" asp-all-route-data="R(Model.TotalPages)">@Model.TotalPages</a></li>
+                }
+                <li class="page-item @(Model.Page >= Model.TotalPages ? "disabled" : "")"><a class="page-link" asp-action="@Model.Action" asp-all-route-data="R(Model.Page + 1)">›</a></li>
+            </ul>
+        </nav>
+    }
+</div>

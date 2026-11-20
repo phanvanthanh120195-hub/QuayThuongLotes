@@ -1,0 +1,383 @@
+@model Event?
+@using System.Globalization
+@using System.Text.Json
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Antiforgery
+@{
+    Layout = null;
+    var culture = CultureInfo.CurrentUICulture.Name;
+    var canDraw = User.IsInRole(Roles.Admin) || User.IsInRole(Roles.Operator);
+    var isAdmin = User.IsInRole(Roles.Admin);
+    var signedIn = User.Identity?.IsAuthenticated == true;
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+
+    // Chữ dùng trong draw.js: render sẵn theo ngôn ngữ, không viết cứng trong file .js
+    var i18n = new Dictionary<string, string>
+    {
+        ["start"] = L["Bắt đầu"],
+        ["stop"] = L["Dừng"],
+        ["drawing"] = L["Đang quay…"],
+        ["continue"] = L["Tiếp tục"],
+        ["nextPrize"] = L["Giải tiếp theo"],
+        ["allDone"] = L["Đã quay xong tất cả giải"],
+        ["progress"] = L["Đã quay {0} / {1} người trúng giải này"],
+        ["notEnough"] = L["Chỉ còn {0} người đủ điều kiện"],
+        ["noResults"] = L["Chưa có người trúng giải này."],
+        ["noPrizes"] = L["Chưa có giải thưởng"],
+        ["absent"] = L["Vắng mặt"],
+        ["absentTitle"] = L["Vắng mặt – huỷ kết quả để quay người khác"],
+        ["confirmAbsent"] = L["Xác nhận {0} vắng mặt? Kết quả của người này bị huỷ và họ không được quay nữa."],
+        ["absentDone"] = L["Đã huỷ kết quả. Bấm Bắt đầu để quay người thay thế."],
+        ["congrats"] = L["Chúc mừng"],
+        ["wonLabel"] = L["Đã trúng"],
+        ["viewAll"] = L["Xem tất cả"],
+        ["confirm"] = L["Xác nhận"],
+        ["skip"] = L["Bỏ qua"],
+        ["close"] = L["Đóng"],
+        ["allPrizes"] = L["Tất cả giải"],
+        ["sumTotal"] = L["Tổng cộng: {0} người trúng trong {1} giải"],
+        ["prizeTotal"] = L["Tổng cộng: {0} suất trong {1} giải · đã quay {2}"],
+        ["manual"] = L["Thủ công"],
+        ["auto"] = L["Tự động"],
+        ["senAny"] = L["Không giới hạn"],
+        ["senMin"] = L["Từ {0} tháng"],
+        ["senMax"] = L["Dưới {0} tháng"],
+        ["senRange"] = L["Từ {0} đến dưới {1} tháng"],
+        ["doneTag"] = L["Đã xong"],
+        ["pressToContinue"] = L["Bấm Enter hoặc chạm vào màn hình để tiếp tục"],
+        ["statusWon"] = L["Đã trúng"],
+        ["statusAbsent"] = L["Vắng mặt"],
+        ["statusWaiting"] = L["Chưa trúng"],
+        ["total"] = L["Tổng {0} người"],
+        ["peopleTotal"] = L["Tổng cộng: {0} người · trang {1}/{2}"],
+        ["prevPage"] = L["Trang trước"],
+        ["nextPage"] = L["Trang sau"],
+        ["noLast"] = L["Chưa có lượt quay nào."],
+        ["soundOn"] = L["Bật âm thanh"],
+        ["soundOff"] = L["Tắt âm thanh"],
+        ["networkError"] = L["Mất kết nối máy chủ, vui lòng thử lại."],
+        ["sessionExpired"] = L["Phiên đăng nhập đã hết hạn, hãy đăng nhập lại."]
+    };
+    var cfg = new { i18n, token = Antiforgery.GetAndStoreTokens(Context).RequestToken, canDraw, culture };
+}
+<!DOCTYPE html>
+<html lang="@culture">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@(Model is null ? "LuckyDraw" : LocalizedName.Get(Model)) · LuckyDraw</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Be+Vietnam+Pro:wght@400;600;700;800&family=Montserrat:wght@800&family=Oswald:wght@600&family=Playfair+Display:wght@800&display=swap" rel="stylesheet" />
+    <link rel="preload" as="image" href="~/images/themes/tet-binh-ngo.webp" />
+    <link rel="preload" as="image" href="~/images/award.png" />
+    <link rel="stylesheet" href="~/css/stage.css" asp-append-version="true" />
+</head>
+<body class="stage pos-bottom">
+    <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+        <symbol id="s-gift" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+        <symbol id="s-clip" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3"/></symbol>
+        <symbol id="s-list" viewBox="0 0 24 24"><path d="M3 6h2M3 12h2M3 18h2M8 6h13M8 12h10M8 18h7"/></symbol>
+        <symbol id="s-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.56-2.5 5.56-5.55C21.97 6.01 17.46 2 12 2z"/></symbol>
+        <symbol id="s-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+        <symbol id="s-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></symbol>
+        <symbol id="s-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></symbol>
+        <symbol id="s-vol" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+        <symbol id="s-mute" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M23 9l-6 6M17 9l6 6"/></symbol>
+        <symbol id="s-full" viewBox="0 0 24 24"><path d="M3.75 3.75v4.5m0-4.5h4.5m-4.5 0L9 9M3.75 20.25v-4.5m0 4.5h4.5m-4.5 0L9 15M20.25 3.75h-4.5m4.5 0v4.5m0-4.5L15 9m5.25 11.25h-4.5m4.5 0v-4.5m0 4.5L15 15"/></symbol>
+        <symbol id="s-userx" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><path d="M18 8l5 5M23 8l-5 5"/></symbol>
+        <symbol id="s-chev" viewBox="0 0 24 24"><path d="M6 15l6-6 6 6"/></symbol>
+        <symbol id="s-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+        <symbol id="s-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></symbol>
+        <symbol id="s-login" viewBox="0 0 24 24"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4M10 17l5-5-5-5M15 12H3"/></symbol>
+        <symbol id="s-logout" viewBox="0 0 24 24"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/></symbol>
+        <symbol id="s-admin" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="1.5"/><rect x="14" y="3" width="7" height="5" rx="1.5"/><rect x="14" y="12" width="7" height="9" rx="1.5"/><rect x="3" y="16" width="7" height="5" rx="1.5"/></symbol>
+    </svg>
+
+    <div class="bg-layer"><div class="bg-img"></div><div class="bg-dim"></div></div>
+    <canvas id="fxAmbient"></canvas>
+    <canvas id="fxBurst"></canvas>
+    <img class="logo" id="logo" alt="" hidden />
+
+    @if (Model is null)
+    {
+        <div class="empty-stage">
+            <div>
+                <h1 class="gold-text">@L["Chưa có sự kiện nào đang chiếu"]</h1>
+                <p>@L["Admin hãy vào trang quản trị và bấm “Chiếu sự kiện này”."]</p>
+            </div>
+        </div>
+    }
+    else
+    {
+        <main class="stage-main">
+            <h1 class="event-title gold-text" id="eventTitle">@LocalizedName.Get(Model)</h1>
+            <div class="prize-nav">
+                <button class="nav-btn" id="prev" type="button" aria-label="@L["Giải trước"]"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+                <div class="prize-name gold-text" id="prizeName"></div>
+                <button class="nav-btn" id="next" type="button" aria-label="@L["Giải sau"]"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+            </div>
+            <div class="prize-badge">
+                <img class="prize-img" id="prizeImg" alt="" hidden />
+                <div class="medal" id="medal">
+                    <img src="~/images/award.png" alt="" aria-hidden="true" />
+                    <span class="medal-num" id="medalNum"></span>
+                </div>
+            </div>
+            <div class="slots glass" id="slots" aria-live="polite"></div>
+            <div class="controls">
+                <div class="start-wrap"><button class="start-btn s2" id="btnStart" type="button" hidden></button></div>
+                @if (!canDraw)
+                {
+                    <span class="view-note">@L["Chế độ xem – đăng nhập MC để quay"]</span>
+                }
+            </div>
+            <div class="progress-txt" id="progressTxt"></div>
+            <div class="warn" id="warn" style="visibility:hidden">&nbsp;</div>
+
+            <nav class="pill" aria-label="@L["Công cụ"]">
+                <button class="pill-btn" id="btnPrizes" type="button"><svg><use href="#s-gift"/></svg><span class="lbl">@L["Giải thưởng"]</span></button>
+                <button class="pill-btn" id="btnPeople" type="button"><svg><use href="#s-clip"/></svg><span class="lbl">@L["Người tham dự"]</span></button>
+                <button class="pill-btn" id="btnSummary" type="button"><svg><use href="#s-list"/></svg><span class="lbl">@L["Kết quả tổng"]</span></button>
+                <button class="pill-btn" id="btnLast" type="button"><svg><use href="#s-trophy"/></svg><span class="lbl">@L["Kết quả vừa quay"]</span></button>
+            </nav>
+        </main>
+
+        <section class="results" aria-labelledby="resultsTitle">
+            <div class="results-head">
+                <h2 id="resultsTitle">@L["Danh sách trúng giải"]</h2>
+                @if (canDraw)
+                {
+                    <a class="dl-btn" href="/api/results/export"><svg><use href="#s-download"/></svg>@L["Tải kết quả"]</a>
+                }
+            </div>
+            <div class="tabs" id="resultTabs" role="tablist"></div>
+            <div class="table-wrap">
+                <table class="rtable">
+                    <thead>
+                        <tr>
+                            <th>@L["STT"]</th>
+                            <th>@L["Mã trúng thưởng"]</th>
+                            <th>@L["Họ và tên"]</th>
+                            <th>@L["Bộ phận"]</th>
+                            @if (canDraw) { <th></th> }
+                        </tr>
+                    </thead>
+                    <tbody id="resultsBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <div class="corner left">
+            <button class="corner-btn" id="btnFull" type="button" title="@L["Toàn màn hình"] (F)"><svg><use href="#s-full"/></svg></button>
+        </div>
+
+        <div class="congrats" id="congrats" hidden role="dialog" aria-live="assertive"></div>
+
+        <div class="modal" id="peopleModal" hidden>
+            <div class="dmodal" role="dialog" aria-labelledby="peopleTitle">
+                <div class="dm-head">
+                    <div>
+                        <h2 id="peopleTitle">@L["Người tham dự"]</h2>
+                        <p>@L["Danh sách người được quay của sự kiện"]</p>
+                    </div>
+                    <button class="dm-x" type="button" data-close aria-label="@L["Đóng"]">×</button>
+                </div>
+                <div class="dm-bar"><span class="dm-total" id="peopleTotal"></span></div>
+                <div class="dm-body">
+                    <div class="dm-tools">
+                        <div class="dm-search"><input id="peopleSearch" type="search" placeholder="@L["Tìm theo mã hoặc tên…"]" /></div>
+                    </div>
+                    <div class="dm-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="c">#</th>
+                                    <th>@L["Họ và tên"]</th>
+                                    <th>@L["Mã nhân viên"]</th>
+                                    <th>@L["Chức vụ"]</th>
+                                    <th>@L["Bộ phận"]</th>
+                                    <th>@L["Trạng thái"]</th>
+                                </tr>
+                            </thead>
+                            <tbody id="peopleRows"></tbody>
+                        </table>
+                        <div class="dm-empty" id="peopleEmpty" hidden>@L["Không có kết quả phù hợp"]</div>
+                    </div>
+                </div>
+                <div class="dm-foot">
+                    <div class="dm-pager" id="peoplePager"></div>
+                    <button class="dm-btn" type="button" data-close>@L["Đóng"]</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="prizeModal" hidden>
+            <div class="dmodal" role="dialog" aria-labelledby="prizeTitle">
+                <div class="dm-head">
+                    <div>
+                        <h2 id="prizeTitle">@L["Thông tin giải thưởng"]</h2>
+                        <p>@L["Danh sách giải, số lượng và tiến độ quay"]</p>
+                    </div>
+                    <button class="dm-x" type="button" data-close aria-label="@L["Đóng"]">×</button>
+                </div>
+                <div class="dm-bar"><span class="dm-total" id="prizeTotal"></span></div>
+                <div class="dm-body">
+                    <div class="dm-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="c">#</th>
+                                    <th>@L["Giải thưởng"]</th>
+                                    <th class="c">@L["Số lượng"]</th>
+                                    <th class="c">@L["Mỗi lượt"]</th>
+                                    <th>@L["Đã quay"]</th>
+                                    <th class="c">@L["Còn lại"]</th>
+                                </tr>
+                            </thead>
+                            <tbody id="prizeRows"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="dm-foot">
+                    <span></span>
+                    <button class="dm-btn" type="button" data-close>@L["Đóng"]</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="sumModal" hidden>
+            <div class="dmodal" role="dialog" aria-labelledby="sumTitle">
+                <div class="dm-head">
+                    <div>
+                        <h2 id="sumTitle">@L["Kết quả quay số"]</h2>
+                        <p>@L["Xem toàn bộ người trúng theo từng giải"]</p>
+                    </div>
+                    <button class="dm-x" type="button" data-close aria-label="@L["Đóng"]">×</button>
+                </div>
+                <div class="dm-bar"><span class="dm-total" id="sumTotal"></span></div>
+                <div class="dm-body">
+                    <div class="dm-tools">
+                        <div class="dm-search"><input id="sumSearch" type="search" placeholder="@L["Tìm kiếm kết quả…"]" /></div>
+                        <select id="sumPrize" class="dm-select"></select>
+                    </div>
+                    <div class="dm-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="c">#</th>
+                                    <th>@L["Họ và tên"]</th>
+                                    <th>@L["Mã trúng thưởng"]</th>
+                                    <th>@L["Chức vụ"]</th>
+                                    <th>@L["Bộ phận"]</th>
+                                    <th>@L["Giải thưởng"]</th>
+                                </tr>
+                            </thead>
+                            <tbody id="sumRows"></tbody>
+                        </table>
+                        <div class="dm-empty" id="sumEmpty" hidden>@L["Chưa có kết quả."]</div>
+                    </div>
+                </div>
+                <div class="dm-foot">
+                    @if (canDraw)
+                    {
+                        <a class="dm-btn gold" href="/api/results/export"><svg><use href="#s-download"/></svg>@L["Tải về danh sách"]</a>
+                    }
+                    else
+                    {
+                        <span></span>
+                    }
+                    <button class="dm-btn" type="button" data-close>@L["Đóng"]</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="cfm" id="confirmModal" hidden>
+            <div class="cfm-card" role="alertdialog" aria-modal="true" aria-labelledby="cfmTitle" aria-describedby="cfmText">
+                <div class="cfm-icon"><svg><use href="#s-userx"/></svg></div>
+                <h2 id="cfmTitle">@L["Xác nhận vắng mặt"]</h2>
+                <div class="cfm-person" id="cfmPerson"></div>
+                <p id="cfmText">@L["Kết quả của người này sẽ bị huỷ và họ không được quay nữa. Suất giải được trả lại để quay người khác."]</p>
+                <div class="cfm-actions">
+                    <button class="dm-btn" type="button" data-cfm="no">@L["Huỷ"]</button>
+                    <button class="dm-btn danger" type="button" data-cfm="yes">@L["Xác nhận vắng mặt"]</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="sound-hint" id="soundHint" hidden>@L["Chạm vào màn hình để bật nhạc"]</div>
+        <div class="toast" id="toast" hidden></div>
+    }
+
+    <div class="corner right">
+        @if (Model != null)
+        {
+            <button class="corner-btn round" id="btnSound" type="button"><svg id="icoSoundOn"><use href="#s-vol"/></svg><svg id="icoSoundOff"><use href="#s-mute"/></svg></button>
+        }
+        @{
+            var langBadge = new Dictionary<string, string> { ["vi-VN"] = "VI", ["zh-TW"] = "繁", ["zh-CN"] = "简", ["en-US"] = "EN" };
+            var curLabel = SupportedCultures.Options.FirstOrDefault(o => o.Code == culture).Label ?? SupportedCultures.Options[0].Label;
+        }
+        <div class="lang-pick" id="langPick">
+            <button class="corner-btn wide lang-btn" type="button" aria-haspopup="listbox" aria-expanded="false" title="@L["Ngôn ngữ"]">
+                <svg><use href="#s-globe"/></svg><span>@curLabel</span><svg class="chev"><use href="#s-chev"/></svg>
+            </button>
+            <form class="lang-menu" method="post" asp-controller="Account" asp-action="SetLanguage" role="listbox" aria-label="@L["Ngôn ngữ"]" hidden>
+                <input type="hidden" name="returnUrl" value="@returnUrl" />
+                <div class="lang-title">@L["Ngôn ngữ"]</div>
+                @foreach (var (code, label) in SupportedCultures.Options)
+                {
+                    <button class="lang-opt @(code == culture ? "active" : "")" type="submit" name="culture" value="@code" role="option" aria-selected="@(code == culture ? "true" : "false")">
+                        <span class="lang-badge">@langBadge[code]</span><span class="lang-name">@label</span><svg class="tick"><use href="#s-check"/></svg>
+                    </button>
+                }
+            </form>
+        </div>
+        @* Trang quản trị và Đăng xuất không hiện trên màn chiếu (vào /admin để quản lý / đăng xuất) *@
+        @if (!signedIn)
+        {
+            <a class="corner-btn wide" href="/Account/Login?returnUrl=%2F"><svg><use href="#s-login"/></svg>@L["Đăng nhập MC"]</a>
+        }
+    </div>
+
+    <script>
+        // Menu chọn ngôn ngữ (dùng được cả khi chưa có sự kiện, không phụ thuộc draw.js)
+        (function () {
+            var pick = document.getElementById('langPick');
+            if (!pick) return;
+            var btn = pick.querySelector('.lang-btn'), menu = pick.querySelector('.lang-menu');
+            function setOpen(open) {
+                menu.hidden = !open;
+                btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+                pick.classList.toggle('open', open);
+                if (open) (menu.querySelector('.lang-opt.active') || menu.querySelector('.lang-opt')).focus();
+            }
+            btn.addEventListener('click', function (e) { e.stopPropagation(); setOpen(menu.hidden); });
+            document.addEventListener('click', function (e) { if (!pick.contains(e.target)) setOpen(false); });
+            menu.addEventListener('keydown', function (e) {
+                var opts = Array.prototype.slice.call(menu.querySelectorAll('.lang-opt')), i = opts.indexOf(document.activeElement);
+                if (e.key === 'Escape') { e.stopPropagation(); setOpen(false); btn.focus(); }
+                else if (e.key === 'ArrowDown') { e.preventDefault(); opts[(i + 1) % opts.length].focus(); }
+                else if (e.key === 'ArrowUp') { e.preventDefault(); opts[(i - 1 + opts.length) % opts.length].focus(); }
+            });
+        })();
+    </script>
+    <script src="~/lib/signalr/signalr.min.js"></script>
+    @if (Model is null)
+    {
+        <script>
+            (function () {
+                var c = new signalR.HubConnectionBuilder().withUrl('/hubs/draw').withAutomaticReconnect().build();
+                c.on('ActiveEventChanged', function () { location.reload(); });
+                var start = function () { c.start().catch(function () { setTimeout(start, 5000); }); };
+                start();
+            })();
+        </script>
+    }
+    else
+    {
+        <script>window.LD = @Html.Raw(JsonSerializer.Serialize(cfg));</script>
+        <script src="~/js/stage-effects.js" asp-append-version="true"></script>
+        <script src="~/js/draw.js" asp-append-version="true"></script>
+    }
+</body>
+</html>

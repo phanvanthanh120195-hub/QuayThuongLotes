@@ -1,0 +1,129 @@
+@model ResultsViewModel
+@{
+    ViewData["Title"] = L["Kết quả"];
+    var returnUrl = Context.Request.Path + Context.Request.QueryString;
+    var tab = Model.Removed ? "removed" : null;
+    string Reason(short? r) => r switch
+    {
+        RemovedReasons.Absent => L["Vắng mặt"],
+        RemovedReasons.AdminDeleted => L["Admin xoá"],
+        RemovedReasons.Reset => L["Reset"],
+        _ => ""
+    };
+    var totalWon = Model.Prizes.Sum(p => p.WonCount);
+}
+<div class="page-head">
+    <div>
+        <h1>@L["Kết quả quay"]</h1>
+        <p class="sub">@L["Xoá kết quả là xoá mềm: luôn khôi phục được ở tab Kết quả đã xoá."]</p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-light" asp-action="Export">@Html.Icon("download") @L["Tải danh sách (.xlsx)"]</a>
+        <button type="button" class="btn btn-light danger" data-bs-toggle="modal" data-bs-target="#resetModal" disabled="@(totalWon == 0)">@Html.Icon("restore") @L["Reset kết quả"]</button>
+    </div>
+</div>
+
+<div class="card-ld">
+    <div class="tabs-ld">
+        <a class="@(Model.Removed ? "" : "active")" asp-action="Index" asp-route-prizeId="@Model.PrizeId">@L["Tất cả kết quả"]<span class="count">@totalWon</span></a>
+        <a class="@(Model.Removed ? "active" : "")" asp-action="Index" asp-route-tab="removed" asp-route-prizeId="@Model.PrizeId">@L["Kết quả đã xoá"]</a>
+    </div>
+    <form method="get" asp-action="Index" class="toolbar">
+        <input type="hidden" name="tab" value="@tab" />
+        <div class="search">
+            @Html.Icon("search")
+            <input type="search" name="q" value="@Model.Q" class="form-control form-control-sm" placeholder="@L["Tìm theo mã hoặc tên…"]" />
+        </div>
+        <select name="prizeId" class="form-select form-select-sm" style="max-width:240px" data-autosubmit>
+            <option value="">@L["Tất cả giải"]</option>
+            @foreach (var p in Model.Prizes)
+            {
+                <option value="@p.PrizeId" selected="@(p.PrizeId == Model.PrizeId)">@LocalizedName.Get(p) (@p.WonCount/@p.Quantity)</option>
+            }
+        </select>
+        <button class="btn btn-light btn-sm" type="submit">@L["Lọc"]</button>
+    </form>
+
+    @if (Model.Page.Items.Count == 0)
+    {
+        <div class="empty">
+            @Html.Icon("trophy")
+            <h3>@(Model.Removed ? L["Không có kết quả đã xoá"] : L["Chưa có kết quả"])</h3>
+            @if (!Model.Removed) { <p>@L["Kết quả sẽ hiện ở đây khi MC bấm quay trên màn hình chính."]</p> }
+        </div>
+    }
+    else
+    {
+        <div class="table-wrap">
+            <table class="table table-ld">
+                <thead>
+                    <tr>
+                        <th>@L["Giải thưởng"]</th>
+                        <th>@L["Mã NV"]</th>
+                        <th>@L["Họ tên"]</th>
+                        <th>@L["Bộ phận"]</th>
+                        <th>@L["Thời gian quay"]</th>
+                        @if (Model.Removed) { <th>@L["Lý do xoá"]</th> }
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                @foreach (var r in Model.Page.Items)
+                {
+                    <tr>
+                        <td><span class="tag gold">@LocalizedName.Prize(r)</span></td>
+                        <td class="mono fw-semibold">@r.EmployeeCode</td>
+                        <td><div class="fw-semibold">@r.FullName</div>@if (r.FullNameZh != null) { <div class="small-note">@r.FullNameZh</div> }</td>
+                        <td>@LocalizedName.Department(r)</td>
+                        <td class="small text-nowrap">@VnTime.Format(r.DrawnAt, "dd/MM HH:mm:ss")<div class="small-note">@r.DrawnBy</div></td>
+                        @if (Model.Removed)
+                        {
+                            <td class="small">
+                                <span class="tag @(r.RemovedReason == RemovedReasons.Absent ? "red" : "")">@Reason(r.RemovedReason)</span>
+                                <div class="small-note">@r.RemovedBy · @VnTime.Format(r.RemovedAt, "dd/MM HH:mm")</div>
+                            </td>
+                        }
+                        <td class="actions-cell">
+                            @if (Model.Removed)
+                            {
+                                <form method="post" asp-action="Restore" asp-route-id="@r.ResultId" asp-route-returnUrl="@returnUrl"
+                                      data-confirm="@L["Khôi phục kết quả của {0}?", r.FullName]">
+                                    <button class="btn btn-light btn-sm" type="submit">@Html.Icon("restore") @L["Khôi phục"]</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form method="post" asp-action="Delete" asp-route-id="@r.ResultId" asp-route-returnUrl="@returnUrl"
+                                      data-confirm="@L["Xoá kết quả của {0}? Người này có thể được quay lại.", r.FullName]">
+                                    <button class="btn btn-ghost btn-icon danger" type="submit" title="@L["Xoá"]">@Html.Icon("trash")</button>
+                                </form>
+                            }
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
+        </div>
+    }
+    <partial name="_Pager" model="@(new PagerModel { Page = Model.Page.Page, TotalPages = Model.Page.TotalPages, Total = Model.Page.Total, Route = new() { ["tab"] = tab, ["q"] = Model.Q, ["prizeId"] = Model.PrizeId?.ToString() } })" />
+</div>
+
+<div class="modal fade" id="resetModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content" method="post" asp-action="Reset">
+            <div class="modal-header">
+                <h5 class="modal-title">@Html.Icon("alert") @L["Reset toàn bộ kết quả"]</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@L["Đóng"]"></button>
+            </div>
+            <div class="modal-body">
+                <p>@L["Tất cả {0} kết quả hiện tại sẽ bị xoá (xoá mềm) và mọi người được quay lại từ đầu. Cờ vắng mặt cũng được bỏ. Thường dùng sau khi quay thử.", totalWon]</p>
+                <label class="form-label" for="confirmName">@L["Gõ lại tên sự kiện (tiếng Việt) để xác nhận"]: <b>@Model.Event.NameVi</b></label>
+                <input class="form-control" id="confirmName" name="confirmName" autocomplete="off" data-confirm-text="@Model.Event.NameVi" data-confirm-target="#resetBtn" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">@L["Huỷ"]</button>
+                <button type="submit" class="btn btn-primary" id="resetBtn" disabled>@L["Reset kết quả"]</button>
+            </div>
+        </form>
+    </div>
+</div>

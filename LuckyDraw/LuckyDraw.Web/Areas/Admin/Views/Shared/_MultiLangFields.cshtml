@@ -1,0 +1,25 @@
+@model MultiLangForm
+@* Bốn ô tên theo ngôn ngữ, dùng chung cho Sự kiện / Bộ phận / Giải thưởng *@
+<div class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="NameVi" class="form-label"><span class="lang-flag">VI</span>@Html.DisplayNameFor(m => m.NameVi) *</label>
+        <input asp-for="NameVi" class="form-control" />
+        <span asp-validation-for="NameVi"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="NameEn" class="form-label"><span class="lang-flag">EN</span>@Html.DisplayNameFor(m => m.NameEn)</label>
+        <input asp-for="NameEn" class="form-control" />
+        <span asp-validation-for="NameEn"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="NameZhTw" class="form-label"><span class="lang-flag">繁</span>@Html.DisplayNameFor(m => m.NameZhTw)</label>
+        <input asp-for="NameZhTw" class="form-control" lang="zh-TW" />
+        <span asp-validation-for="NameZhTw"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="NameZhCn" class="form-label"><span class="lang-flag">简</span>@Html.DisplayNameFor(m => m.NameZhCn)</label>
+        <input asp-for="NameZhCn" class="form-control" lang="zh-CN" />
+        <span asp-validation-for="NameZhCn"></span>
+        <div class="form-text">@L["Để trống thì màn chiếu tạm dùng tên phồn thể. Chuyển phồn → giản tự động chỉ đổi từng chữ, nên xem lại từ vựng."]</div>
+    </div>
+</div>

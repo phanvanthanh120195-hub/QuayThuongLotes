@@ -1,0 +1,218 @@
+@model PrizeFormModel
+@inject AdminEventContext EventContext
+@{
+    var isNew = Model.PrizeId == 0;
+    ViewData["Title"] = isNew ? L["Thêm giải thưởng"] : L["Sửa giải thưởng"];
+    // Nền màn chiếu thu nhỏ = chủ đề của sự kiện đang quản lý
+    var ev = await EventContext.GetAsync();
+    var theme = SettingsJson.Read<ThemeSettings>(ev?.ThemeJson);
+    var preset = ThemeOptions.Presets.FirstOrDefault(p => p.Key == theme.ThemeKey);
+    var stageBg = preset.Key is null ? ThemeOptions.Presets[0].Bg : preset.Bg;
+}
+@section Head {
+    <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet" />
+}
+<div class="page-head">
+    <div>
+        <div class="crumb"><a asp-action="Index">@L["Giải thưởng"]</a> / @ViewData["Title"]</div>
+        <h1>@ViewData["Title"]</h1>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-xl-7">
+        <form method="post" asp-action="@(isNew ? "Create" : "Edit")" asp-route-id="@(isNew ? null : Model.PrizeId)" enctype="multipart/form-data" class="card-ld" id="prizeForm" novalidate>
+            <div asp-validation-summary="ModelOnly" class="flash err m-3 mb-0"></div>
+
+            <div class="form-section">
+                <h3>@L["Tên giải thưởng"]</h3>
+                <p class="hint">@L["Ví dụ: Giải nhất, Giải đặc biệt."]</p>
+                <partial name="_MultiLangFields" model="Model" />
+            </div>
+
+            <div class="form-section">
+                <h3>@L["Số lượng"]</h3>
+                <p class="hint">@L["Ví dụ 100 người trúng, mỗi lượt quay 20 người → MC bấm quay 5 lần."]</p>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label asp-for="Quantity" class="form-label"></label>
+                        <input asp-for="Quantity" class="form-control" type="number" min="1" />
+                        <span asp-validation-for="Quantity"></span>
+                        @if (Model.WonCount > 0)
+                        {
+                            <div class="form-text">@L["Đã có {0} người trúng giải này.", Model.WonCount]</div>
+                        }
+                    </div>
+                    <div class="col-sm-6">
+                        <label asp-for="DrawPerTurn" class="form-label"></label>
+                        <input asp-for="DrawPerTurn" class="form-control" type="number" min="1" />
+                        <span asp-validation-for="DrawPerTurn"></span>
+                        <div class="form-text">@L["Quay lại người vắng mặt thì chỉ quay 1 người."]</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>@L["Kiểu quay"]</h3>
+                <p class="hint">@L["Thủ công: MC bấm dừng. Tự động: tự dừng sau số giây cài đặt."]</p>
+                <div class="choice-grid mb-3" style="grid-template-columns:repeat(auto-fill,minmax(220px,1fr))">
+                    <label class="choice">
+                        <input type="radio" name="DrawType" value="1" checked="@(Model.DrawType != 2)" />
+                        <div class="t">@Html.Icon("pause") @L["Thủ công"]</div>
+                        <div class="d">@L["Bấm Bắt đầu, rồi bấm Dừng khi muốn"]</div>
+                    </label>
+                    <label class="choice">
+                        <input type="radio" name="DrawType" value="2" checked="@(Model.DrawType == 2)" />
+                        <div class="t">@Html.Icon("clock") @L["Tự động"]</div>
+                        <div class="d">@L["Bấm Bắt đầu, tự dừng sau thời gian quay"]</div>
+                    </label>
+                </div>
+                <div class="row g-3">
+                    <div class="col-sm-6" data-show-when="DrawType=2">
+                        <label asp-for="SpinSeconds" class="form-label"></label>
+                        <input asp-for="SpinSeconds" class="form-control" type="number" min="1" max="120" />
+                        <span asp-validation-for="SpinSeconds"></span>
+                    </div>
+                    <div class="col-sm-6">
+                        <label asp-for="StopSeconds" class="form-label"></label>
+                        <input asp-for="StopSeconds" class="form-control" type="number" min="0" max="60" />
+                        <span asp-validation-for="StopSeconds"></span>
+                        <div class="form-text">@L["Thời gian chạy chậm dần trước khi dừng hẳn."]</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>@L["Điều kiện thâm niên"]</h3>
+                <p class="hint">@L["Tính đến ngày sự kiện. Để trống = không giới hạn. Ví dụ giải khuyến khích cho người dưới 6 tháng: tối đa = 6."]</p>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <label asp-for="MinSeniorityMonths" class="form-label"></label>
+                        <input asp-for="MinSeniorityMonths" class="form-control" type="number" min="0" placeholder="—" />
+                        <span asp-validation-for="MinSeniorityMonths"></span>
+                        <div class="form-text">@L["Thâm niên ≥ giá trị này"]</div>
+                    </div>
+                    <div class="col-sm-6">
+                        <label asp-for="MaxSeniorityMonths" class="form-label"></label>
+                        <input asp-for="MaxSeniorityMonths" class="form-control" type="number" min="1" placeholder="—" />
+                        <span asp-validation-for="MaxSeniorityMonths"></span>
+                        <div class="form-text">@L["Thâm niên < giá trị này"]</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>@L["Ảnh phần thưởng"]</h3>
+                <p class="hint">@L["PNG, JPG hoặc WEBP, tối đa 2 MB. Hiển thị trên màn chiếu khi quay giải này."]</p>
+                <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <img id="prizeImg" class="thumb-lg" src="@Model.ImagePath" alt="" hidden="@(Model.ImagePath is null)" />
+                    <div>
+                        <input asp-for="Image" type="file" class="form-control" accept=".jpg,.jpeg,.png,.webp" data-preview="#prizeImg" />
+                        <span asp-validation-for="Image"></span>
+                        @if (Model.ImagePath != null)
+                        {
+                            <div class="form-check mt-2">
+                                <input class="form-check-input" type="checkbox" asp-for="RemoveImage" />
+                                <label class="form-check-label" asp-for="RemoveImage">@L["Xoá ảnh hiện tại"]</label>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" asp-for="IsActive" />
+                    <label class="form-check-label fw-semibold" asp-for="IsActive"></label>
+                </div>
+                <div class="form-text">@L["Giải đã tắt sẽ không hiện trên màn chiếu và không quay được."]</div>
+            </div>
+
+            <div class="form-foot">
+                <a class="btn btn-light" asp-action="Index">@L["Huỷ"]</a>
+                <button type="submit" class="btn btn-primary">@Html.Icon("check") @L["Lưu"]</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="col-xl-5">
+        <div class="preview-sticky">
+            <div class="card-ld">
+                <div class="card-head"><h2>@Html.Icon("eye") @L["Xem trước"]</h2><span class="small-note">16:9</span></div>
+                <div class="card-body">
+                    <div class="stage-preview" style="background:@stageBg; gap:4%">
+                        <div class="gold" id="pvName" style="font-size:clamp(16px,2.4vw,30px)"></div>
+                        <img class="prize-mini-img" id="pvImg" src="@Model.ImagePath" alt="" hidden="@(Model.ImagePath is null)" />
+                        <div class="medal-mini" id="pvMedal" hidden="@(Model.ImagePath != null)">
+                            <img src="~/images/award.png" alt="" aria-hidden="true" />
+                            <span id="pvQty"></span>
+                        </div>
+                        <div class="rows" id="pvRows"></div>
+                    </div>
+                    <dl class="kv mt-3">
+                        <dt>@L["Số lượt quay cần"]</dt><dd id="pvTurns"></dd>
+                        <dt>@L["Kiểu quay"]</dt><dd id="pvType"></dd>
+                        <dt>@L["Điều kiện thâm niên"]</dt><dd id="pvSeniority"></dd>
+                    </dl>
+                </div>
+            </div>
+            <partial name="_NamePreview" />
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        (function () {
+            var t = {
+                manual: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Thủ công"].Value)),
+                auto: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Tự động"].Value)),
+                stop: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["dừng {0}s"].Value)),
+                all: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Tất cả"].Value)),
+                months: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["{0} tháng"].Value)),
+                range: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["{0}–{1} tháng"].Value)),
+                turns: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["{0} lượt"].Value))
+            };
+            var f = function (s) { var a = arguments; return s.replace(/\{(\d)\}/g, function (_, i) { return a[+i + 1]; }); };
+            var val = function (n) { var el = document.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };
+            var num = function (n) { var v = parseInt(val(n), 10); return isNaN(v) ? null : v; };
+
+            function update() {
+                var qty = Math.max(1, num('Quantity') || 1), per = Math.max(1, num('DrawPerTurn') || 1);
+                var type = (document.querySelector('[name="DrawType"]:checked') || {}).value === '2';
+                var min = num('MinSeniorityMonths'), max = num('MaxSeniorityMonths');
+                document.getElementById('pvName').textContent = val('NameVi') || '—';
+                document.getElementById('pvQty').textContent = qty;
+                document.getElementById('pvTurns').textContent = f(t.turns, Math.ceil(qty / per));
+                document.getElementById('pvType').textContent = (type ? t.auto + ' · ' + (num('SpinSeconds') || 5) + 's' : t.manual)
+                    + ' · ' + f(t.stop, num('StopSeconds') == null ? 2 : num('StopSeconds'));
+                document.getElementById('pvSeniority').textContent =
+                    min == null && max == null ? t.all
+                    : max == null ? '≥ ' + f(t.months, min)
+                    : min == null ? '< ' + f(t.months, max)
+                    : f(t.range, min, max);
+                // Mỗi lượt quay bao nhiêu người thì màn chiếu hiện bấy nhiêu dãy ô (tối đa vẽ 8 dãy)
+                var rows = document.getElementById('pvRows'), n = Math.min(Math.min(per, qty), 8);
+                rows.innerHTML = '';
+                for (var r = 0; r < n; r++) {
+                    var row = document.createElement('div');
+                    row.className = 'row-mini';
+                    for (var i = 0; i < 5; i++) row.appendChild(document.createElement('i'));
+                    rows.appendChild(row);
+                }
+            }
+
+            var file = document.querySelector('input[name="Image"]'), pvImg = document.getElementById('pvImg'), pvMedal = document.getElementById('pvMedal');
+            if (file) file.addEventListener('change', function () {
+                if (file.files && file.files[0]) { pvImg.src = URL.createObjectURL(file.files[0]); pvImg.hidden = false; pvMedal.hidden = true; }
+            });
+            var remove = document.getElementById('RemoveImage');
+            if (remove) remove.addEventListener('change', function () { pvImg.hidden = remove.checked; pvMedal.hidden = !remove.checked; });
+
+            document.getElementById('prizeForm').addEventListener('input', update);
+            document.getElementById('prizeForm').addEventListener('change', update);
+            update();
+        })();
+    </script>
+}

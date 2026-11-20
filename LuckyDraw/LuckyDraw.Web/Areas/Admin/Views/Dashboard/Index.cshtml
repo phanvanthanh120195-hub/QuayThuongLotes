@@ -1,0 +1,209 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = L["Tổng quan"];
+    var ev = Model.Event;
+}
+
+@if (ev is null)
+{
+    <div class="card-ld">
+        <div class="empty">
+            @Html.Icon("calendar")
+            <h3>@L["Chào mừng đến LuckyDraw"]</h3>
+            <p>@L["Bắt đầu bằng việc tạo sự kiện, sau đó thêm giải thưởng và người tham dự."]</p>
+            <a class="btn btn-primary" asp-controller="Events" asp-action="Create">@Html.Icon("plus") @L["Tạo sự kiện"]</a>
+        </div>
+    </div>
+    return;
+}
+
+@{
+    var totalQty = Model.Prizes.Where(p => p.IsActive).Sum(p => p.Quantity);
+    var totalWon = Model.Prizes.Sum(p => p.WonCount);
+    var present = Model.Stats.Total - Model.Stats.Absent;
+    var steps = new (bool Done, string Text, string Controller)[]
+    {
+        (Model.Prizes.Count > 0, L["Thêm giải thưởng"], "Prizes"),
+        (Model.Stats.Total > 0, L["Thêm người tham dự"], "Participants"),
+        (ev.ThemeJson.Length > 2, L["Chỉnh giao diện màn chiếu"], "Theme"),
+        (ev.IsActive, L["Chiếu sự kiện lên màn hình chính"], "Events")
+    };
+}
+
+<div class="page-head">
+    <div>
+        <h1>@LocalizedName.Get(ev)</h1>
+        <p class="sub">
+            @Html.Icon("calendar") @ev.EventDate.ToString("dd/MM/yyyy")
+            @if (!string.IsNullOrEmpty(ev.Location)) { <span> · @ev.Location</span> }
+            @if (ev.IsActive) { <span class="tag red live ms-2">@L["Đang chiếu"]</span> }
+            else { <span class="tag ms-2">@L["Chưa chiếu"]</span> }
+        </p>
+    </div>
+    <div class="actions">
+        <a class="btn btn-light" asp-controller="Events" asp-action="Edit" asp-route-id="@ev.EventId">@Html.Icon("edit") @L["Sửa sự kiện"]</a>
+        @if (!ev.IsActive)
+        {
+            <form method="post" asp-controller="Events" asp-action="Activate" asp-route-id="@ev.EventId" data-confirm="@L["Chiếu sự kiện này lên màn hình chính? Sự kiện đang chiếu (nếu có) sẽ bị thay."]">
+                <button class="btn btn-primary" type="submit">@Html.Icon("broadcast") @L["Chiếu sự kiện này"]</button>
+            </form>
+        }
+        else
+        {
+            <a class="btn btn-gold" href="/" target="_blank" rel="noopener">@Html.Icon("monitor") @L["Mở màn hình quay"]</a>
+        }
+    </div>
+</div>
+
+<div class="row g-3 mb-3">
+    <div class="col-sm-6 col-xl-3">
+        <div class="card-ld stat">
+            <div class="stat-icon blue">@Html.Icon("users")</div>
+            <div><div class="num">@Model.Stats.Total</div><div class="lbl">@L["Người tham dự"] · @L["{0} vắng mặt", Model.Stats.Absent]</div></div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card-ld stat">
+            <div class="stat-icon gold">@Html.Icon("gift")</div>
+            <div><div class="num">@Model.Prizes.Count</div><div class="lbl">@L["Giải thưởng"] · @L["{0} suất", totalQty]</div></div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card-ld stat">
+            <div class="stat-icon red">@Html.Icon("trophy")</div>
+            <div><div class="num">@totalWon<small>/@totalQty</small></div><div class="lbl">@L["Đã quay"]</div></div>
+        </div>
+    </div>
+    <div class="col-sm-6 col-xl-3">
+        <div class="card-ld stat">
+            <div class="stat-icon green">@Html.Icon("user-check")</div>
+            <div><div class="num">@(present - Model.Stats.Won)</div><div class="lbl">@L["Còn có thể trúng"]</div></div>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-xl-8">
+        <div class="card-ld">
+            <div class="card-head">
+                <h2>@L["Tiến độ từng giải"]</h2>
+                <a class="btn btn-ghost btn-sm" asp-controller="Prizes" asp-action="Index">@L["Quản lý giải"] @Html.Icon("chevron-right")</a>
+            </div>
+            @if (Model.Prizes.Count == 0)
+            {
+                <div class="empty">
+                    @Html.Icon("gift")
+                    <h3>@L["Chưa có giải thưởng"]</h3>
+                    <a class="btn btn-primary btn-sm" asp-controller="Prizes" asp-action="Create">@Html.Icon("plus") @L["Thêm giải thưởng"]</a>
+                </div>
+            }
+            else
+            {
+                <div class="table-wrap">
+                    <table class="table table-ld">
+                        <thead><tr><th>#</th><th>@L["Giải thưởng"]</th><th style="width:38%">@L["Tiến độ"]</th><th class="text-end">@L["Người đủ điều kiện"]</th></tr></thead>
+                        <tbody>
+                        @for (var i = 0; i < Model.Prizes.Count; i++)
+                        {
+                            var p = Model.Prizes[i];
+                            var pct = p.Quantity == 0 ? 0 : Math.Min(100, p.WonCount * 100 / p.Quantity);
+                            var remaining = Math.Max(0, p.Quantity - p.WonCount);
+                            <tr class="@(p.IsActive ? "" : "opacity-50")">
+                                <td class="muted">@(i + 1)</td>
+                                <td>
+                                    <div class="fw-semibold">@LocalizedName.Get(p)</div>
+                                    @if (!p.IsActive) { <span class="tag">@L["Đã tắt"]</span> }
+                                </td>
+                                <td>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <div class="progress-ld flex-grow-1 @(pct >= 100 ? "done" : "")"><span style="width:@pct%"></span></div>
+                                        <span class="small fw-semibold" style="min-width:52px;text-align:right">@p.WonCount/@p.Quantity</span>
+                                    </div>
+                                </td>
+                                <td class="text-end">
+                                    @if (remaining > 0 && p.EligibleCount < remaining)
+                                    {
+                                        <span class="tag warn" title="@L["Không đủ người hợp lệ để quay hết số suất còn lại"]">@Html.Icon("alert") @p.EligibleCount</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="tag">@p.EligibleCount</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+
+        <div class="card-ld">
+            <div class="card-head">
+                <h2>@L["Kết quả vừa quay"]</h2>
+                <a class="btn btn-ghost btn-sm" asp-controller="Results" asp-action="Index">@L["Xem tất cả"] @Html.Icon("chevron-right")</a>
+            </div>
+            @if (Model.RecentResults.Count == 0)
+            {
+                <div class="empty py-4"><p class="mb-0">@L["Chưa có kết quả nào."]</p></div>
+            }
+            else
+            {
+                <div class="table-wrap">
+                    <table class="table table-ld">
+                        <thead><tr><th>@L["Mã NV"]</th><th>@L["Họ tên"]</th><th>@L["Giải thưởng"]</th><th class="text-end">@L["Lúc"]</th></tr></thead>
+                        <tbody>
+                        @foreach (var r in Model.RecentResults)
+                        {
+                            <tr>
+                                <td class="mono">@r.EmployeeCode</td>
+                                <td><div class="fw-semibold">@r.FullName @if (r.FullNameZh != null) { <span class="small-note fw-normal">@r.FullNameZh</span> }</div><div class="small-note">@LocalizedName.Department(r)</div></td>
+                                <td><span class="tag gold">@LocalizedName.Prize(r)</span></td>
+                                <td class="text-end small-note">@VnTime.Format(r.DrawnAt, "HH:mm:ss")</td>
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>
+    </div>
+
+    <div class="col-xl-4">
+        <div class="card-ld">
+            <div class="card-head"><h2>@L["Các bước chuẩn bị"]</h2></div>
+            <div class="card-body pt-2 pb-2">
+                @foreach (var s in steps)
+                {
+                    <a class="d-flex align-items-center gap-2 py-2 text-decoration-none @(s.Done ? "muted" : "")" asp-controller="@s.Controller" asp-action="Index">
+                        <span class="stat-icon @(s.Done ? "green" : "gold")" style="width:28px;height:28px;border-radius:8px">@Html.Icon(s.Done ? "check" : "chevron-right")</span>
+                        <span class="@(s.Done ? "text-decoration-line-through" : "fw-semibold text-dark")">@s.Text</span>
+                    </a>
+                }
+            </div>
+        </div>
+
+        <div class="card-ld">
+            <div class="card-head">
+                <h2>@L["Hoạt động gần đây"]</h2>
+                <a class="btn btn-ghost btn-sm" asp-controller="Audit" asp-action="Index">@Html.Icon("chevron-right")</a>
+            </div>
+            <div class="card-body py-2">
+                @if (Model.RecentLogs.Count == 0)
+                {
+                    <p class="small-note my-3">@L["Chưa có hoạt động."]</p>
+                }
+                @foreach (var log in Model.RecentLogs)
+                {
+                    <div class="d-flex gap-2 py-2 border-bottom" style="border-color:var(--ld-line)!important">
+                        <span class="muted">@Html.Icon("clock")</span>
+                        <div class="small">
+                            <span class="mono fw-semibold">@log.Action</span>
+                            <div class="small-note">@log.UserName · @VnTime.Format(log.CreatedAt, "dd/MM HH:mm")</div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

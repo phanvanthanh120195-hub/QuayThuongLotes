@@ -1,0 +1,45 @@
+@model LoginModel
+@{
+    ViewData["Title"] = L["Đăng nhập"];
+}
+<div class="auth-page">
+    <section class="auth-hero">
+        <div class="brand p-0">
+            <span class="brand-mark">@Html.Icon("gift")</span>
+            <span class="brand-text">LuckyDraw<small>@L["Quay số trúng thưởng"]</small></span>
+        </div>
+        <div>
+            <div class="digits" aria-hidden="true"><span>2</span><span>0</span><span>2</span><span>6</span></div>
+            <h1>@L["Tiệc tất niên – quay thưởng công bằng, minh bạch"]</h1>
+            <p>@L["Kết quả được quyết định ở máy chủ trước, màn chiếu chỉ diễn hiệu ứng. Mọi thao tác đều được ghi nhật ký."]</p>
+        </div>
+        <p class="small mb-0">© LuckyDraw</p>
+    </section>
+
+    <section class="auth-form">
+        <div class="auth-lang"><partial name="_LanguageSwitcher" /></div>
+        <div class="auth-card">
+            <h2>@L["Đăng nhập"]</h2>
+            <p class="muted mb-4">@L["Dành cho Admin và MC (Operator)."]</p>
+            <form method="post" asp-action="Login" novalidate>
+                <input type="hidden" asp-for="ReturnUrl" />
+                <div asp-validation-summary="ModelOnly" class="flash err"></div>
+                <div class="mb-3">
+                    <label asp-for="UserName" class="form-label"></label>
+                    <input asp-for="UserName" class="form-control form-control-lg" autocomplete="username" autofocus />
+                    <span asp-validation-for="UserName"></span>
+                </div>
+                <div class="mb-4">
+                    <label asp-for="Password" class="form-label"></label>
+                    <input asp-for="Password" class="form-control form-control-lg" autocomplete="current-password" />
+                    <span asp-validation-for="Password"></span>
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg w-100">@L["Đăng nhập"]</button>
+            </form>
+            <p class="small-note mt-4 mb-0 text-center">
+                <a asp-controller="Home" asp-action="Index">@Html.Icon("monitor") @L["Xem màn hình quay số"]</a>
+            </p>
+        </div>
+    </section>
+</div>
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
