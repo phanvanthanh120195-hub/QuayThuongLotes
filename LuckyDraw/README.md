@@ -24,10 +24,13 @@ ASP.NET Core 8 MVC + Dapper/Npgsql + PostgreSQL (Supabase) + SignalR. Thiết k�
 
 ## Chạy lần đầu
 
+> Hướng dẫn đầy đủ từng bước (Supabase, cấu hình, chạy trong mạng LAN, bản Release, sao lưu, xử lý sự cố): **[../HUONG-DAN-SETUP.md](../HUONG-DAN-SETUP.md)**.
+
 1. **Database.** Mở Supabase → SQL Editor, chạy lần lượt:
    1. `database/01_schema.sql`
    2. `database/02_seed.sql` (dữ liệu mẫu, chỉ dùng để test)
-   3. `database/03_app_role.sql` (sửa mật khẩu `DOI_MAT_KHAU_O_DAY` trước khi chạy, **không commit** bản có mật khẩu thật)
+   3. `database/03_app_role.sql` (sửa mật khẩu `DOI_MAT_KHAU_TRUOC_KHI_CHAY` trước khi chạy, **không commit** bản có mật khẩu thật)
+   4. `database/04_participant_info.sql` (chỉ cần khi nâng cấp database cũ; cài mới thì `01` đã có các cột này)
 2. **Chuỗi kết nối và mật khẩu admin.** Để trong User Secrets, không để trong `appsettings.json`:
    ```
    cd LuckyDraw.Web
@@ -49,7 +52,7 @@ ASP.NET Core 8 MVC + Dapper/Npgsql + PostgreSQL (Supabase) + SignalR. Thiết k�
 | Sự kiện | Tạo, sửa, xoá (gõ lại tên để xác nhận); **Chiếu** (chỉ 1 sự kiện được chiếu); chọn sự kiện để quản lý ở thanh trên cùng |
 | Giải thưởng | Tên 4 ngôn ngữ, số lượng, số người mỗi lượt, kiểu quay (thủ công / tự động), thời gian quay và dừng, thâm niên min/max, ảnh, bật/tắt, đổi thứ tự |
 | Người tham dự | Tìm kiếm, lọc theo bộ phận và trạng thái (chưa trúng / đã trúng / vắng mặt), thâm niên tính theo ngày sự kiện, đánh dấu vắng mặt, xoá danh sách |
-| Bộ phận | Mã và tên 4 ngôn ngữ, dùng chung cho mọi sự kiện |
+| Bộ phận | *Đang ẩn khỏi menu* (bộ phận giờ ghi thẳng trên từng người tham dự). Trang `/admin/departments` vẫn còn |
 | Import Excel | File mẫu → upload → xem trước, báo lỗi từng dòng → xác nhận, ghi trong 1 transaction (upsert theo mã) |
 | Giao diện | Chủ đề, ảnh nền (làm mờ, phủ tối), logo, font và màu tiêu đề, ô quay số, nút bắt đầu, hiệu ứng, lời chúc 4 ngôn ngữ, **xem trước trực tiếp** → `event.theme_json` |
 | Âm thanh | Thư viện mp3, nhạc nền (không phát / 1 danh sách / mỗi giải 1 bài), hiệu ứng (đang quay, hiện kết quả, chúc mừng, bấm nút), âm lượng → `event.sound_json` |

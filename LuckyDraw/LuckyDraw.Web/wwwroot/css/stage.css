@@ -219,7 +219,8 @@ body.light .gold-text {
     font-family: var(--title-font), var(--cjk);
     font-size: clamp(24px, 2.4vw, 50px);
     line-height: 1.15;
-    padding: .14em .1em .24em;       /* chỗ cho dấu và chân chữ (xem .event-title) */
+    padding: .14em .1em .24em;
+    /* chỗ cho dấu và chân chữ (xem .event-title) */
     margin: -.14em 0 -.24em;
     min-width: 0;
     overflow-wrap: anywhere;
@@ -245,7 +246,8 @@ body.light .gold-text {
 .medal {
     position: relative;
     height: var(--badge);
-    width: calc(var(--badge) * 225 / 240);      /* tỉ lệ ảnh /images/award.png */
+    width: calc(var(--badge) * 225 / 240);
+    /* tỉ lệ ảnh /images/award.png */
     filter: drop-shadow(0 6px 10px rgba(60, 0, 0, .45));
 }
 
@@ -261,7 +263,7 @@ body.light .gold-text {
     position: absolute;
     left: 0;
     right: 0;
-    top: 14%;
+    top: 20%;
     height: 42%;
     display: grid;
     place-items: center;
@@ -527,7 +529,10 @@ body.light .warn {
 }
 
 /* Nút toàn màn hình: icon lớn (h-7 w-7 = 28px) */
-#btnFull svg { width: 28px !important; height: 28px !important; }
+#btnFull svg {
+    width: 28px !important;
+    height: 28px !important;
+}
 
 .pill-btn svg,
 .corner-btn svg {
