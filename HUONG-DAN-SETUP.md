@@ -231,13 +231,26 @@ Repo có sẵn thư mục `LuckyDraw.Web/bin` và `obj` (bản build Debug, kho�
 - **ASP.NET Core Runtime 8** (hoặc .NET 8 SDK). Có thể tải bộ cài *offline* ở máy khác rồi chép sang bằng USB.
 - **Mạng ra Internet tới Supabase**, vì database nằm trên mạng. Nếu hoàn toàn không có Internet, phải cài PostgreSQL ngay trên máy đó, chạy các script ở mục 2.2 bằng `psql`, và trỏ chuỗi kết nối về `Host=localhost`.
 
+**Cách nhanh (Windows):** đặt chuỗi kết nối một lần, rồi nhấp đúp `LuckyDraw\chay-ban-build-san.bat`.
+
+```bat
+setx ConnectionStrings__LuckyDraw "Host=...;Port=5432;Database=postgres;Username=luckydraw_app.<project-ref>;Password=...;SSL Mode=Require;Search Path=luckydraw"
+setx Seed__AdminPassword "..."   :: chỉ cần khi database chưa có tài khoản nào
+```
+`setx` lưu vĩnh viễn và chỉ có hiệu lực với cửa sổ mở **sau đó**. File `.bat` chạy ở cổng 5280. Muốn cổng khác thì chạy `chay-ban-build-san.bat 8080`.
+
+**Hoặc gõ lệnh trực tiếp (PowerShell):**
 ```powershell
 cd LuckyDraw\LuckyDraw.Web
 $env:ConnectionStrings__LuckyDraw = "Host=...;Port=5432;Database=postgres;Username=...;Password=...;SSL Mode=Require;Search Path=luckydraw"
-dotnet bin\Debug\net8.0\LuckyDraw.Web.dll --contentRoot . --urls http://0.0.0.0:5280
+dotnet bin\Debug\net8.0\LuckyDraw.Web.dll --contentRoot (Get-Location).Path --urls http://0.0.0.0:5280
 ```
 
-`--contentRoot .` để app tìm thấy thư mục `wwwroot` (CSS, JS, ảnh) và `Views`. Khi sửa code, nhớ build lại (`dotnet build`) **trước khi commit** để `bin` khớp với code.
+> ⚠️ `--contentRoot` phải là **đường dẫn tuyệt đối**. Nếu ghi `--contentRoot .`, app hiểu là thư mục chứa file `.dll` (`bin\Debug\net8.0`), không tìm thấy `wwwroot`, và màn chiếu mất toàn bộ CSS, JS, ảnh (lỗi 404).
+>
+> Chạy kiểu này là chế độ **Production**: User Secrets **không** được nạp, nên phải dùng biến môi trường như trên. Đừng dùng `dotnet run` trên máy khác: lệnh đó build lại (cần tải NuGet), và file `bin\...\staticwebassets.runtime.json` còn ghi đường dẫn của máy build.
+
+Khi sửa code, nhớ build lại (`dotnet build`) **trước khi commit** để `bin` khớp với code.
 
 Muốn app tự chạy cùng máy thì có thể dùng IIS (cài *ASP.NET Core Hosting Bundle*), Windows Service hoặc `systemd`.
 
