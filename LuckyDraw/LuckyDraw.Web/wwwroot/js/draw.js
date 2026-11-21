@@ -588,10 +588,7 @@
             t.setAttribute('role', 'tab');
             t.appendChild(el('span', 'n', p.won + '/' + p.quantity));
             t.addEventListener('click', function () {
-                // Không cho chuyển giải nếu đang trong lúc quay số
                 if (state.phase !== 'idle') return;
-
-                // Đồng bộ giải quay ở khu vực bên trên (#prizeName, #medalNum, #progressTxt, #slots)
                 var curName = ($('#prizeName') && $('#prizeName').textContent || '').trim();
                 var curIdx = state.prizes.findIndex(function (x) { return x.name.trim() === curName; });
                 var targetIdx = state.prizes.findIndex(function (x) { return x.prizeId === p.prizeId; });
@@ -605,7 +602,6 @@
                         }
                     }
                 }
-
                 state.viewPrizeId = p.prizeId;
                 renderResults();
             });
