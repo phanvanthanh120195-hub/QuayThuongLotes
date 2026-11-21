@@ -104,7 +104,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// Không dùng UseHttpsRedirection: app chạy HTTP trong mạng LAN (http://<IP>:5280), không có cổng HTTPS
+// → middleware chỉ in cảnh báo "Failed to determine the https port for redirect" mỗi lần chạy.
 app.UseStaticFiles();
 
 var cultures = SupportedCultures.All.Select(c => new CultureInfo(c)).ToList();

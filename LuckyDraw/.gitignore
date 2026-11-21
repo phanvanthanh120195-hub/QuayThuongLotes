@@ -11,3 +11,6 @@ LuckyDraw.Web/App_Data/
 
 ## Bản script có mật khẩu thật
 database/*.local.sql
+
+## Log khi chạy ngầm (chay-ngam.bat)
+LuckyDraw.Web/logs/

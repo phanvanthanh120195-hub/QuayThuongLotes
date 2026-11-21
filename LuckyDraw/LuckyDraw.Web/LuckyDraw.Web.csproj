@@ -2,6 +2,9 @@
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
+    <!-- WinExe: chạy (F5 trong Visual Studio / mở LuckyDraw.Web.exe) không bật cửa sổ console đen.
+         Log khi debug xem ở cửa sổ Output của VS. Dừng app: nút Stop của VS hoặc dung-app.bat. -->
+    <OutputType>WinExe</OutputType>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>LuckyDraw.Web</RootNamespace>

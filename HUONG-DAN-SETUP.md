@@ -239,6 +239,8 @@ setx Seed__AdminPassword "..."   :: chỉ cần khi database chưa có tài kho�
 ```
 `setx` lưu vĩnh viễn và chỉ có hiệu lực với cửa sổ mở **sau đó**. File `.bat` chạy ở cổng 5280. Muốn cổng khác thì chạy `chay-ban-build-san.bat 8080`.
 
+**Chạy ngầm (không hiện cửa sổ):** nhấp đúp `LuckyDraw\chay-ngam.bat` — app chạy nền và tự mở trình duyệt; log ghi vào `LuckyDraw.Web\logs\app.log`. Dừng app: nhấp đúp `LuckyDraw\dung-app.bat` (lệnh này dừng mọi bản LuckyDraw đang chạy trên máy, kể cả bản chạy từ Visual Studio).
+
 **Hoặc gõ lệnh trực tiếp (PowerShell):**
 ```powershell
 cd LuckyDraw\LuckyDraw.Web
