@@ -21,7 +21,7 @@
 
 <div class="row g-3">
     <div class="col-xl-7">
-        <form method="post" asp-action="@(isNew ? "Create" : "Edit")" asp-route-id="@(isNew ? null : Model.PrizeId)" enctype="multipart/form-data" class="card-ld" id="prizeForm" novalidate>
+        <form method="post" asp-action="@(isNew ? "Create" : "Edit")" asp-route-id="@(isNew ? null : Model.PrizeId)" class="card-ld" id="prizeForm" novalidate>
             <div asp-validation-summary="ModelOnly" class="flash err m-3 mb-0"></div>
 
             <div class="form-section">
@@ -103,19 +103,14 @@
 
             <div class="form-section">
                 <h3>@L["Ảnh phần thưởng"]</h3>
-                <p class="hint">@L["PNG, JPG hoặc WEBP, tối đa 2 MB. Hiển thị trên màn chiếu khi quay giải này."]</p>
+                <p class="hint">@L["Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc URL http(s). Để trống nếu không dùng ảnh. Hiển thị trên màn chiếu khi quay giải này."]</p>
                 <div class="d-flex align-items-center gap-3 flex-wrap">
-                    <img id="prizeImg" class="thumb-lg" src="@Model.ImagePath" alt="" hidden="@(Model.ImagePath is null)" />
-                    <div>
-                        <input asp-for="Image" type="file" class="form-control" accept=".jpg,.jpeg,.png,.webp" data-preview="#prizeImg" />
-                        <span asp-validation-for="Image"></span>
-                        @if (Model.ImagePath != null)
-                        {
-                            <div class="form-check mt-2">
-                                <input class="form-check-input" type="checkbox" asp-for="RemoveImage" />
-                                <label class="form-check-label" asp-for="RemoveImage">@L["Xoá ảnh hiện tại"]</label>
-                            </div>
-                        }
+                    <img id="prizeImg" class="thumb-lg" src="@Model.ImagePath" alt="" hidden="@string.IsNullOrEmpty(Model.ImagePath)" />
+                    <div class="flex-grow-1">
+                        <label asp-for="ImagePath" class="form-label"></label>
+                        <input asp-for="ImagePath" class="form-control" maxlength="300" placeholder="/images/prizes/tivi.png" autocomplete="off" spellcheck="false" />
+                        <span asp-validation-for="ImagePath"></span>
+                        <div class="form-text text-danger" id="imgPathErr" hidden>@L["Không tải được ảnh từ đường dẫn này. Kiểm tra lại tên file và thư mục."]</div>
                     </div>
                 </div>
             </div>
@@ -142,8 +137,8 @@
                 <div class="card-body">
                     <div class="stage-preview" style="background:@stageBg; gap:4%">
                         <div class="gold" id="pvName" style="font-size:clamp(16px,2.4vw,30px)"></div>
-                        <img class="prize-mini-img" id="pvImg" src="@Model.ImagePath" alt="" hidden="@(Model.ImagePath is null)" />
-                        <div class="medal-mini" id="pvMedal" hidden="@(Model.ImagePath != null)">
+                        <img class="prize-mini-img" id="pvImg" src="@Model.ImagePath" alt="" hidden="@string.IsNullOrEmpty(Model.ImagePath)" />
+                        <div class="medal-mini" id="pvMedal" hidden="@(!string.IsNullOrEmpty(Model.ImagePath))">
                             <img src="~/images/award.png" alt="" aria-hidden="true" />
                             <span id="pvQty"></span>
                         </div>
@@ -203,12 +198,33 @@
                 }
             }
 
-            var file = document.querySelector('input[name="Image"]'), pvImg = document.getElementById('pvImg'), pvMedal = document.getElementById('pvMedal');
-            if (file) file.addEventListener('change', function () {
-                if (file.files && file.files[0]) { pvImg.src = URL.createObjectURL(file.files[0]); pvImg.hidden = false; pvMedal.hidden = true; }
-            });
-            var remove = document.getElementById('RemoveImage');
-            if (remove) remove.addEventListener('change', function () { pvImg.hidden = remove.checked; pvMedal.hidden = !remove.checked; });
+            // Ảnh theo đường dẫn nhập tay: chuẩn hoá giống server (PrizeFormModel.NormalizeImagePath) rồi xem trước
+            var pathInput = document.getElementById('ImagePath'), prizeImg = document.getElementById('prizeImg'),
+                pvImg = document.getElementById('pvImg'), pvMedal = document.getElementById('pvMedal'), imgErr = document.getElementById('imgPathErr');
+            function normalizeImagePath(s) {
+                s = (s || '').trim().replace(/\\/g, '/');
+                if (!s) return '';
+                if (/^https?:\/\//i.test(s)) return s;
+                if (s.indexOf('~/') === 0) s = s.slice(1);
+                s = s.replace(/^\/?wwwroot\//i, '/');
+                return s.charAt(0) === '/' ? s : '/' + s;
+            }
+            function showImg(ok) {
+                prizeImg.hidden = pvImg.hidden = !ok;
+                pvMedal.hidden = ok;
+            }
+            var imgTimer;
+            function previewPath() {
+                var p = normalizeImagePath(pathInput.value);
+                imgErr.hidden = true;
+                if (!p) { showImg(false); prizeImg.removeAttribute('src'); pvImg.removeAttribute('src'); return; }
+                if (prizeImg.getAttribute('src') === p) return;
+                prizeImg.src = pvImg.src = p;
+            }
+            prizeImg.addEventListener('load', function () { showImg(true); imgErr.hidden = true; });
+            prizeImg.addEventListener('error', function () { if (!prizeImg.getAttribute('src')) return; showImg(false); imgErr.hidden = false; });
+            pathInput.addEventListener('input', function () { clearTimeout(imgTimer); imgTimer = setTimeout(previewPath, 300); });
+            pathInput.addEventListener('change', previewPath);
 
             document.getElementById('prizeForm').addEventListener('input', update);
             document.getElementById('prizeForm').addEventListener('change', update);

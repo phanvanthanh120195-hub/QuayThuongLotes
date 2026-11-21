@@ -117,13 +117,25 @@ public class PrizeFormModel : MultiLangForm, IValidatableObject
     [Display(Name = "Đang dùng")]
     public bool IsActive { get; set; } = true;
 
+    [StringLength(300, ErrorMessage = Msg.MaxLen), Display(Name = "Đường dẫn ảnh")]
     public string? ImagePath { get; set; }
 
-    [Display(Name = "Ảnh phần thưởng")]
-    public IFormFile? Image { get; set; }
-
-    public bool RemoveImage { get; set; }
     public int WonCount { get; set; }
+
+    /// <summary>
+    /// Chuẩn hoá đường dẫn ảnh nhập tay: bỏ khoảng trắng, đổi "\" thành "/", bỏ tiền tố "~" / "wwwroot",
+    /// thêm "/" ở đầu (tính từ wwwroot). URL http(s) giữ nguyên. Rỗng → null (không có ảnh).
+    /// </summary>
+    public static string? NormalizeImagePath(string? s)
+    {
+        s = s?.Trim().Replace('\\', '/');
+        if (string.IsNullOrEmpty(s)) return null;
+        if (s.StartsWith("http://", StringComparison.OrdinalIgnoreCase) || s.StartsWith("https://", StringComparison.OrdinalIgnoreCase)) return s;
+        if (s.StartsWith("~/")) s = s[1..];
+        if (s.StartsWith("/wwwroot/", StringComparison.OrdinalIgnoreCase)) s = s["/wwwroot".Length..];
+        else if (s.StartsWith("wwwroot/", StringComparison.OrdinalIgnoreCase)) s = s["wwwroot".Length..];
+        return s.StartsWith('/') ? s : "/" + s;
+    }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
     {
@@ -136,6 +148,11 @@ public class PrizeFormModel : MultiLangForm, IValidatableObject
             yield return new ValidationResult(T("Thâm niên tối đa phải lớn hơn tối thiểu"), new[] { nameof(MaxSeniorityMonths) });
         if (WonCount > Quantity)
             yield return new ValidationResult(T("Số lượng không được nhỏ hơn số người đã trúng"), new[] { nameof(Quantity) });
+        var img = NormalizeImagePath(ImagePath);
+        if (img != null && !img.StartsWith("http", StringComparison.OrdinalIgnoreCase) && img.Contains(':'))
+            yield return new ValidationResult(T("Đường dẫn ảnh phải tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc là URL http(s), không dùng đường dẫn ổ đĩa như C:\\..."), new[] { nameof(ImagePath) });
+        else if (img != null && img.Length > 300)
+            yield return new ValidationResult(T("Đường dẫn ảnh quá dài"), new[] { nameof(ImagePath) });
     }
 
     public static PrizeFormModel From(Prize p) => new()

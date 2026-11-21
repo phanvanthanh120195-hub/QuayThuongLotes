@@ -9,15 +9,11 @@ namespace LuckyDraw.Web.Areas.Admin.Controllers;
 
 public class PrizesController : AdminControllerBase
 {
-    private const long MaxImageBytes = 2 * 1024 * 1024;
-
     private readonly PrizeRepository _prizes;
-    private readonly IFileStorage _files;
 
-    public PrizesController(PrizeRepository prizes, IFileStorage files)
+    public PrizesController(PrizeRepository prizes)
     {
         _prizes = prizes;
-        _files = files;
     }
 
     public async Task<IActionResult> Index()
@@ -44,16 +40,6 @@ public class PrizesController : AdminControllerBase
 
         var prize = new Prize { EventId = ev.EventId };
         Apply(model, prize);
-        if (model.Image is { Length: > 0 })
-        {
-            var up = await _files.SaveAsync(model.Image, ev.EventId, "prize", UploadKind.Image, MaxImageBytes);
-            if (!up.Ok)
-            {
-                ModelState.AddModelError(nameof(model.Image), UploadError(up));
-                return View("Form", model);
-            }
-            prize.ImagePath = up.Path;
-        }
 
         var id = await _prizes.InsertAsync(prize);
         await Audit.LogAsync(AuditActions.PrizeCreate, ev.EventId, "prize", id, new { prize.NameVi, prize.Quantity });
@@ -82,30 +68,13 @@ public class PrizesController : AdminControllerBase
         // Số đã trúng lấy từ DB, không tin giá trị form gửi lên
         model.PrizeId = id;
         model.WonCount = prize.WonCount;
-        model.ImagePath = prize.ImagePath;
         ModelState.Clear();
         TryValidateModel(model);
         if (!ModelState.IsValid) return View("Form", model);
 
-        var oldImage = prize.ImagePath;
         Apply(model, prize);
-        if (model.Image is { Length: > 0 })
-        {
-            var up = await _files.SaveAsync(model.Image, ev.EventId, "prize", UploadKind.Image, MaxImageBytes);
-            if (!up.Ok)
-            {
-                ModelState.AddModelError(nameof(model.Image), UploadError(up));
-                return View("Form", model);
-            }
-            prize.ImagePath = up.Path;
-        }
-        else if (model.RemoveImage)
-        {
-            prize.ImagePath = null;
-        }
 
         await _prizes.UpdateAsync(prize);
-        if (oldImage != prize.ImagePath) _files.Delete(oldImage);
         await Audit.LogAsync(AuditActions.PrizeUpdate, ev.EventId, "prize", id, new { prize.NameVi, prize.Quantity, prize.DrawPerTurn });
         await Realtime.ConfigChanged(ev.EventId);
         Success(L["Đã lưu giải thưởng."]);
@@ -159,7 +128,6 @@ public class PrizesController : AdminControllerBase
             Error(L["Giải đã có kết quả quay (kể cả đã xoá) nên không xoá được. Hãy tắt giải thay vì xoá."]);
             return RedirectToAction(nameof(Index));
         }
-        _files.Delete(p.ImagePath);
         await Audit.LogAsync(AuditActions.PrizeDelete, ev.EventId, "prize", id, new { p.NameVi });
         await Realtime.ConfigChanged(ev.EventId);
         Success(L["Đã xoá giải thưởng."]);
@@ -180,5 +148,7 @@ public class PrizesController : AdminControllerBase
         p.MinSeniorityMonths = m.MinSeniorityMonths;
         p.MaxSeniorityMonths = m.MaxSeniorityMonths;
         p.IsActive = m.IsActive;
+        // Đường dẫn ảnh nhập tay (nhiều giải có thể dùng chung) nên không tự xoá file khi đổi / xoá giải
+        p.ImagePath = PrizeFormModel.NormalizeImagePath(m.ImagePath);
     }
 }

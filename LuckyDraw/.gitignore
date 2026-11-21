@@ -1,8 +1,10 @@
 ## .NET
-## bin/ và obj/ ĐƯỢC đưa lên git (theo yêu cầu) để máy không có mạng vẫn chạy được bản build sẵn
+## bin/ ĐƯỢC đưa lên git (theo yêu cầu) để máy không có mạng vẫn chạy được bản build sẵn
 ## mà không cần tải gói NuGet. Nhớ build lại trước khi commit để bin khớp với code.
+## obj/ chỉ là file trung gian khi build, không cần để chạy -> không đưa lên git.
 *.user
 .vs/
+obj/
 
 ## File người dùng upload & file import tạm (backup riêng cùng DB)
 LuckyDraw.Web/wwwroot/uploads/
