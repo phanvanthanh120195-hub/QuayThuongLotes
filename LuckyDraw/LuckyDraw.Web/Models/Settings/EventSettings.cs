@@ -25,7 +25,7 @@ public class ThemeSettings
     public string SpinEffect { get; set; } = "fireworks";
     /// <summary>Tốc độ bay của pháo hoa (%): 100 = tốc độ thật, nhỏ hơn = chậm (kiểu quay chậm), lớn hơn = nhanh.</summary>
     public int FireworksSpeed { get; set; } = 100;
-    public string TitleFont { get; set; } = "Anton";
+    public string TitleFont { get; set; } = "Playfair Display";
     public string TitleColor { get; set; } = "#FFD86B";
     public int TitleSize { get; set; } = 64;
     public LocalizedText CongratsTitle { get; set; } = new() { Vi = "Chúc mừng", ZhTW = "恭喜", ZhCN = "恭喜", En = "Congratulations" };

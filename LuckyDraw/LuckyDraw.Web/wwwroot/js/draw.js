@@ -791,6 +791,7 @@
             winners.forEach(function (x, i) {
                 var c = el('div', 'cgf-card');
                 c.style.animationDelay = Math.min(i * 70, 2000) + 'ms';
+                c.style.setProperty('--len', String(Math.max(4, String(x.code || '').length)));   // co chữ mã theo độ dài
                 if (anyPhoto) c.appendChild(photoEl(x, 'cgf-mini-photo'));
                 c.appendChild(el('div', 'cgf-code', x.code));
                 c.appendChild(el('div', 'cgf-name', x.name));

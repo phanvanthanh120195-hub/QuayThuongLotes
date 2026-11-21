@@ -34,7 +34,7 @@ public static class ThemeOptions
         ("none", "Không"), ("confetti", "Giấy màu"), ("fireworks", "Pháo hoa")
     };
 
-    public static readonly string[] Fonts = { "Anton", "Bebas Neue", "Oswald", "Montserrat", "Playfair Display" };
+    public static readonly string[] Fonts = { "Playfair Display", "Noto Serif Display", "Be Vietnam Pro", "Montserrat", "Lobster", "Paytone One", "Anton", "Bebas Neue", "Oswald" };
 
     public static readonly (string Key, string Label)[] DigitStyles =
     {
