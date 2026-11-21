@@ -225,9 +225,9 @@ export ConnectionStrings__LuckyDraw="Host=...;...;Search Path=luckydraw"
 dotnet LuckyDraw.Web.dll --urls http://0.0.0.0:5280
 ```
 
-### Chạy bản build sẵn trong git (máy không tải được gói NuGet)
+### Chạy bản build sẵn (máy không tải được gói NuGet)
 
-Repo có sẵn thư mục `LuckyDraw.Web/bin` và `obj` (bản build Debug, khoảng 17 MB), nên máy đích **không cần tải gói NuGet và không cần build**. Máy đích vẫn cần:
+Thư mục `bin/` và `obj/` **không** có trong git. Muốn chạy trên máy không tải được gói NuGet: build trên một máy có mạng (`dotnet build` trong `LuckyDraw\LuckyDraw.Web`), rồi chép **cả thư mục `LuckyDraw`** (gồm `LuckyDraw.Web\bin\Debug\net8.0` vừa build và `wwwroot`) sang máy đích bằng USB. Máy đích khi đó **không cần tải gói NuGet và không cần build**, nhưng vẫn cần:
 - **ASP.NET Core Runtime 8** (hoặc .NET 8 SDK). Có thể tải bộ cài *offline* ở máy khác rồi chép sang bằng USB.
 - **Mạng ra Internet tới Supabase**, vì database nằm trên mạng. Nếu hoàn toàn không có Internet, phải cài PostgreSQL ngay trên máy đó, chạy các script ở mục 2.2 bằng `psql`, và trỏ chuỗi kết nối về `Host=localhost`.
 
@@ -250,7 +250,7 @@ dotnet bin\Debug\net8.0\LuckyDraw.Web.dll --contentRoot (Get-Location).Path --ur
 >
 > Chạy kiểu này là chế độ **Production**: User Secrets **không** được nạp, nên phải dùng biến môi trường như trên. Đừng dùng `dotnet run` trên máy khác: lệnh đó build lại (cần tải NuGet), và file `bin\...\staticwebassets.runtime.json` còn ghi đường dẫn của máy build.
 
-Khi sửa code, nhớ build lại (`dotnet build`) **trước khi commit** để `bin` khớp với code.
+Khi sửa code, nhớ build lại (`dotnet build`) rồi chép lại `bin` sang máy đích để bản chạy khớp với code.
 
 Muốn app tự chạy cùng máy thì có thể dùng IIS (cài *ASP.NET Core Hosting Bundle*), Windows Service hoặc `systemd`.
 

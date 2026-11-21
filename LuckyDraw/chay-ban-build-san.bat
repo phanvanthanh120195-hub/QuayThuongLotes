@@ -1,6 +1,7 @@
 @echo off
 REM ======================================================================
-REM  LuckyDraw - chay ban build san trong git (khong can build, khong can NuGet)
+REM  LuckyDraw - chay ban build san (khong can build, khong can NuGet)
+REM  bin\ khong co trong git: build o may co mang (dotnet build) roi chep ca thu muc LuckyDraw sang
 REM  Can: ASP.NET Core Runtime 8 (hoac .NET 8 SDK) + mang toi database
 REM
 REM  Dat chuoi ket noi 1 lan (mo cmd moi sau khi chay lenh nay):
@@ -20,6 +21,7 @@ if "%ConnectionStrings__LuckyDraw%"=="" (
 
 if not exist "bin\Debug\net8.0\LuckyDraw.Web.dll" (
     echo [LOI] Khong thay bin\Debug\net8.0\LuckyDraw.Web.dll
+    echo       bin\ khong co trong git - chay "dotnet build" trong LuckyDraw.Web, hoac chep bin tu may da build.
     pause
     exit /b 1
 )
