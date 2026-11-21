@@ -575,3 +575,10 @@ Kết quả của người này sẽ bị huỷ và họ không được quay n�
 Xác nhận vắng mặt	Confirm absence	確認缺席	确认缺席
 100% = tốc độ thật. Kéo nhỏ để pháo bay và nổ chậm lại (quay chậm), kéo lớn để nhanh hơn.	100% = real speed. Drag lower for slow-motion fireworks, higher for faster ones.	100% = 實際速度。調低可讓煙火放慢（慢動作），調高則加快。	100% = 实际速度。调低可让烟花放慢（慢动作），调高则加快。
 Tốc độ bay của pháo hoa	Firework speed	煙火飛行速度	烟花飞行速度
+{0} năm	{0} years	{0} 年	{0} 年
+{0} năm {1} tháng	{0} years {1} months	{0} 年 {1} 個月	{0} 年 {1} 个月
+Đường dẫn ảnh	Image path	圖片路徑	图片路径
+{0} phải tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc là URL http(s), không dùng đường dẫn ổ đĩa như C:\...	{0} must be relative to the wwwroot folder (e.g. /images/prizes/tv.png) or an http(s) URL, not a drive path like C:\...	{0} 須為相對於 wwwroot 資料夾的路徑（例：/images/prizes/tv.png）或 http(s) 網址，不可使用 C:\... 這類磁碟路徑	{0} 须为相对于 wwwroot 文件夹的路径（例：/images/prizes/tv.png）或 http(s) 网址，不可使用 C:\... 这类磁盘路径
+Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc URL http(s). Để trống nếu không dùng ảnh. Hiển thị trên màn chiếu khi quay giải này.	Enter an image path relative to the wwwroot folder (e.g. /images/prizes/tv.png) or an http(s) URL. Leave blank for no image. Shown on the screen when drawing this prize.	輸入相對於 wwwroot 資料夾的圖片路徑（例：/images/prizes/tv.png）或 http(s) 網址。不使用圖片請留空。抽此獎項時會顯示在投影畫面上。	输入相对于 wwwroot 文件夹的图片路径（例：/images/prizes/tv.png）或 http(s) 网址。不使用图片请留空。抽此奖项时会显示在投影画面上。
+Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/photos/VN000123.jpg) hoặc URL http(s). Để trống nếu không dùng ảnh. Nên dùng ảnh vuông, mặt ở giữa.	Enter an image path relative to the wwwroot folder (e.g. /images/photos/VN000123.jpg) or an http(s) URL. Leave blank for no photo. A square photo with the face centered works best.	輸入相對於 wwwroot 資料夾的圖片路徑（例：/images/photos/VN000123.jpg）或 http(s) 網址。不使用照片請留空。建議使用正方形、臉部置中的照片。	输入相对于 wwwroot 文件夹的图片路径（例：/images/photos/VN000123.jpg）或 http(s) 网址。不使用照片请留空。建议使用正方形、脸部居中的照片。
+Không tải được ảnh từ đường dẫn này. Kiểm tra lại tên file và thư mục.	Could not load an image from this path. Check the file name and folder.	無法從此路徑載入圖片，請檢查檔名與資料夾。	无法从此路径加载图片，请检查文件名与文件夹。

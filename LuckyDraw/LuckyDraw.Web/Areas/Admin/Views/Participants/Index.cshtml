@@ -17,7 +17,6 @@
         <p class="sub">@L["Danh sách người được quay của sự kiện đang quản lý. Người vắng mặt không được quay."]</p>
     </div>
     <div class="actions">
-        <button type="button" class="btn btn-light" data-bs-toggle="modal" data-bs-target="#photosModal">@Html.Icon("image") @L["Tải ảnh hàng loạt"]</button>
         <a class="btn btn-light" asp-controller="Import" asp-action="Index">@Html.Icon("upload") @L["Import Excel"]</a>
         <a class="btn btn-primary" asp-action="Create">@Html.Icon("plus") @L["Thêm người"]</a>
     </div>
@@ -107,7 +106,7 @@
                         <td><div>@(p.DepartmentNameVi)</div>@if (p.DepartmentNameZhTw != null && p.DepartmentNameZhTw != p.DepartmentNameVi) { <div class="small-note">@p.DepartmentNameZhTw</div> }</td>
                         <td>@p.Position</td>
                         <td class="text-nowrap">@p.JoinDate.ToString("dd/MM/yyyy")</td>
-                        <td class="text-center">@L["{0} tháng", months]</td>
+                        <td class="text-center">@Seniority.Format(L, months)</td>
                         <td>
                             @if (p.WonPrizeId != null) { <span class="tag gold">@Html.Icon("trophy") @LocalizedName.WonPrize(p)</span> }
                             @if (p.IsAbsent) { <span class="tag red">@L["Vắng mặt"]</span> }

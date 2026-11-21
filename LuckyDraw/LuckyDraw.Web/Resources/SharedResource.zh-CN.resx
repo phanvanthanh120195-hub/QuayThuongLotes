@@ -577,4 +577,11 @@
   <data name="— Không phát —" xml:space="preserve"><value>— 不播放 —</value></data>
   <data name="— Không —" xml:space="preserve"><value>— 无 —</value></data>
   <data name="姓名, Bộ phận, 現任單位, Chức vụ: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名、部门、现任单位、职务：可留空。可直接粘贴人事档（STT、工龄列会被忽略）。</value></data>
+  <data name="{0} năm" xml:space="preserve"><value>{0} 年</value></data>
+  <data name="{0} năm {1} tháng" xml:space="preserve"><value>{0} 年 {1} 个月</value></data>
+  <data name="Đường dẫn ảnh" xml:space="preserve"><value>图片路径</value></data>
+  <data name="{0} phải tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc là URL http(s), không dùng đường dẫn ổ đĩa như C:\..." xml:space="preserve"><value>{0} 须为相对于 wwwroot 文件夹的路径（例：/images/prizes/tv.png）或 http(s) 网址，不可使用 C:\... 这类磁盘路径</value></data>
+  <data name="Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc URL http(s). Để trống nếu không dùng ảnh. Hiển thị trên màn chiếu khi quay giải này." xml:space="preserve"><value>输入相对于 wwwroot 文件夹的图片路径（例：/images/prizes/tv.png）或 http(s) 网址。不使用图片请留空。抽此奖项时会显示在投影画面上。</value></data>
+  <data name="Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/photos/VN000123.jpg) hoặc URL http(s). Để trống nếu không dùng ảnh. Nên dùng ảnh vuông, mặt ở giữa." xml:space="preserve"><value>输入相对于 wwwroot 文件夹的图片路径（例：/images/photos/VN000123.jpg）或 http(s) 网址。不使用照片请留空。建议使用正方形、脸部居中的照片。</value></data>
+  <data name="Không tải được ảnh từ đường dẫn này. Kiểm tra lại tên file và thư mục." xml:space="preserve"><value>无法从此路径加载图片，请检查文件名与文件夹。</value></data>
 </root>

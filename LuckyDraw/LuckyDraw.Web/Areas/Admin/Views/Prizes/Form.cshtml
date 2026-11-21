@@ -108,7 +108,8 @@
                     <img id="prizeImg" class="thumb-lg" src="@Model.ImagePath" alt="" hidden="@string.IsNullOrEmpty(Model.ImagePath)" />
                     <div class="flex-grow-1">
                         <label asp-for="ImagePath" class="form-label"></label>
-                        <input asp-for="ImagePath" class="form-control" maxlength="300" placeholder="/images/prizes/tivi.png" autocomplete="off" spellcheck="false" />
+                        <input asp-for="ImagePath" class="form-control" maxlength="300" placeholder="/images/prizes/tivi.png" autocomplete="off" spellcheck="false"
+                               data-image-path data-img="#prizeImg, #pvImg" data-img-empty="#pvMedal" data-img-error="#imgPathErr" />
                         <span asp-validation-for="ImagePath"></span>
                         <div class="form-text text-danger" id="imgPathErr" hidden>@L["Không tải được ảnh từ đường dẫn này. Kiểm tra lại tên file và thư mục."]</div>
                     </div>
@@ -197,34 +198,6 @@
                     rows.appendChild(row);
                 }
             }
-
-            // Ảnh theo đường dẫn nhập tay: chuẩn hoá giống server (PrizeFormModel.NormalizeImagePath) rồi xem trước
-            var pathInput = document.getElementById('ImagePath'), prizeImg = document.getElementById('prizeImg'),
-                pvImg = document.getElementById('pvImg'), pvMedal = document.getElementById('pvMedal'), imgErr = document.getElementById('imgPathErr');
-            function normalizeImagePath(s) {
-                s = (s || '').trim().replace(/\\/g, '/');
-                if (!s) return '';
-                if (/^https?:\/\//i.test(s)) return s;
-                if (s.indexOf('~/') === 0) s = s.slice(1);
-                s = s.replace(/^\/?wwwroot\//i, '/');
-                return s.charAt(0) === '/' ? s : '/' + s;
-            }
-            function showImg(ok) {
-                prizeImg.hidden = pvImg.hidden = !ok;
-                pvMedal.hidden = ok;
-            }
-            var imgTimer;
-            function previewPath() {
-                var p = normalizeImagePath(pathInput.value);
-                imgErr.hidden = true;
-                if (!p) { showImg(false); prizeImg.removeAttribute('src'); pvImg.removeAttribute('src'); return; }
-                if (prizeImg.getAttribute('src') === p) return;
-                prizeImg.src = pvImg.src = p;
-            }
-            prizeImg.addEventListener('load', function () { showImg(true); imgErr.hidden = true; });
-            prizeImg.addEventListener('error', function () { if (!prizeImg.getAttribute('src')) return; showImg(false); imgErr.hidden = false; });
-            pathInput.addEventListener('input', function () { clearTimeout(imgTimer); imgTimer = setTimeout(previewPath, 300); });
-            pathInput.addEventListener('change', previewPath);
 
             document.getElementById('prizeForm').addEventListener('input', update);
             document.getElementById('prizeForm').addEventListener('change', update);

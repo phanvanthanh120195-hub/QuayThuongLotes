@@ -1,6 +1,7 @@
 using System.Globalization;
 using LuckyDraw.Web.Models.Entities;
 using LuckyDraw.Web.Models.Settings;
+using Microsoft.Extensions.Localization;
 
 namespace LuckyDraw.Web.Services;
 
@@ -79,5 +80,14 @@ public static class Seniority
         // join_date <= event_date - n tháng  ⇔ đủ n tháng (AddMonths tự xử lý tháng thiếu ngày, như make_interval)
         while (months > 0 && joinDate.Date > eventDate.Date.AddMonths(-months)) months--;
         return Math.Max(0, months);
+    }
+
+    /// <summary>Hiển thị thâm niên theo năm: 16 → "1 năm 4 tháng", 24 → "2 năm", 5 → "5 tháng".
+    /// Phía trình duyệt: Participants/Form.cshtml (seniorityText) làm y hệt.</summary>
+    public static string Format(IStringLocalizer L, int months)
+    {
+        int y = months / 12, m = months % 12;
+        if (y == 0) return L["{0} tháng", m];
+        return m == 0 ? L["{0} năm", y] : L["{0} năm {1} tháng", y, m];
     }
 }

@@ -44,6 +44,42 @@
         });
     });
 
+    // Ô nhập đường dẫn ảnh + xem trước:
+    // <input data-image-path data-img="#a, #b" data-img-empty="#khiKhongCoAnh" data-img-error="#baoLoi">
+    // Chuẩn hoá giống server (ImagePathInput.Normalize): "\" → "/", bỏ "~" / "wwwroot", thêm "/" ở đầu; URL http(s) giữ nguyên.
+    function normalizeImagePath(s) {
+        s = (s || '').trim().replace(/\\/g, '/');
+        if (!s) return '';
+        if (/^https?:\/\//i.test(s)) return s;
+        if (s.indexOf('~/') === 0) s = s.slice(1);
+        s = s.replace(/^\/?wwwroot\//i, '/');
+        return s.charAt(0) === '/' ? s : '/' + s;
+    }
+    document.querySelectorAll('input[data-image-path]').forEach(function (input) {
+        var all = function (attr) { var sel = input.getAttribute(attr); return sel ? Array.prototype.slice.call(document.querySelectorAll(sel)) : []; };
+        var imgs = all('data-img'), empty = all('data-img-empty'), err = all('data-img-error');
+        if (!imgs.length) return;
+        var show = function (ok) {
+            imgs.forEach(function (i) { i.hidden = !ok; });
+            empty.forEach(function (e) { e.hidden = ok; });
+        };
+        var showErr = function (on) { err.forEach(function (e) { e.hidden = !on; }); };
+        imgs[0].addEventListener('load', function () { show(true); showErr(false); });
+        imgs[0].addEventListener('error', function () { if (imgs[0].getAttribute('src')) { show(false); showErr(true); } });
+        var apply = function () {
+            var p = normalizeImagePath(input.value);
+            if (!p) { showErr(false); show(false); imgs.forEach(function (i) { i.removeAttribute('src'); }); return; }
+            if (imgs[0].getAttribute('src') === p) return;
+            showErr(false);
+            imgs.forEach(function (i) { i.src = p; });
+        };
+        var timer;
+        input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(apply, 300); });
+        input.addEventListener('change', apply);
+        // Ảnh đã lưu nhưng hỏng sẵn từ lúc mở trang
+        if (imgs[0].getAttribute('src') && imgs[0].complete && !imgs[0].naturalWidth) { show(false); showErr(true); }
+    });
+
     // Xem trước tên 4 ngôn ngữ: <div data-lang-preview> … <span data-lang="vi|zhTW|zhCN|en">
     document.querySelectorAll('[data-lang-preview]').forEach(function (box) {
         var get = function (n) { var el = document.querySelector('[name="' + n + '"]'); return el ? el.value.trim() : ''; };

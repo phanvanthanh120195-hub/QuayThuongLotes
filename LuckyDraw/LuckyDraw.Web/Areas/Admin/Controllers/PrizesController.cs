@@ -149,6 +149,6 @@ public class PrizesController : AdminControllerBase
         p.MaxSeniorityMonths = m.MaxSeniorityMonths;
         p.IsActive = m.IsActive;
         // Đường dẫn ảnh nhập tay (nhiều giải có thể dùng chung) nên không tự xoá file khi đổi / xoá giải
-        p.ImagePath = PrizeFormModel.NormalizeImagePath(m.ImagePath);
+        p.ImagePath = ImagePathInput.Normalize(m.ImagePath);
     }
 }

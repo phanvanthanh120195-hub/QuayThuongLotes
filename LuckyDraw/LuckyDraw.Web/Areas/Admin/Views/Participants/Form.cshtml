@@ -20,15 +20,15 @@
 
 <div class="row g-3">
     <div class="col-xl-7">
-        <form method="post" asp-action="@(isNew ? "Create" : "Edit")" asp-route-id="@(isNew ? null : Model.ParticipantId)" enctype="multipart/form-data" class="card-ld" novalidate>
+        <form method="post" asp-action="@(isNew ? "Create" : "Edit")" asp-route-id="@(isNew ? null : Model.ParticipantId)" class="card-ld" novalidate>
             <div class="form-section">
                 <div class="row g-3">
-                    <div class="col-md-4">
+                    <div class="col-md-6">
                         <label asp-for="EmployeeCode" class="form-label"></label>
                         <input asp-for="EmployeeCode" class="form-control mono" />
                         <span asp-validation-for="EmployeeCode"></span>
                     </div>
-                    <div class="col-md-8">
+                    <div class="col-md-6">
                         <label asp-for="JoinDate" class="form-label"></label>
                         <input asp-for="JoinDate" class="form-control" type="date" />
                         <span asp-validation-for="JoinDate"></span>
@@ -66,16 +66,12 @@
             </div>
             <div class="form-section">
                 <h3>@L["Ảnh chân dung"]</h3>
-                <p class="hint">@L["JPG, PNG, WEBP tối đa 5 MB mỗi ảnh. Nên dùng ảnh vuông, mặt ở giữa."] @L["Hiện trên màn chiếu khi người này trúng giải."]</p>
-                <input asp-for="Photo" type="file" class="form-control" accept=".jpg,.jpeg,.png,.webp" data-preview="#pvPhoto" />
-                <span asp-validation-for="Photo"></span>
-                @if (Model.PhotoPath != null)
-                {
-                    <div class="form-check mt-2">
-                        <input class="form-check-input" type="checkbox" asp-for="RemovePhoto" />
-                        <label class="form-check-label" asp-for="RemovePhoto"></label>
-                    </div>
-                }
+                <p class="hint">@L["Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/photos/VN000123.jpg) hoặc URL http(s). Để trống nếu không dùng ảnh. Nên dùng ảnh vuông, mặt ở giữa."] @L["Hiện trên màn chiếu khi người này trúng giải."]</p>
+                <label asp-for="PhotoPath" class="form-label"></label>
+                <input asp-for="PhotoPath" class="form-control" maxlength="300" placeholder="/images/photos/VN000123.jpg" autocomplete="off" spellcheck="false"
+                       data-image-path data-img="#pvPhoto" data-img-empty="#pvNoPhoto" data-img-error="#photoPathErr" />
+                <span asp-validation-for="PhotoPath"></span>
+                <div class="form-text text-danger" id="photoPathErr" hidden>@L["Không tải được ảnh từ đường dẫn này. Kiểm tra lại tên file và thư mục."]</div>
             </div>
             <div class="form-section">
                 <div class="form-check form-switch">
@@ -98,8 +94,8 @@
                 <div class="card-body">
                     <div class="winner-preview">
                         <div class="wp-photo">
-                            <img id="pvPhoto" src="@Model.PhotoPath" alt="" hidden="@(Model.PhotoPath is null)" />
-                            <span id="pvNoPhoto" hidden="@(Model.PhotoPath != null)">@Html.Icon("image")</span>
+                            <img id="pvPhoto" src="@Model.PhotoPath" alt="" hidden="@string.IsNullOrEmpty(Model.PhotoPath)" />
+                            <span id="pvNoPhoto" hidden="@(!string.IsNullOrEmpty(Model.PhotoPath))">@Html.Icon("image")</span>
                         </div>
                         <div class="wp-code" id="pvCode">@(string.IsNullOrEmpty(Model.EmployeeCode) ? "VN000000" : Model.EmployeeCode)</div>
                         <div class="wp-name" id="pvName">@(string.IsNullOrEmpty(Model.FullName) ? L["Họ tên"] : Model.FullName)</div>
@@ -134,7 +130,17 @@
         (function () {
             var eventDate = @Html.Raw(ev is null ? "null" : "'" + ev.EventDate.ToString("yyyy-MM-dd") + "'");
             var prizes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(prizeData));
-            var monthsLabel = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["{0} tháng"].Value));
+            var senLabel = {
+                m: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["{0} tháng"].Value)),
+                y: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["{0} năm"].Value)),
+                ym: @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["{0} năm {1} tháng"].Value))
+            };
+            // Giống Seniority.Format phía server: 16 → "1 năm 4 tháng"
+            function seniorityText(months) {
+                var y = Math.floor(months / 12), m = months % 12;
+                if (!y) return senLabel.m.replace('{0}', m);
+                return m ? senLabel.ym.replace('{0}', y).replace('{1}', m) : senLabel.y.replace('{0}', y);
+            }
             var yes = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Đủ điều kiện"].Value));
             var no = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(L["Không đủ"].Value));
 
@@ -157,7 +163,7 @@
                 document.getElementById('absentNote').hidden = !(absent && absent.checked);
                 if (!j || !e || !prizes.length) { document.getElementById('senMonths').textContent = '—'; return; }
                 var m = months(j, e);
-                document.getElementById('senMonths').textContent = monthsLabel.replace('{0}', m);
+                document.getElementById('senMonths').textContent = seniorityText(m);
                 list.innerHTML = '';
                 prizes.forEach(function (p) {
                     var ok = (p.min == null || m >= p.min) && (p.max == null || m < p.max);
@@ -179,13 +185,6 @@
                 if (!inp || !out) return;
                 var ph = x[2] || out.textContent;
                 inp.addEventListener('input', function () { out.textContent = inp.value.trim() || (x[0] === 'DepartmentVi' ? '' : ph); });
-            });
-            var photoIn = document.getElementById('Photo'), rm = document.getElementById('RemovePhoto');
-            var pvPhoto = document.getElementById('pvPhoto'), pvNo = document.getElementById('pvNoPhoto'), orig = pvPhoto.getAttribute('src');
-            if (photoIn) photoIn.addEventListener('change', function () { if (photoIn.files[0]) { pvNo.hidden = true; if (rm) rm.checked = false; } });
-            if (rm) rm.addEventListener('change', function () {
-                var off = rm.checked && !(photoIn.files && photoIn.files[0]);
-                pvPhoto.hidden = off || !orig; pvNo.hidden = !off && !!orig;
             });
 
             input.addEventListener('input', update);

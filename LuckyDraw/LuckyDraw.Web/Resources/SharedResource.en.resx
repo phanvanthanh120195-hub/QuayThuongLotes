@@ -577,4 +577,11 @@
   <data name="— Không phát —" xml:space="preserve"><value>— No music —</value></data>
   <data name="— Không —" xml:space="preserve"><value>— None —</value></data>
   <data name="姓名, Bộ phận, 現任單位, Chức vụ: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名, department, 現任單位, position: optional. You can paste the HR file directly (STT, 工齡 columns are ignored).</value></data>
+  <data name="{0} năm" xml:space="preserve"><value>{0} years</value></data>
+  <data name="{0} năm {1} tháng" xml:space="preserve"><value>{0} years {1} months</value></data>
+  <data name="Đường dẫn ảnh" xml:space="preserve"><value>Image path</value></data>
+  <data name="{0} phải tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc là URL http(s), không dùng đường dẫn ổ đĩa như C:\..." xml:space="preserve"><value>{0} must be relative to the wwwroot folder (e.g. /images/prizes/tv.png) or an http(s) URL, not a drive path like C:\...</value></data>
+  <data name="Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc URL http(s). Để trống nếu không dùng ảnh. Hiển thị trên màn chiếu khi quay giải này." xml:space="preserve"><value>Enter an image path relative to the wwwroot folder (e.g. /images/prizes/tv.png) or an http(s) URL. Leave blank for no image. Shown on the screen when drawing this prize.</value></data>
+  <data name="Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/photos/VN000123.jpg) hoặc URL http(s). Để trống nếu không dùng ảnh. Nên dùng ảnh vuông, mặt ở giữa." xml:space="preserve"><value>Enter an image path relative to the wwwroot folder (e.g. /images/photos/VN000123.jpg) or an http(s) URL. Leave blank for no photo. A square photo with the face centered works best.</value></data>
+  <data name="Không tải được ảnh từ đường dẫn này. Kiểm tra lại tên file và thư mục." xml:space="preserve"><value>Could not load an image from this path. Check the file name and folder.</value></data>
 </root>

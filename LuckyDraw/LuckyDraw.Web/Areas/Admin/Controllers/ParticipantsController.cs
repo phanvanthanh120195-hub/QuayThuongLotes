@@ -61,20 +61,9 @@ public class ParticipantsController : AdminControllerBase
     {
         var ev = await WorkingEventAsync();
         if (ev is null) return NoEvent();
-        model.PhotoPath = null;
         if (!ModelState.IsValid) return await FormView(model);
 
         var p = ToEntity(model, ev.EventId);
-        if (model.Photo is { Length: > 0 })
-        {
-            var up = await _files.SaveAsync(model.Photo, ev.EventId, "photo", UploadKind.Image, MaxPhotoBytes);
-            if (!up.Ok)
-            {
-                ModelState.AddModelError(nameof(model.Photo), UploadError(up));
-                return await FormView(model);
-            }
-            p.PhotoPath = up.Path;
-        }
         try
         {
             var id = await _participants.InsertAsync(p);
@@ -82,7 +71,6 @@ public class ParticipantsController : AdminControllerBase
         }
         catch (Exception ex) when (PgErrors.Is(ex, PgErrors.UniqueViolation))
         {
-            _files.Delete(p.PhotoPath);
             ModelState.AddModelError(nameof(model.EmployeeCode), L["Mã nhân viên đã có trong sự kiện này."]);
             return await FormView(model);
         }
@@ -109,36 +97,18 @@ public class ParticipantsController : AdminControllerBase
         model.ParticipantId = id;
         var current = await _participants.GetAsync(ev.EventId, id);
         if (current is null) return NotFound();
-        model.PhotoPath = current.PhotoPath; // không tin đường dẫn ảnh gửi lên từ form
         if (!ModelState.IsValid) return await FormView(model);
 
         var p = ToEntity(model, ev.EventId);
-        p.PhotoPath = model.RemovePhoto ? null : current.PhotoPath;
-        if (model.Photo is { Length: > 0 })
-        {
-            var up = await _files.SaveAsync(model.Photo, ev.EventId, "photo", UploadKind.Image, MaxPhotoBytes);
-            if (!up.Ok)
-            {
-                ModelState.AddModelError(nameof(model.Photo), UploadError(up));
-                return await FormView(model);
-            }
-            p.PhotoPath = up.Path;
-        }
         try
         {
-            if (!await _participants.UpdateAsync(p))
-            {
-                if (p.PhotoPath != current.PhotoPath) _files.Delete(p.PhotoPath);
-                return NotFound();
-            }
+            if (!await _participants.UpdateAsync(p)) return NotFound();
         }
         catch (Exception ex) when (PgErrors.Is(ex, PgErrors.UniqueViolation))
         {
-            if (p.PhotoPath != current.PhotoPath) _files.Delete(p.PhotoPath);
             ModelState.AddModelError(nameof(model.EmployeeCode), L["Mã nhân viên đã có trong sự kiện này."]);
             return await FormView(model);
         }
-        if (p.PhotoPath != current.PhotoPath) _files.Delete(current.PhotoPath);
         await Audit.LogAsync(AuditActions.ParticipantUpdate, ev.EventId, "participant", id, new { p.EmployeeCode, p.FullName, p.IsAbsent });
         await Realtime.ConfigChanged(ev.EventId);
         Success(L["Đã lưu người tham dự."]);
@@ -168,7 +138,6 @@ public class ParticipantsController : AdminControllerBase
             var existing = await _participants.GetAsync(ev.EventId, id);
             if (existing != null && await _participants.DeleteAsync(ev.EventId, id))
             {
-                _files.Delete(existing.PhotoPath);
                 await Audit.LogAsync(AuditActions.ParticipantDelete, ev.EventId, "participant", id);
                 await Realtime.ConfigChanged(ev.EventId);
                 Success(L["Đã xoá người tham dự."]);
@@ -355,6 +324,8 @@ public class ParticipantsController : AdminControllerBase
         DepartmentVi = Blank(m.DepartmentVi),
         DepartmentZh = Blank(m.DepartmentZh),
         Position = Blank(m.Position),
+        // Đường dẫn ảnh nhập tay (có thể dùng chung) nên không tự xoá file khi đổi / xoá người
+        PhotoPath = ImagePathInput.Normalize(m.PhotoPath),
         DepartmentId = m.DepartmentId,
         JoinDate = m.JoinDate!.Value.Date,
         IsAbsent = m.IsAbsent
