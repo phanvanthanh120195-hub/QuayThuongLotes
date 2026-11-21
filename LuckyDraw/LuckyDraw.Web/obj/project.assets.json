@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 3,
   "targets": {
     "net8.0": {
       "ClosedXML/0.105.1": {
@@ -512,23 +512,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\PC\\.nuget\\packages\\": {},
+    "C:\\Users\\vnpc06\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\AI\\Code\\QuayThuongLotes\\LuckyDraw\\LuckyDraw.Web\\LuckyDraw.Web.csproj",
+      "projectUniqueName": "C:\\Users\\vnpc06\\Desktop\\QuayThuongLotes\\QuayThuongLotes\\LuckyDraw\\LuckyDraw.Web\\LuckyDraw.Web.csproj",
       "projectName": "LuckyDraw.Web",
-      "projectPath": "D:\\AI\\Code\\QuayThuongLotes\\LuckyDraw\\LuckyDraw.Web\\LuckyDraw.Web.csproj",
-      "packagesPath": "C:\\Users\\PC\\.nuget\\packages\\",
-      "outputPath": "D:\\AI\\Code\\QuayThuongLotes\\LuckyDraw\\LuckyDraw.Web\\obj\\",
+      "projectPath": "C:\\Users\\vnpc06\\Desktop\\QuayThuongLotes\\QuayThuongLotes\\LuckyDraw\\LuckyDraw.Web\\LuckyDraw.Web.csproj",
+      "packagesPath": "C:\\Users\\vnpc06\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\vnpc06\\Desktop\\QuayThuongLotes\\QuayThuongLotes\\LuckyDraw\\LuckyDraw.Web\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\vnpc06\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -541,7 +541,6 @@
       },
       "frameworks": {
         "net8.0": {
-          "framework": "net8.0",
           "targetAlias": "net8.0",
           "projectReferences": {}
         }
@@ -556,11 +555,10 @@
         "auditLevel": "low",
         "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "10.0.400"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
-        "framework": "net8.0",
         "targetAlias": "net8.0",
         "dependencies": {
           "ClosedXML": {
@@ -595,7 +593,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.401/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.311/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
