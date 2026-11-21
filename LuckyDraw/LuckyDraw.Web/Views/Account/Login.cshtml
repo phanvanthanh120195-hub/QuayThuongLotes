@@ -5,8 +5,34 @@
 <div class="auth-page">
     <section class="auth-hero">
         <div class="brand p-0">
-            <span class="brand-mark">@Html.Icon("gift")</span>
-            <span class="brand-text">LotesLuckyDraw<small>@L["Quay số trúng thưởng"]</small></span>
+            <a href="/admin" class="lotes-admin-brand">
+                <!-- Logo chữ LOTES vector màu đỏ chuyển sắc -->
+                <svg class="lotes-admin-svg" viewBox="0 0 235 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="lotesAdminRedGrad" x1="0" y1="0" x2="235" y2="46" gradientUnits="userSpaceOnUse">
+                            <stop offset="0%" stop-color="#FF5252" />
+                            <stop offset="50%" stop-color="#E62E2D" />
+                            <stop offset="100%" stop-color="#C81E1E" />
+                        </linearGradient>
+                    </defs>
+                    <!-- Chữ L -->
+                    <path d="M2 4H12V34H34V42H4C2.89543 42 2 41.1046 2 40V4Z" fill="url(#lotesAdminRedGrad)" />
+                    <!-- Chữ O -->
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M48 4H78C81.3137 4 84 6.68629 84 10V36C84 39.3137 81.3137 42 78 42H48C44.6863 42 42 39.3137 42 36V10C42 6.68629 44.6863 4 48 4ZM52 12V34H74V12H52Z" fill="url(#lotesAdminRedGrad)" />
+                    <!-- Chữ T -->
+                    <path d="M90 4H132V12H116V42H106V12H90V4Z" fill="url(#lotesAdminRedGrad)" />
+                    <!-- Chữ E -->
+                    <path d="M140 4H178V12H150V19H173V27H150V34H178V42H140V4Z" fill="url(#lotesAdminRedGrad)" />
+                    <!-- Chữ S -->
+                    <path d="M192 4H228V12H196V19H222C225.314 19 228 21.6863 228 25V36C228 39.3137 225.314 42 222 42H186V34H218V27H192C188.686 27 186 24.3137 186 21V10C186 6.68629 188.686 4 192 4Z" fill="url(#lotesAdminRedGrad)" />
+                </svg>
+
+                <!-- Dòng phụ đề giữ tông vàng đồng bộ với giao diện cũ -->
+                <div class="lotes-admin-sub">
+                    <span class="sub-system">LUCKY DRAW</span>
+                    <span class="sub-role-badge">ADMIN</span>
+                </div>
+            </a>
         </div>
         <div>
             <div class="digits" aria-hidden="true"><span>2</span><span>0</span><span>2</span><span>7</span></div>

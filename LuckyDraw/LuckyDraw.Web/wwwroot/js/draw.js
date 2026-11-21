@@ -527,6 +527,7 @@
     }
 
     function renderPrize() {
+        debugger
         var p = cur(), idle = state.phase === 'idle';
         $('#prev').disabled = !idle || state.idx <= 0;
         $('#next').disabled = !idle || state.idx >= state.prizes.length - 1;
@@ -586,7 +587,28 @@
             t.type = 'button';
             t.setAttribute('role', 'tab');
             t.appendChild(el('span', 'n', p.won + '/' + p.quantity));
-            t.addEventListener('click', function () { state.viewPrizeId = p.prizeId; renderResults(); });
+            t.addEventListener('click', function () {
+                // Không cho chuyển giải nếu đang trong lúc quay số
+                if (state.phase !== 'idle') return;
+
+                // Đồng bộ giải quay ở khu vực bên trên (#prizeName, #medalNum, #progressTxt, #slots)
+                var curName = ($('#prizeName') && $('#prizeName').textContent || '').trim();
+                var curIdx = state.prizes.findIndex(function (x) { return x.name.trim() === curName; });
+                var targetIdx = state.prizes.findIndex(function (x) { return x.prizeId === p.prizeId; });
+
+                if (curIdx !== -1 && targetIdx !== -1 && curIdx !== targetIdx) {
+                    var diff = targetIdx - curIdx;
+                    var navBtn = diff > 0 ? $('#next') : $('#prev');
+                    if (navBtn) {
+                        for (var s = 0; s < Math.abs(diff); s++) {
+                            navBtn.click();
+                        }
+                    }
+                }
+
+                state.viewPrizeId = p.prizeId;
+                renderResults();
+            });
             tabs.appendChild(t);
         });
         var active = tabs.querySelector('.tab.active');
