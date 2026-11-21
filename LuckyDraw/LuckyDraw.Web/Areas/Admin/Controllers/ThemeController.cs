@@ -10,7 +10,7 @@ public static class ThemeOptions
 {
     public static readonly (string Key, string Label, string Bg, string Accent)[] Presets =
     {
-        ("tet-binh-ngo", "Tết Bính Ngọ 2026", "url('/images/themes/tet-dinh-mui.webp') center / cover no-repeat, #8b0000", "#FFD86B"),
+        ("tet-binh-ngo", "Tết Bính Ngọ 2026", "url('/images/themes/tet-dinh-mui.jpg') center / cover no-repeat, #8b0000", "#FFD86B"),
         ("tet-red-gold", "Tết đỏ vàng", "radial-gradient(circle at 50% 30%, #b3122a, #4a0410 75%)", "#FFD86B"),
         ("royal-blue", "Xanh hoàng gia", "radial-gradient(circle at 50% 30%, #1f4fbf, #08143d 75%)", "#F5D27A"),
         ("galaxy", "Dải ngân hà", "radial-gradient(circle at 50% 20%, #5b2a86, #0b0820 75%)", "#9BE7FF"),
