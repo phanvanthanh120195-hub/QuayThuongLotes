@@ -16,6 +16,7 @@ public static class ThemeOptions
         ("galaxy", "Dải ngân hà", "radial-gradient(circle at 50% 20%, #5b2a86, #0b0820 75%)", "#9BE7FF"),
         ("emerald", "Ngọc lục bảo", "radial-gradient(circle at 50% 30%, #0f7a5a, #022a1f 75%)", "#FFE29A"),
         ("minimal-light", "Sáng tối giản", "linear-gradient(160deg, #ffffff, #e9ecf3)", "#C8102E")
+
     };
 
     public static readonly (string Key, string Label)[] StageEffects =
