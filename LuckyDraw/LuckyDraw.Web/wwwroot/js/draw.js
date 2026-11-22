@@ -565,7 +565,7 @@
             root.setProperty('--cur-pointer', 'pointer');
             return;
         }
-        var u = '/images/cursor/' + (key || 'gold'), ext = '.' + (h[2] || 'svg') + '?v=2';   // ?v= đổi khi sửa ảnh con trỏ → trình duyệt tải ảnh mới
+        var u = '/images/cursor/' + (key || 'gold'), ext = '.' + (h[2] || 'svg') + '?v=3';   // ?v= đổi khi sửa ảnh con trỏ → trình duyệt tải ảnh mới
         function set(a, b, f) {
             var hs = ' ' + Math.round(h[0] * f) + ' ' + Math.round(h[1] * f);
             root.setProperty('--cur-default', "url('" + a + "')" + hs + ', default');
