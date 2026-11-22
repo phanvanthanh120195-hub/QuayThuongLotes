@@ -393,6 +393,7 @@
   <data name="Trang quản trị (giải, người, giao diện…)" xml:space="preserve"><value>管理后台（奖项、人员、外观…）</value></data>
   <data name="Trang trước" xml:space="preserve"><value>上一页</value></data>
   <data name="Trạng thái" xml:space="preserve"><value>状态</value></data>
+  <data name="Trống xoay 3D" xml:space="preserve"><value>3D 滚筒</value></data>
   <data name="Tuyết rơi" xml:space="preserve"><value>下雪</value></data>
   <data name="Tài khoản" xml:space="preserve"><value>账号</value></data>
   <data name="Tài khoản bị khoá không đăng nhập được." xml:space="preserve"><value>被锁定的账号无法登录。</value></data>

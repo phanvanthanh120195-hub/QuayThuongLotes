@@ -393,6 +393,7 @@
   <data name="Trang quản trị (giải, người, giao diện…)" xml:space="preserve"><value>Admin panel (prizes, people, appearance…)</value></data>
   <data name="Trang trước" xml:space="preserve"><value>Previous page</value></data>
   <data name="Trạng thái" xml:space="preserve"><value>Status</value></data>
+  <data name="Trống xoay 3D" xml:space="preserve"><value>3D spinning drum</value></data>
   <data name="Tuyết rơi" xml:space="preserve"><value>Snow</value></data>
   <data name="Tài khoản" xml:space="preserve"><value>Accounts</value></data>
   <data name="Tài khoản bị khoá không đăng nhập được." xml:space="preserve"><value>Locked accounts cannot sign in.</value></data>

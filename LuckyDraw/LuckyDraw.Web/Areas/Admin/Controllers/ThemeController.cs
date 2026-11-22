@@ -38,7 +38,7 @@ public static class ThemeOptions
 
     public static readonly (string Key, string Label)[] DigitStyles =
     {
-        ("glass", "Kính đỏ"), ("gold", "Vàng")
+        ("glass", "Kính đỏ"), ("gold", "Vàng"), ("drum", "Trống xoay 3D")
     };
 
     /// <summary>Con trỏ chuột màn chiếu. Ảnh: /images/cursor/{Key}.svg và {Key}-hover.svg (rồng: .png); HotX/HotY = điểm bấm

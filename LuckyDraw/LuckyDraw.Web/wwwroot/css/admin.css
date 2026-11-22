@@ -1206,6 +1206,19 @@ a:hover {
     box-shadow: 0 0 12px rgba(255, 110, 140, .45);
 }
 
+/* Trống xoay 3D: tấm số vàng, tối ở trên/dưới như mặt trụ, vành vàng 2 bên */
+.stage-preview .boxes.drum span,
+.digit-sample.drum {
+    color: #3a1600;
+    background:
+        linear-gradient(180deg, rgba(0, 0, 0, .75), transparent 30%, transparent 70%, rgba(0, 0, 0, .75)),
+        linear-gradient(180deg, #fff3c8, #f3c65e 45%, #b47a1c);
+    border-left: 4px solid #c8902c;
+    border-right: 4px solid #c8902c;
+    border-radius: 4px !important;
+    box-shadow: 0 0 0 2px #5a3608, 0 6px 14px rgba(0, 0, 0, .4);
+}
+
 .digit-sample {
     width: 26px;
     height: 32px;

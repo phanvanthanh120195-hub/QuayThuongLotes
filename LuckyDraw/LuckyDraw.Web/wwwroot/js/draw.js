@@ -152,7 +152,7 @@
 
     function digitStyle() {
         var s = state.ev && state.ev.theme.digitBox && state.ev.theme.digitBox.style;
-        return s === 'gold' ? 'gold' : 'glass';
+        return s === 'gold' || s === 'drum' ? s : 'glass';
     }
 
     function sizeSlots() {
@@ -160,8 +160,9 @@
         var side = document.body.classList.contains('pos-bottom') ? 0 : 0.27;
         var availW = window.innerWidth * (0.86 - side);
         var cols = n === 1 ? 1 : Math.min(n, Math.max(1, Math.round(Math.sqrt(n * 1.8))));
-        var extra = n === 1 ? 0 : 0.75;                      // khung + khoảng cách giữa các dãy ô
-        var wBox = availW / (cols * (len * 1.1 + extra));
+        var drum = digitStyle() === 'drum';                  // trống 3D: ô rộng hơn + khung vàng dày
+        var extra = drum ? 1 : n === 1 ? 0 : 0.75;           // khung + khoảng cách giữa các dãy ô
+        var wBox = availW / (cols * (len * (drum ? 1.16 : 1.1) + extra));
         var hi = Math.floor(Math.max(22, Math.min(wBox, n === 1 ? 180 : 110))), lo = 22;
         var rootStyle = document.documentElement.style, main = document.querySelector('.stage-main');
         function fits(b) {
@@ -183,6 +184,7 @@
         var wrap = $('#slots'), len = state.ev.codeLength;
         var ph = (state.ev.theme.digitBox && state.ev.theme.digitBox.placeholder) || '?';
         wrap.innerHTML = '';
+        state.drum = digitStyle() === 'drum';
         wrap.className = 'slots ' + digitStyle();
         for (var s = 0; s < n; s++) {
             var slot = el('div', 'slot' + (n > 1 ? ' multi' : ''));
@@ -190,8 +192,13 @@
                 var b = el('div', 'box');
                 b.dataset.pos = i;
                 var r = el('span', 'reel');
-                r.appendChild(el('i', null, ph));
-                r.appendChild(el('i'));
+                if (state.drum) {                            // trống 3D: 5 tấm số (2 trên, giữa, 2 dưới)
+                    for (var k = 0; k < 5; k++) r.appendChild(el('i', null, k === 2 ? ph : ''));
+                    drumPlace(r, 0);
+                } else {
+                    r.appendChild(el('i', null, ph));
+                    r.appendChild(el('i'));
+                }
                 b.appendChild(r);
                 slot.appendChild(b);
             }
@@ -219,8 +226,22 @@
         return arr.sort(function (a, b) { return rank(a) - rank(b) || (a < b ? -1 : a > b ? 1 : 0); });
     }
 
+    // Trống 3D: đặt 5 tấm quanh trục. Tấm k (0..4, giữa = 2) nghiêng (k-2-frac)*36° → frac tăng thì số trôi lên,
+    // số kế tiếp trồi từ dưới (giống dải cuộn phẳng). Tấm quay ra sau (>90°) tự ẩn nhờ backface-visibility.
+    var DRUM_STEP = 36;
+    function drumPlace(r, frac) {
+        for (var k = 0; k < r.children.length; k++)
+            r.children[k].style.transform = 'rotateX(' + (-(k - 2 - frac) * DRUM_STEP).toFixed(2) + 'deg) translateZ(var(--r))';
+    }
+
     function boxStatic(b, ch) {
         var r = b.firstChild;
+        if (state.drum) {
+            for (var k = 0; k < r.children.length; k++) r.children[k].textContent = k === 2 && ch !== ' ' ? ch : '';
+            drumPlace(r, 0);
+            b.shownIdx = null;
+            return;
+        }
         r.style.transform = '';
         r.children[0].textContent = ch === ' ' ? '' : ch;
         r.children[1].textContent = '';
@@ -230,6 +251,14 @@
     function boxRender(b, pos) {
         var seq = reel.seq, n = seq.length, i = Math.floor(pos), idx = ((i % n) + n) % n;
         var r = b.firstChild;
+        if (state.drum) {
+            if (b.shownIdx !== idx) {
+                b.shownIdx = idx;
+                for (var k = 0; k < r.children.length; k++) r.children[k].textContent = seq[(((idx + k - 2) % n) + n) % n];
+            }
+            drumPlace(r, pos - i);
+            return;
+        }
         if (b.shownIdx !== idx) {
             b.shownIdx = idx;
             r.children[0].textContent = seq[idx];
