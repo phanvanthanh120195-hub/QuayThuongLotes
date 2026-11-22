@@ -148,6 +148,7 @@ public class ThemeController : AdminControllerBase
             TitleFont = Pick(t.TitleFont, ThemeOptions.Fonts, d.TitleFont),
             TitleColor = Color(t.TitleColor, d.TitleColor),
             TitleSize = Math.Clamp(t.TitleSize, 24, 140),
+            TitleBanner = t.TitleBanner,
             CongratsTitle = Text(t.CongratsTitle, 60),
             DigitBox = new DigitBoxSettings
             {

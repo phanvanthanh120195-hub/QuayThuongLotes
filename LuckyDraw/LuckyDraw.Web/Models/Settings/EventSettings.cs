@@ -28,6 +28,8 @@ public class ThemeSettings
     public string TitleFont { get; set; } = "Playfair Display";
     public string TitleColor { get; set; } = "#FFD86B";
     public int TitleSize { get; set; } = 64;
+    /// <summary>Hiện bảng hiệu đỏ viền vàng (2 đầu cuộn trục + mây) phía sau tên sự kiện.</summary>
+    public bool TitleBanner { get; set; } = true;
     public LocalizedText CongratsTitle { get; set; } = new() { Vi = "Chúc mừng", ZhTW = "恭喜", ZhCN = "恭喜", En = "Congratulations" };
     public DigitBoxSettings DigitBox { get; set; } = new();
     public StartButtonSettings StartButton { get; set; } = new();

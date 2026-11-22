@@ -95,6 +95,8 @@
         $('#btnStart').classList.remove('s1', 's2', 's3', 's4', 's5', 's6');
         $('#btnStart').classList.add('s' + ((t.startButton && t.startButton.style) || 2));
         $('#eventTitle').textContent = ev.name;
+        $('#eventTitle').setAttribute('data-text', ev.name);   // lớp mặt chữ vàng của tiêu đề 3D (::after)
+        body.classList.toggle('no-title-banner', t.titleBanner === false);   // bảng hiệu đỏ viền vàng sau tiêu đề
         document.title = ev.name + ' · LuckyDraw';
         StageFx.setSpeed(t.fireworksSpeed || 100);
         StageFx.setAmbient(t.stageEffect);

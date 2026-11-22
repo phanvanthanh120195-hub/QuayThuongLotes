@@ -16,6 +16,7 @@
   <data name="Bên trái" xml:space="preserve"><value>Left</value></data>
   <data name="Bạn" xml:space="preserve"><value>You</value></data>
   <data name="Bản xem trước gần đúng; màn chiếu thật sẽ có hiệu ứng động và bảng kết quả." xml:space="preserve"><value>Approximate preview; the real stage screen has animations and a results panel.</value></data>
+  <data name="Bảng hiệu đỏ viền vàng phía sau tên sự kiện" xml:space="preserve"><value>Red-and-gold banner behind the event name</value></data>
   <data name="Bấm Bắt đầu, rồi bấm Dừng khi muốn" xml:space="preserve"><value>Press Start, then press Stop when ready</value></data>
   <data name="Bấm Bắt đầu, tự dừng sau thời gian quay" xml:space="preserve"><value>Press Start, stops automatically after the spin time</value></data>
   <data name="Bấm Enter hoặc chạm vào màn hình để tiếp tục" xml:space="preserve"><value>Press Enter or tap the screen to continue</value></data>

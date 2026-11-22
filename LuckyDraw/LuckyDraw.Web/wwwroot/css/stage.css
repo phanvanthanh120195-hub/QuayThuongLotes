@@ -162,10 +162,124 @@ body.light .gold-text {
     filter: none;
 }
 
+/* ---------- Bảng hiệu sau tiêu đề ----------
+   Bảng đỏ (cùng tông nền) viền vàng đôi (::before) + 2 đầu cuộn trục vàng có mây cát tường (::after, ảnh
+   /images/title/banner-end-l|r.svg). Mọi kích thước tính theo em = cỡ chữ tiêu đề → bảng co giãn theo chữ.
+   Tắt ở Admin → Giao diện → Tên sự kiện (body.no-title-banner). */
+.title-banner {
+    position: relative;
+    isolation: isolate;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 96vw;
+    font-size: max(26px, calc(var(--title-size) * 100vw / 1920));
+    padding: .34em 1.38em .4em;
+    margin: 0 0 .4vh;
+}
+
+.title-banner .event-title {
+    font-size: 1em;
+    margin: -.14em 0 -.24em;
+    max-width: calc(96vw - 2.8em);
+}
+
+.title-banner::before {
+    content: "";
+    position: absolute;
+    z-index: -2;
+    left: .8em;
+    right: .8em;
+    top: .1em;
+    bottom: .1em;
+    border-radius: .06em;
+    border: .045em solid transparent;
+    background:
+        radial-gradient(ellipse 75% 95% at 50% 40%, rgba(255, 120, 120, .22), transparent 60%) padding-box,
+        radial-gradient(ellipse 70% 90% at 50% 45%, #d4172f 0%, #a50d22 55%, #650411 100%) padding-box,
+        linear-gradient(90deg, #8a5512, #ffe39a 16%, #c8902c 34%, #fff3c4 50%, #c8902c 66%, #ffe39a 84%, #8a5512) border-box;
+    box-shadow:
+        inset 0 0 0 .05em #6e0512,
+        inset 0 0 0 .068em rgba(255, 216, 107, .8),
+        inset 0 0 .45em rgba(50, 0, 0, .65),
+        0 .08em .28em rgba(0, 0, 0, .5),
+        0 0 .6em rgba(255, 190, 80, .28);
+}
+
+.title-banner::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    pointer-events: none;
+    background:
+        url('/images/title/banner-end-l.svg') left center / 1.15em 100% no-repeat,
+        url('/images/title/banner-end-r.svg') right center / 1.15em 100% no-repeat;
+    filter: drop-shadow(0 .04em .06em rgba(0, 0, 0, .5));
+}
+
+body.no-title-banner .title-banner {
+    padding: 0;
+}
+
+body.no-title-banner .title-banner::before,
+body.no-title-banner .title-banner::after {
+    display: none;
+}
+
+/* ---------- Tiêu đề chữ nổi khối 3D (giống chữ "NĂM ĐINH MÙI 2027" trên nền) ----------
+   Lớp dưới = chính thẻ h1: chữ vàng đồng đậm + 9 lớp text-shadow lệch dần xuống → phần khối dày của chữ,
+   thêm bóng đổ và quầng sáng. Lớp trên = ::after (cùng nội dung, lấy từ data-text): mặt chữ dải vàng như cũ
+   (theo Màu chữ trong Admin → Giao diện) + viền sáng mảnh ở mép. Độ dày tính theo em → to nhỏ theo cỡ chữ. */
+.event-title.title-3d {
+    position: relative;
+    background: none;
+    -webkit-background-clip: border-box;
+    background-clip: border-box;
+    color: color-mix(in srgb, #7a3c00 50%, var(--title-color));
+    filter: none;
+    text-shadow:
+        0 .011em 0 color-mix(in srgb, #8a4400 55%, var(--title-color)),
+        0 .022em 0 color-mix(in srgb, #7a3a00 60%, var(--title-color)),
+        0 .033em 0 color-mix(in srgb, #6e3300 64%, var(--title-color)),
+        0 .044em 0 color-mix(in srgb, #622c00 68%, var(--title-color)),
+        0 .055em 0 color-mix(in srgb, #562500 72%, var(--title-color)),
+        0 .066em 0 color-mix(in srgb, #4a1e00 76%, var(--title-color)),
+        0 .077em 0 color-mix(in srgb, #3e1800 80%, var(--title-color)),
+        0 .088em 0 color-mix(in srgb, #321200 84%, var(--title-color)),
+        0 .099em 0 color-mix(in srgb, #2a0e00 88%, var(--title-color)),
+        0 .13em .06em rgba(40, 0, 0, .6),
+        0 .18em .3em rgba(30, 0, 0, .5),
+        0 0 .45em color-mix(in srgb, var(--title-color) 38%, transparent);
+}
+
+.event-title.title-3d::after {
+    content: attr(data-text);
+    position: absolute;
+    inset: 0;
+    padding: inherit;
+    pointer-events: none;
+    background: linear-gradient(180deg,
+            color-mix(in srgb, #fff 70%, var(--title-color)) 0%,
+            color-mix(in srgb, #fff 35%, var(--title-color)) 30%,
+            var(--title-color) 52%,
+            color-mix(in srgb, #b25a00 45%, var(--title-color)) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: none;
+    -webkit-text-stroke: .01em color-mix(in srgb, #fff 55%, var(--title-color));
+    /* viền sáng mép chữ */
+}
+
+body.light .event-title.title-3d {
+    text-shadow: 0 .03em 0 color-mix(in srgb, #7a3a00 60%, var(--title-color)), 0 .06em .08em rgba(0, 0, 0, .25);
+}
+
 .event-title {
     /* Chữ vàng dùng background-clip:text → màu chỉ phủ trong khung chữ. Nới khung trên/dưới cho dấu và
        chân chữ (ệ, ấ, y, g…) không bị mất, rồi bù bằng margin âm để bố cục giữ nguyên. */
-    padding: .14em .1em .24em;
+    padding: .24em .1em .24em;
     margin: -.14em 0 calc(.4vh - .24em);
     font-family: var(--title-font), var(--cjk);
     font-size: max(26px, calc(var(--title-size) * 100vw / 1920));
@@ -419,7 +533,8 @@ body.light .gold-text {
    rotateX(góc) translateZ(bán kính) → thấy số trước/sau cong vào trong ở trên/dưới. Vành vàng 2 bên (::before),
    bóng đổ hình trụ (::after). Cả dãy trống nằm trong khung vàng có đinh tán 4 góc (.slot). */
 .slots.drum .slot {
-    --rv: calc(var(--box) * .13);            /* cỡ đinh tán */
+    --rv: calc(var(--box) * .13);
+    /* cỡ đinh tán */
     gap: calc(var(--box) * .07);
     padding: calc(var(--box) * .2) calc(var(--box) * .26);
     border-radius: calc(var(--box) * .16);
@@ -443,14 +558,17 @@ body.light .gold-text {
 }
 
 .slots.drum .box {
-    --item: calc(var(--box) * .84);              /* chiều cao 1 tấm số */
-    --r: calc(var(--item) * 1.539);              /* bán kính trống = (item/2) / tan(18°) – 10 tấm/vòng, góc 36° */
+    --item: calc(var(--box) * .84);
+    /* chiều cao 1 tấm số */
+    --r: calc(var(--item) * 1.539);
+    /* bán kính trống = (item/2) / tan(18°) – 10 tấm/vòng, góc 36° */
     width: calc(var(--box) * 1.06);
     height: calc(var(--box) * 1.72);
     border-radius: calc(var(--box) * .1);
     perspective: calc(var(--box) * 5);
     color: #3a1600;
-    background: linear-gradient(180deg, #050100, #2a0c04 50%, #050100);   /* hốc tối sau trống */
+    background: linear-gradient(180deg, #050100, #2a0c04 50%, #050100);
+    /* hốc tối sau trống */
     box-shadow: inset 0 0 calc(var(--box) * .2) #000;
 }
 
@@ -461,7 +579,8 @@ body.light .gold-text {
     top: calc(50% - var(--item) / 2);
     height: var(--item);
     transform-style: preserve-3d;
-    transform: translateZ(calc(var(--r) * -1));   /* lùi trống ra sau để tấm giữa đúng cỡ */
+    transform: translateZ(calc(var(--r) * -1));
+    /* lùi trống ra sau để tấm giữa đúng cỡ */
     will-change: auto;
 }
 
@@ -587,7 +706,8 @@ body.btn-idle:not(.drawing) .slots {
 }
 
 /* Thanh công cụ (Giải thưởng, Người tham dự…) mờ cùng nhịp 10 giây với nút Bắt đầu; rê chuột vào là rõ lại */
-body.btn-idle:not(.idle) .pill:not(:hover):not(:focus-within) {   /* :not(.idle): toàn màn hình vẫn ẩn hẳn như cũ */
+body.btn-idle:not(.idle) .pill:not(:hover):not(:focus-within) {
+    /* :not(.idle): toàn màn hình vẫn ẩn hẳn như cũ */
     opacity: .22;
     transition: opacity 1.2s ease;
 }

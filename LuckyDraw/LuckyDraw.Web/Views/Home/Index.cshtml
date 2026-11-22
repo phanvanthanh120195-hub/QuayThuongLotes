@@ -110,7 +110,9 @@
     else
     {
         <main class="stage-main">
-            <h1 class="event-title gold-text" id="eventTitle">@LocalizedName.Get(Model)</h1>
+            <div class="title-banner">
+                <h1 class="event-title gold-text title-3d" id="eventTitle" data-text="@LocalizedName.Get(Model)">@LocalizedName.Get(Model)</h1>
+            </div>
             <div class="prize-nav">
                 <button class="nav-btn" id="prev" type="button" aria-label="@L["Giải trước"]"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
                 <div class="prize-name gold-text" id="prizeName"></div>

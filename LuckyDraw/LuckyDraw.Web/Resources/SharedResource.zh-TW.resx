@@ -16,6 +16,7 @@
   <data name="Bên trái" xml:space="preserve"><value>左側</value></data>
   <data name="Bạn" xml:space="preserve"><value>您</value></data>
   <data name="Bản xem trước gần đúng; màn chiếu thật sẽ có hiệu ứng động và bảng kết quả." xml:space="preserve"><value>此為近似預覽；實際投影畫面會有動畫及結果面板。</value></data>
+  <data name="Bảng hiệu đỏ viền vàng phía sau tên sự kiện" xml:space="preserve"><value>活動名稱後的紅金橫幅</value></data>
   <data name="Bấm Bắt đầu, rồi bấm Dừng khi muốn" xml:space="preserve"><value>按「開始」，想停時再按「停止」</value></data>
   <data name="Bấm Bắt đầu, tự dừng sau thời gian quay" xml:space="preserve"><value>按「開始」，到時間自動停止</value></data>
   <data name="Bấm Enter hoặc chạm vào màn hình để tiếp tục" xml:space="preserve"><value>按 Enter 或點擊畫面繼續</value></data>

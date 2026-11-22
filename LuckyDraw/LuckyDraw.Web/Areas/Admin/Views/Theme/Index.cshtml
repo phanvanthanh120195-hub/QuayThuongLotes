@@ -90,6 +90,13 @@
                             <label class="form-label">@L["Cỡ chữ"] <span class="muted" data-out="size">@t.TitleSize</span>px</label>
                             <input type="range" class="form-range" min="24" max="140" name="Theme.TitleSize" value="@t.TitleSize" />
                         </div>
+                        <div class="col-12">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" role="switch" id="titleBanner" name="Theme.TitleBanner" value="true" checked="@t.TitleBanner" />
+                                <input type="hidden" name="Theme.TitleBanner" value="false" />
+                                <label class="form-check-label" for="titleBanner">@L["Bảng hiệu đỏ viền vàng phía sau tên sự kiện"]</label>
+                            </div>
+                        </div>
                     </div>
                 </div>
 
