@@ -1,5 +1,6 @@
 using Dapper;
 using LuckyDraw.Web.Models.Entities;
+using LuckyDraw.Web.Services;
 using Npgsql;
 
 namespace LuckyDraw.Web.Data.Repositories;
@@ -39,7 +40,8 @@ public class ParticipantRepository
     {
         var page = Math.Max(1, s.Page);
         var size = Math.Clamp(s.PageSize, 10, 500);
-        const string sql = @"
+        // Tìm không dấu: tên / bộ phận / chức vụ so bằng bản đã bỏ dấu (@qf); mã NV và chữ Hán so trực tiếp (@q)
+        var sql = $@"
             SELECT p.participant_id, p.event_id, p.employee_code, p.full_name, p.full_name_zh, p.department_vi,
                    p.department_zh, p.position, p.photo_path, p.department_id, p.join_date, p.is_absent,
                    d.code AS department_code,
@@ -55,8 +57,9 @@ public class ParticipantRepository
             LEFT JOIN luckydraw.draw_result r ON r.event_id = p.event_id AND r.participant_id = p.participant_id AND NOT r.is_removed
             LEFT JOIN luckydraw.prize z ON z.prize_id = r.prize_id
             WHERE p.event_id = @eventId
-              AND (@q = '' OR p.employee_code ILIKE @q OR p.full_name ILIKE @q OR p.full_name_zh ILIKE @q
-                   OR p.department_vi ILIKE @q OR p.department_zh ILIKE @q OR p.position ILIKE @q)
+              AND (@q = '' OR p.employee_code ILIKE @q OR p.full_name_zh ILIKE @q OR p.department_zh ILIKE @q
+                   OR {VnText.Sql("p.full_name")} LIKE @qf OR {VnText.Sql("COALESCE(p.department_vi, d.name_vi)")} LIKE @qf
+                   OR {VnText.Sql("p.position")} LIKE @qf)
               AND (@deptId::int IS NULL OR p.department_id = @deptId)
               AND (@dept = '' OR COALESCE(p.department_vi, d.name_vi) = @dept)
               AND (@status = ''
@@ -70,6 +73,7 @@ public class ParticipantRepository
         {
             eventId,
             q = LikePattern(s.Q),
+            qf = VnText.FoldPattern(s.Q),
             deptId = s.DepartmentId,
             dept = s.Dept?.Trim() ?? "",
             status = s.Status ?? "",

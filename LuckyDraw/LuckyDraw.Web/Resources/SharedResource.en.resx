@@ -304,6 +304,7 @@
   <data name="PNG nền trong suốt là đẹp nhất, tối đa 2 MB. Hiển thị góc trên bên trái." xml:space="preserve"><value>A transparent PNG looks best, up to 2 MB. Shown in the top-left corner.</value></data>
   <data name="PNG, JPG hoặc WEBP, tối đa 2 MB. Hiển thị trên màn chiếu khi quay giải này." xml:space="preserve"><value>PNG, JPG or WEBP, up to 2 MB. Shown on the stage screen while drawing this prize.</value></data>
   <data name="Phiên đăng nhập đã hết hạn, hãy đăng nhập lại." xml:space="preserve"><value>Your session has expired, please sign in again.</value></data>
+  <data name="Pháo bông chạy quanh viền nút" xml:space="preserve"><value>Sparkler running around the button border</value></data>
   <data name="Pháo hoa" xml:space="preserve"><value>Fireworks</value></data>
   <data name="Phát lần lượt các bài đã chọn" xml:space="preserve"><value>Plays the selected tracks in order</value></data>
   <data name="Phân trang" xml:space="preserve"><value>Pagination</value></data>

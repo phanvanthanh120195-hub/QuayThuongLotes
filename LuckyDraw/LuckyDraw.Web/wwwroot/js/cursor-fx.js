@@ -7,6 +7,7 @@
               tia sáng toả tròn quay chậm, các vòng sáng ngũ sắc, đốm sáng lấp lánh xoay quanh; bấm chuột toả 1 vòng sáng.
    Dừng khi chuột ra khỏi cửa sổ, để yên 10 giây (body.btn-idle) hoặc con trỏ bị ẩn (body.idle). Không còn gì để vẽ thì
    tự tắt vòng vẽ.  draw.js gọi CursorFx.setMode('wand' | 'halo' | 'dragon' | null) theo theme.
+   Ngoài ra: CursorFx.setButtonSparkler(true/false) – 2 đốm pháo bông chạy quanh viền nút Bắt đầu.
    - 'dragon' (Rồng vờn ngọc): ngọc lửa là con trỏ; con rồng (ảnh /images/mouse/*.webp) uốn lượn đuổi theo ngọc.
    ===================================================================== */
 (function () {
@@ -264,6 +265,86 @@
         ctx.globalAlpha = 1;
     }
 
+    // ------------------------------------------------------------ Pháo bông chạy quanh viền nút Bắt đầu
+    // 2 đốm lửa (đối diện nhau) chạy vòng theo đúng dáng nút: đọc clip-path polygon (Kiểu 2/6 lục giác) hoặc
+    // border-radius (viên thuốc / bo góc) → đường viền gấp khúc, mỗi đốm toé tia lửa như que pháo bông, hướng ra ngoài.
+    // Tạm dừng khi nút ẩn, để yên chuột 10 giây (nút đang mờ), có màn chúc mừng hoặc popup. Bật/tắt: Admin → Nút bắt đầu.
+    var btnSpark = false, btnLap = 0, btnPath = null, btnKey = '';
+
+    function cssLen(v, total) { return /%$/.test(v) ? parseFloat(v) / 100 * total : parseFloat(v) || 0; }
+
+    function btnOutline(b) {
+        var r = b.getBoundingClientRect(), cs = getComputedStyle(b), cp = cs.clipPath || '', key = [r.left, r.top, r.width, r.height, cp, cs.borderTopLeftRadius].join('|');
+        if (key === btnKey && btnPath) return btnPath;
+        var pts = [];
+        if (cp.indexOf('polygon(') === 0) {
+            cp.slice(8, cp.lastIndexOf(')')).split(',').forEach(function (pair) {
+                var v = pair.trim().split(/\s+/);
+                pts.push({ x: r.left + cssLen(v[0], r.width), y: r.top + cssLen(v[1], r.height) });
+            });
+        } else {
+            var rad = Math.min(parseFloat(cs.borderTopLeftRadius) || 0, r.height / 2, r.width / 2);
+            [[r.right - rad, r.top + rad, -90], [r.right - rad, r.bottom - rad, 0], [r.left + rad, r.bottom - rad, 90], [r.left + rad, r.top + rad, 180]]
+                .forEach(function (c) {
+                    for (var k = 0; k <= 6; k++) {
+                        var a = (c[2] + k * 15) * Math.PI / 180;
+                        pts.push({ x: c[0] + Math.cos(a) * rad, y: c[1] + Math.sin(a) * rad });
+                    }
+                });
+        }
+        pts.push(pts[0]);
+        var acc = [0];
+        for (var i = 1; i < pts.length; i++) acc.push(acc[i - 1] + Math.hypot(pts[i].x - pts[i - 1].x, pts[i].y - pts[i - 1].y));
+        btnKey = key;
+        btnPath = { pts: pts, acc: acc, total: acc[acc.length - 1], cx: r.left + r.width / 2, cy: r.top + r.height / 2 };
+        return btnPath;
+    }
+
+    function outlineAt(P, u) {                         // u: 0..1 quanh chu vi
+        var d = ((u % 1) + 1) % 1 * P.total;
+        for (var i = 1; i < P.pts.length; i++) {
+            if (P.acc[i] >= d) {
+                var a = P.pts[i - 1], b = P.pts[i], l = P.acc[i] - P.acc[i - 1], k = l ? (d - P.acc[i - 1]) / l : 0;
+                return { x: a.x + (b.x - a.x) * k, y: a.y + (b.y - a.y) * k };
+            }
+        }
+        return P.pts[0];
+    }
+
+    function btnVisible() {
+        if (!btnSpark || document.hidden) return null;
+        var b = document.getElementById('btnStart'), bl = document.body.classList;
+        if (!b || b.hidden || !b.offsetParent || bl.contains('btn-idle') || bl.contains('idle')) return null;
+        var cg = document.getElementById('congrats'), cf = document.getElementById('confirmModal');
+        if ((cg && !cg.hidden) || (cf && !cf.hidden)) return null;
+        var modals = document.querySelectorAll('.modal');
+        for (var i = 0; i < modals.length; i++) if (!modals[i].hidden) return null;
+        return b;
+    }
+
+    function btnSparkStep(dt) {
+        var b = btnVisible();
+        if (!b) return;
+        var P = btnOutline(b);
+        if (P.total < 10) return;
+        btnLap += dt * 16.67 / 2600;                      // 1 vòng ~2,6 giây
+        for (var h = 0; h < 2; h++) {
+            var q = outlineAt(P, btnLap + h * 0.5), out = Math.atan2(q.y - P.cy, q.x - P.cx);
+            var n = (reduced ? 1 : 3) * dt;
+            for (var k = 0; k < n && parts.length < MAX; k++) {
+                var a = out + rnd(-1.3, 1.3), v = rnd(0.5, 2.8);
+                parts.push({ x: q.x, y: q.y, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 0.3, life: 0, max: rnd(12, 30),
+                    c: Math.random() < 0.7 ? pick(COLORS.slice(0, 4)) : pick(COLORS), w: rnd(0.9, 1.8), g: 0.05 });
+            }
+            var gr = ctx.createRadialGradient(q.x, q.y, 0, q.x, q.y, 10);
+            gr.addColorStop(0, 'rgba(255,248,220,.95)');
+            gr.addColorStop(0.45, 'rgba(255,200,90,.45)');
+            gr.addColorStop(1, 'rgba(255,160,60,0)');
+            ctx.fillStyle = gr;
+            ctx.beginPath(); ctx.arc(q.x, q.y, 10, 0, Math.PI * 2); ctx.fill();
+        }
+    }
+
     // ------------------------------------------------------------ vòng vẽ
     function frame(t) {
         raf = 0;
@@ -274,6 +355,7 @@
         ctx.globalCompositeOperation = 'lighter';
 
         if (mode === 'wand' && on) wandStep(t, dt);
+        btnSparkStep(dt);                              // pháo bông quanh viền nút Bắt đầu
 
         // hào quang hiện/tắt dần trong ~0,3 giây
         var target = mode === 'halo' && on ? 1 : 0;
@@ -303,7 +385,7 @@
         ctx.globalAlpha = 1;
         ctx.globalCompositeOperation = 'source-over';
 
-        if (on || parts.length || ripples.length || haloA > 0 || DR.a > 0) raf = requestAnimationFrame(frame);
+        if (on || btnSpark || parts.length || ripples.length || haloA > 0 || DR.a > 0) raf = requestAnimationFrame(frame);
         else last = 0;
     }
 
@@ -333,6 +415,11 @@
             if (mode) ensureCanvas();
             if (mode === 'dragon') dragonLoad();
             kick();
+        },
+        // pháo bông chạy quanh viền nút Bắt đầu (Admin → Giao diện → Nút bắt đầu)
+        setButtonSparkler: function (on) {
+            btnSpark = !!on;
+            if (btnSpark) { ensureCanvas(); kick(); }
         }
     };
 })();

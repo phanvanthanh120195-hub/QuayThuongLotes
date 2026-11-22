@@ -304,6 +304,7 @@
   <data name="PNG nền trong suốt là đẹp nhất, tối đa 2 MB. Hiển thị góc trên bên trái." xml:space="preserve"><value>透明背景的 PNG 效果最佳，最大 2 MB。显示于左上角。</value></data>
   <data name="PNG, JPG hoặc WEBP, tối đa 2 MB. Hiển thị trên màn chiếu khi quay giải này." xml:space="preserve"><value>PNG、JPG 或 WEBP，最大 2 MB。抽此奖项时显示于投影画面。</value></data>
   <data name="Phiên đăng nhập đã hết hạn, hãy đăng nhập lại." xml:space="preserve"><value>登录已过期，请重新登录。</value></data>
+  <data name="Pháo bông chạy quanh viền nút" xml:space="preserve"><value>按钮边框烟花</value></data>
   <data name="Pháo hoa" xml:space="preserve"><value>烟花</value></data>
   <data name="Phát lần lượt các bài đã chọn" xml:space="preserve"><value>依次播放已选的曲目</value></data>
   <data name="Phân trang" xml:space="preserve"><value>分页</value></data>

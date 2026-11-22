@@ -1,5 +1,6 @@
 using Dapper;
 using LuckyDraw.Web.Models.Entities;
+using LuckyDraw.Web.Services;
 
 namespace LuckyDraw.Web.Data.Repositories;
 
@@ -45,12 +46,12 @@ public class ResultRepository
             WHERE r.event_id = @eventId
               AND r.is_removed = @removed
               AND (@prizeId::int IS NULL OR r.prize_id = @prizeId)
-              AND (@q = '' OR pa.employee_code ILIKE @q OR pa.full_name ILIKE @q OR pa.full_name_zh ILIKE @q)
+              AND (@q = '' OR pa.employee_code ILIKE @q OR pa.full_name_zh ILIKE @q OR " + VnText.Sql("pa.full_name") + @" LIKE @qf)   -- tên: tìm không dấu
             ORDER BY " + (removed ? "r.removed_at DESC" : "z.sort_order, r.drawn_at, r.result_id") + @"
             LIMIT @pageSize OFFSET @offset";
         await using var conn = await _db.OpenAsync();
         var rows = (await conn.QueryAsync<DrawResultRow>(sql,
-            new { eventId, removed, prizeId, q = ParticipantRepository.LikePattern(q), pageSize, offset = (page - 1) * pageSize })).AsList();
+            new { eventId, removed, prizeId, q = ParticipantRepository.LikePattern(q), qf = VnText.FoldPattern(q), pageSize, offset = (page - 1) * pageSize })).AsList();
         return new PagedList<DrawResultRow>
         {
             Items = rows,

@@ -53,6 +53,8 @@ public class DigitBoxSettings
 public class StartButtonSettings
 {
     public int Style { get; set; } = 5;   // 5 = light gradient
+    /// <summary>Pháo bông (tia lửa kiểu đũa thần) chạy vòng quanh viền nút.</summary>
+    public bool Sparkler { get; set; } = true;
     public LocalizedText Label { get; set; } = new() { Vi = "Bắt đầu", ZhTW = "開始", ZhCN = "开始", En = "Start" };
 }
 

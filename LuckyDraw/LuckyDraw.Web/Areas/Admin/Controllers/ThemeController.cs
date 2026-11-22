@@ -160,6 +160,7 @@ public class ThemeController : AdminControllerBase
             StartButton = new StartButtonSettings
             {
                 Style = Math.Clamp(t.StartButton?.Style ?? 5, 1, 6),
+                Sparkler = t.StartButton?.Sparkler ?? true,
                 Label = Text(t.StartButton?.Label, 30)
             },
             ResultPanelPosition = Pick(t.ResultPanelPosition, ThemeOptions.ResultPositions.Select(p => p.Key), "bottom"),

@@ -92,6 +92,7 @@
         body.classList.remove('pos-bottom', 'pos-left', 'pos-right');
         body.classList.add('pos-' + (t.resultPanelPosition || 'bottom'));
         applyCursor(t.cursor, t.cursorSize);
+        if (window.CursorFx) CursorFx.setButtonSparkler(!t.startButton || t.startButton.sparkler !== false);
         $('#btnStart').classList.remove('s1', 's2', 's3', 's4', 's5', 's6');
         $('#btnStart').classList.add('s' + ((t.startButton && t.startButton.style) || 2));
         $('#eventTitle').textContent = ev.name;
@@ -797,8 +798,13 @@
         $('#sumModal').hidden = false;
     }
 
+    // Bỏ dấu tiếng Việt + chữ thường để tìm không dấu ("nguyen van a" khớp "Nguyễn Văn A")
+    function fold(s) {
+        return String(s || '').normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/đ/g, 'd').replace(/Đ/g, 'D').toLowerCase();
+    }
+
     function renderSummary() {
-        var q = ($('#sumSearch').value || '').trim().toLowerCase(), pid = $('#sumPrize').value;
+        var q = fold(($('#sumSearch').value || '').trim()), pid = $('#sumPrize').value;
         var prizeCount = {};
         state.results.forEach(function (r) { prizeCount[r.prizeId] = 1; });
         $('#sumTotal').innerHTML = '';
@@ -808,7 +814,7 @@
         body.innerHTML = '';
         state.results.forEach(function (r, i) {               // mới nhất trước, STT giảm dần như thứ tự quay
             if (pid && String(r.prizeId) !== pid) return;
-            if (q && [r.code, r.name, r.position, r.department, r.prizeName].join(' ').toLowerCase().indexOf(q) < 0) return;
+            if (q && fold([r.code, r.name, r.position, r.department, r.prizeName].join(' ')).indexOf(q) < 0) return;
             shown++;
             var tr = el('tr');
             var n = el('td', 'c');
