@@ -91,7 +91,8 @@
         if (t.logoPath) { logo.src = t.logoPath; logo.hidden = false; } else { logo.hidden = true; }
         body.classList.remove('pos-bottom', 'pos-left', 'pos-right');
         body.classList.add('pos-' + (t.resultPanelPosition || 'bottom'));
-        $('#btnStart').classList.remove('s1', 's2', 's3', 's4');
+        applyCursor(t.cursor, t.cursorSize);
+        $('#btnStart').classList.remove('s1', 's2', 's3', 's4', 's5', 's6');
         $('#btnStart').classList.add('s' + ((t.startButton && t.startButton.style) || 2));
         $('#eventTitle').textContent = ev.name;
         document.title = ev.name + ' · LuckyDraw';
@@ -551,8 +552,48 @@
         warn.textContent = T('notEnough', p.eligible);
     }
 
+    // Con trỏ chuột theo theme. [điểm bấm x, y, đuôi file] – khớp ThemeOptions.Cursors (ThemeController.cs)
+    var CURSORS = { gold: [3, 2], wand: [5, 5], blossom: [16, 16], lantern: [16, 1], coin: [16, 16], rose: [3, 2], scepter: [15, 15],
+        dragon: [20, 20, 'png'] };
+    var cursorToken = 0;
+    function applyCursor(key, sizePct) {
+        var root = document.documentElement.style, h = CURSORS[key || 'gold'], k = (sizePct || 100) / 100, token = ++cursorToken;
+        // hiệu ứng động kèm con trỏ: đũa thần → tia pháo bông, quyền trượng → hào quang, rồng → rồng vờn ngọc (to theo cỡ con trỏ)
+        if (window.CursorFx) CursorFx.setMode({ wand: 'wand', scepter: 'halo', dragon: 'dragon' }[key] || null, k);
+        if (!h) {                                          // 'system': con trỏ mặc định của máy
+            root.setProperty('--cur-default', 'default');
+            root.setProperty('--cur-pointer', 'pointer');
+            return;
+        }
+        var u = '/images/cursor/' + (key || 'gold'), ext = '.' + (h[2] || 'svg') + '?v=2';   // ?v= đổi khi sửa ảnh con trỏ → trình duyệt tải ảnh mới
+        function set(a, b, f) {
+            var hs = ' ' + Math.round(h[0] * f) + ' ' + Math.round(h[1] * f);
+            root.setProperty('--cur-default', "url('" + a + "')" + hs + ', default');
+            root.setProperty('--cur-pointer', "url('" + b + "')" + hs + ', pointer');
+        }
+        set(u + ext, u + '-hover' + ext, 1);               // cỡ gốc trước, phóng to xong thì thay
+        if (Math.abs(k - 1) < 0.01) return;
+        // Trình duyệt không phóng to ảnh con trỏ bằng CSS → vẽ lại ảnh ở cỡ mới ra PNG (data URL). Tối đa 128px (giới hạn của Chrome).
+        function scaled(src, cb) {
+            var im = new Image();
+            im.onload = function () {
+                var f = Math.min(k, 128 / Math.max(im.naturalWidth, im.naturalHeight)),
+                    c = document.createElement('canvas'), g = c.getContext('2d');
+                c.width = Math.round(im.naturalWidth * f); c.height = Math.round(im.naturalHeight * f);
+                g.imageSmoothingQuality = 'high';
+                g.drawImage(im, 0, 0, c.width, c.height);
+                cb(c.toDataURL('image/png'), f);
+            };
+            im.src = src;
+        }
+        scaled(u + ext, function (a, f) {
+            scaled(u + '-hover' + ext, function (b) { if (token === cursorToken) set(a, b, f); });
+        });
+    }
+
     function renderButton() {
         var b = $('#btnStart'), p = cur();
+        document.body.classList.toggle('drawing', state.phase === 'spinning' || state.phase === 'stopping');
         b.classList.remove('stop');
         if (!LD.canDraw) { b.hidden = true; return; }
         b.hidden = false;
@@ -775,16 +816,22 @@
         var box = $('#congrats'), wrap = el('div', 'cgf');
         var bgImg = $('.bg-img').style.backgroundImage;
         box.style.background = bgImg && bgImg !== 'none' ? bgImg + ' center / cover no-repeat, var(--bg)' : '';
-        wrap.appendChild(el('div', 'cgf-hello', loc(state.ev.theme.congratsTitle) || T('congrats')));
+        var hello = loc(state.ev.theme.congratsTitle) || T('congrats');
         if (winners.length === 1) {
-            var w = winners[0];
-            if (w.photo) wrap.appendChild(photoEl(w, 'cgf-photo'));
-            wrap.appendChild(el('div', 'cgf-code', w.code));
-            wrap.appendChild(el('div', 'cgf-name', w.name));
-            if (w.position || w.department) wrap.appendChild(el('div', 'cgf-pos', w.position || w.department));
-            wrap.appendChild(el('div', 'cgf-won', T('wonLabel')));
-            wrap.appendChild(el('div', 'cgf-prize', w.prizeName));
+            // 1 người trúng: đặt trong khung vàng kiểu khung tranh (hoạ tiết 4 góc, ánh kim chạy, băng "Chúc mừng")
+            var w = winners[0], fr = el('div', 'cgf-frame');
+            ['tl', 'tr', 'bl', 'br'].forEach(function (k) { fr.appendChild(el('span', 'cf-corner ' + k)); });
+            fr.appendChild(el('span', 'cf-shine'));
+            fr.appendChild(el('div', 'cgf-hello cf-ribbon', hello));
+            if (w.photo) fr.appendChild(photoEl(w, 'cgf-photo'));
+            fr.appendChild(el('div', 'cgf-code', w.code));
+            fr.appendChild(el('div', 'cgf-name', w.name));
+            if (w.position || w.department) fr.appendChild(el('div', 'cgf-pos', w.position || w.department));
+            fr.appendChild(el('div', 'cgf-won', T('wonLabel')));
+            fr.appendChild(el('div', 'cgf-prize', w.prizeName));
+            wrap.appendChild(fr);
         } else {
+            wrap.appendChild(el('div', 'cgf-hello', hello));
             wrap.appendChild(el('div', 'cgf-won', T('wonLabel')));
             wrap.appendChild(el('div', 'cgf-prize', winners[0].prizeName));
             var grid = el('div', 'cgf-grid'), anyPhoto = winners.some(function (x) { return !!x.photo; });
@@ -1004,10 +1051,14 @@
         else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
     }
     var idleTimer = 0;
+    var btnIdleTimer = 0;
     function poke() {
-        document.body.classList.remove('idle');
+        document.body.classList.remove('idle', 'btn-idle');
         clearTimeout(idleTimer);
         if (document.fullscreenElement) idleTimer = setTimeout(function () { document.body.classList.add('idle'); }, 2800);
+        // nút Bắt đầu: không động chuột 10 giây thì mờ đi (cả khi không toàn màn hình)
+        clearTimeout(btnIdleTimer);
+        btnIdleTimer = setTimeout(function () { document.body.classList.add('btn-idle'); }, 10000);
     }
 
     // ------------------------------------------------------------------ Realtime (SignalR)
@@ -1055,6 +1106,8 @@
             document.addEventListener(ev, function () { Sound.unlock(); }, { passive: true });
         });
         document.addEventListener('mousemove', poke);
+        document.addEventListener('pointerdown', poke);
+        poke();                                            // bắt đầu đếm 10 giây ngay khi mở trang
         document.addEventListener('fullscreenchange', poke);
         $('#confirmModal').addEventListener('click', function (e) {
             if (e.target === this) { closeConfirm(false); return; }

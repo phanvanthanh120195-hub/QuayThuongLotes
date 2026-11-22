@@ -128,8 +128,8 @@
 
                 <div class="form-section">
                     <h3>@L["Nút bắt đầu"]</h3>
-                    <div class="choice-grid mb-3" style="grid-template-columns:repeat(4,1fr)">
-                        @for (var i = 1; i <= 4; i++)
+                    <div class="choice-grid mb-3" style="grid-template-columns:repeat(6,1fr)">
+                        @for (var i = 1; i <= 6; i++)
                         {
                             <label class="choice text-center">
                                 <input type="radio" name="Theme.StartButton.Style" value="@i" checked="@(t.StartButton.Style == i)" />
@@ -142,6 +142,44 @@
                         <div class="col-md-3 col-6"><label class="form-label"><span class="lang-flag">繁</span></label><input class="form-control" name="Theme.StartButton.Label.ZhTW" value="@t.StartButton.Label.ZhTW" maxlength="30" /></div>
                         <div class="col-md-3 col-6"><label class="form-label"><span class="lang-flag">简</span></label><input class="form-control" name="Theme.StartButton.Label.ZhCN" value="@t.StartButton.Label.ZhCN" maxlength="30" /></div>
                         <div class="col-md-3 col-6"><label class="form-label"><span class="lang-flag">EN</span></label><input class="form-control" name="Theme.StartButton.Label.En" value="@t.StartButton.Label.En" maxlength="30" /></div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <h3>@L["Con trỏ chuột"]</h3>
+                    <div class="choice-grid cursor-grid">
+                        @foreach (var c in ThemeOptions.Cursors)
+                        {
+                            var css = c.Key == "system" ? "auto" : $"url('{Url.Content("~/images/cursor/" + ThemeOptions.CursorFile(c.Key))}') {c.HotX} {c.HotY}, auto";
+                            <label class="choice text-center" style="cursor:@css">
+                                <input type="radio" name="Theme.Cursor" value="@c.Key" checked="@(t.Cursor == c.Key)" data-cursor="@css" />
+                                <div class="cursor-sample">
+                                    @if (c.Key == "system")
+                                    {
+                                        <svg viewBox="0 0 32 32" width="34" height="34"><path d="M3 2 L3 24.5 L8.6 19.4 L12.6 28.4 L16.4 26.8 L12.4 18 L20 18 Z" fill="#fff" stroke="#222" stroke-width="1.6" stroke-linejoin="round" /></svg>
+                                    }
+                                    else if (c.Key == "dragon")
+                                    {
+                                        <img src="~/images/mouse/head.webp" height="34" alt="" style="transform:scaleX(-1)" />
+                                        <img src="~/images/cursor/dragon.png" width="30" height="30" alt="" />
+                                    }
+                                    else
+                                    {
+                                        <img src="~/images/cursor/@(ThemeOptions.CursorFile(c.Key))" width="34" height="34" alt="" />
+                                        <img src="~/images/cursor/@(ThemeOptions.CursorFile(c.Key, true))" width="34" height="34" alt="" />
+                                    }
+                                </div>
+                                <div class="t">@L[c.Label]</div>
+                            </label>
+                        }
+                    </div>
+                    <div class="form-text">@L["Rê chuột lên từng ô để thử. Ảnh thứ hai là con trỏ khi rê vào nút bấm được."]</div>
+                    <div class="row g-3 mt-1">
+                        <div class="col-md-6">
+                            <label class="form-label">@L["Kích thước con trỏ"] <span class="muted" data-out="cursize">@t.CursorSize</span>%</label>
+                            <input type="range" class="form-range" min="80" max="250" step="10" name="Theme.CursorSize" value="@t.CursorSize" />
+                            <div class="form-text">@L["100% = cỡ gốc. Hiệu ứng đi kèm (tia lửa, hào quang, con rồng) to theo."]</div>
+                        </div>
                     </div>
                 </div>
 
@@ -255,11 +293,14 @@
                 });
                 var style = form.querySelector('input[name="Theme.StartButton.Style"]:checked');
                 start.className = 'start s' + (style ? style.value : 2);
+                var cur = form.querySelector('input[name="Theme.Cursor"]:checked');
+                stage.style.cursor = cur ? cur.getAttribute('data-cursor') : '';
                 start.textContent = val('Theme.StartButton.Label.' + labelField) || val('Theme.StartButton.Label.Vi');
                 document.querySelector('[data-out=blur]').textContent = blur;
                 document.querySelector('[data-out=dim]').textContent = dimV;
                 document.querySelector('[data-out=size]').textContent = val('Theme.TitleSize');
                 document.querySelector('[data-out=radius]').textContent = radius;
+                document.querySelector('[data-out=cursize]').textContent = val('Theme.CursorSize');
             }
 
             document.getElementById('bgFile').addEventListener('change', function () {

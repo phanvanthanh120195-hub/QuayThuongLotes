@@ -33,6 +33,10 @@ public class ThemeSettings
     public StartButtonSettings StartButton { get; set; } = new();
     public string ResultPanelPosition { get; set; } = "bottom";
     public string CongratsEffect { get; set; } = "confetti";
+    /// <summary>Con trỏ chuột trên màn chiếu: gold | wand (đũa thần + tia pháo bông) | blossom | lantern | coin | rose | scepter (quyền trượng + hào quang) | dragon (rồng vờn ngọc) | system.</summary>
+    public string Cursor { get; set; } = "gold";
+    /// <summary>Cỡ con trỏ chuột (%): 100 = cỡ gốc (32px); hiệu ứng đi kèm (tia lửa, hào quang, rồng) to theo.</summary>
+    public int CursorSize { get; set; } = 100;
 }
 
 public class DigitBoxSettings
@@ -46,7 +50,7 @@ public class DigitBoxSettings
 
 public class StartButtonSettings
 {
-    public int Style { get; set; } = 2;
+    public int Style { get; set; } = 5;   // 5 = light gradient
     public LocalizedText Label { get; set; } = new() { Vi = "Bắt đầu", ZhTW = "開始", ZhCN = "开始", En = "Start" };
 }
 

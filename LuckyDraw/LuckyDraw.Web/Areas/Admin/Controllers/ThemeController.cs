@@ -41,6 +41,20 @@ public static class ThemeOptions
         ("glass", "Kính đỏ"), ("gold", "Vàng")
     };
 
+    /// <summary>Con trỏ chuột màn chiếu. Ảnh: /images/cursor/{Key}.svg và {Key}-hover.svg (rồng: .png); HotX/HotY = điểm bấm
+    /// (phải khớp bảng CURSORS trong wwwroot/js/draw.js).</summary>
+    public static readonly (string Key, string Label, int HotX, int HotY)[] Cursors =
+    {
+        ("gold", "Mũi tên vàng", 3, 2), ("wand", "Đũa thần pháo bông", 5, 5), ("blossom", "Hoa mai", 16, 16),
+        ("lantern", "Đèn lồng", 16, 1), ("coin", "Đồng tiền vàng", 16, 16), ("rose", "Mũi tên hồng", 3, 2),
+        ("scepter", "Quyền trượng hào quang", 15, 15), ("dragon", "Rồng vờn ngọc", 20, 20),
+        ("system", "Con trỏ hệ thống", 0, 0)
+    };
+
+    /// <summary>Tên file ảnh con trỏ (trong /images/cursor).</summary>
+    public static string CursorFile(string key, bool hover = false) =>
+        key + (hover ? "-hover" : "") + (key == "dragon" ? ".png" : ".svg");
+
     public static readonly (string Key, string Label)[] ResultPositions =
     {
         ("bottom", "Dưới ô quay số"), ("left", "Bên trái"), ("right", "Bên phải")
@@ -144,11 +158,13 @@ public class ThemeController : AdminControllerBase
             },
             StartButton = new StartButtonSettings
             {
-                Style = Math.Clamp(t.StartButton?.Style ?? 2, 1, 4),
+                Style = Math.Clamp(t.StartButton?.Style ?? 5, 1, 6),
                 Label = Text(t.StartButton?.Label, 30)
             },
             ResultPanelPosition = Pick(t.ResultPanelPosition, ThemeOptions.ResultPositions.Select(p => p.Key), "bottom"),
-            CongratsEffect = Pick(t.CongratsEffect, ThemeOptions.CongratsEffects.Select(p => p.Key), "confetti")
+            CongratsEffect = Pick(t.CongratsEffect, ThemeOptions.CongratsEffects.Select(p => p.Key), "confetti"),
+            Cursor = Pick(t.Cursor, ThemeOptions.Cursors.Select(c => c.Key), d.Cursor),
+            CursorSize = t.CursorSize <= 0 ? d.CursorSize : Math.Clamp(t.CursorSize, 80, 250)
         };
     }
 

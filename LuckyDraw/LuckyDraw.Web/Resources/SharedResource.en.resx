@@ -6,6 +6,7 @@
   <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
   <data name="0 = ô vuông, 50 = ô tròn." xml:space="preserve"><value>0 = square, 50 = circle.</value></data>
+  <data name="100% = cỡ gốc. Hiệu ứng đi kèm (tia lửa, hào quang, con rồng) to theo." xml:space="preserve"><value>100% = original size. Attached effects (sparks, halo, dragon) scale with it.</value></data>
   <data name="100% = tốc độ thật. Kéo nhỏ để pháo bay và nổ chậm lại (quay chậm), kéo lớn để nhanh hơn." xml:space="preserve"><value>100% = real speed. Drag lower for slow-motion fireworks, higher for faster ones.</value></data>
   <data name="Admin hãy vào trang quản trị và bấm “Chiếu sự kiện này”." xml:space="preserve"><value>An admin should open the admin panel and click “Show this event”.</value></data>
   <data name="Admin xoá" xml:space="preserve"><value>Deleted by admin</value></data>
@@ -80,6 +81,8 @@
   <data name="Chủ đề, ảnh nền, logo, ô quay số và nút bắt đầu của màn hình quay. Bản xem trước bên phải cập nhật ngay khi bạn chỉnh." xml:space="preserve"><value>Theme, background, logo, digit boxes and start button of the draw screen. The preview on the right updates as you edit.</value></data>
   <data name="Chức vụ" xml:space="preserve"><value>Position</value></data>
   <data name="Chữ mờ: ngôn ngữ đó đang để trống, màn chiếu sẽ dùng tên dự phòng." xml:space="preserve"><value>Faded text: that language is empty, the stage screen uses the fallback name.</value></data>
+  <data name="Con trỏ chuột" xml:space="preserve"><value>Mouse cursor</value></data>
+  <data name="Con trỏ hệ thống" xml:space="preserve"><value>System cursor</value></data>
   <data name="Các bước chuẩn bị" xml:space="preserve"><value>Setup checklist</value></data>
   <data name="Cách phát nhạc nền trong suốt chương trình." xml:space="preserve"><value>How background music plays during the show.</value></data>
   <data name="Còn có thể trúng" xml:space="preserve"><value>Still eligible</value></data>
@@ -147,6 +150,7 @@
   <data name="Hiệu ứng khi đang quay" xml:space="preserve"><value>Effect while spinning</value></data>
   <data name="Hiệu ứng sân khấu" xml:space="preserve"><value>Stage effect</value></data>
   <data name="Hiệu ứng âm thanh" xml:space="preserve"><value>Sound effects</value></data>
+  <data name="Hoa mai" xml:space="preserve"><value>Apricot blossom</value></data>
   <data name="Hoạt động" xml:space="preserve"><value>Active</value></data>
   <data name="Hoạt động gần đây" xml:space="preserve"><value>Recent activity</value></data>
   <data name="Huỷ" xml:space="preserve"><value>Cancel</value></data>
@@ -185,6 +189,7 @@
   <data name="Không thay thế được: đã có kết quả quay gắn với giải cũ. Hãy chọn chế độ thêm vào cuối." xml:space="preserve"><value>Cannot replace: the old prizes already have draw results. Choose append mode instead.</value></data>
   <data name="Không thể tự hạ quyền hoặc khoá tài khoản của chính mình." xml:space="preserve"><value>You cannot demote or lock your own account.</value></data>
   <data name="Không thể xoá tài khoản đang đăng nhập." xml:space="preserve"><value>You cannot delete the account you are signed in with.</value></data>
+  <data name="Không tải được ảnh từ đường dẫn này. Kiểm tra lại tên file và thư mục." xml:space="preserve"><value>Could not load an image from this path. Check the file name and folder.</value></data>
   <data name="Không xoá được sự kiện đang chiếu. Hãy ngừng chiếu trước." xml:space="preserve"><value>The event on screen cannot be deleted. Stop showing it first.</value></data>
   <data name="Không đọc được file .zip." xml:space="preserve"><value>Cannot read the .zip file.</value></data>
   <data name="Không đọc được file. Hãy lưu lại dưới dạng .xlsx." xml:space="preserve"><value>Cannot read the file. Please save it as .xlsx.</value></data>
@@ -194,6 +199,7 @@
   <data name="Kiểm tra" xml:space="preserve"><value>Check</value></data>
   <data name="Kiểu quay" xml:space="preserve"><value>Draw mode</value></data>
   <data name="Kiểu {0}" xml:space="preserve"><value>Style {0}</value></data>
+  <data name="Kích thước con trỏ" xml:space="preserve"><value>Cursor size</value></data>
   <data name="Kính đỏ" xml:space="preserve"><value>Red glass</value></data>
   <data name="Ký tự chờ" xml:space="preserve"><value>Placeholder</value></data>
   <data name="Kết quả" xml:space="preserve"><value>Results</value></data>
@@ -246,6 +252,8 @@
   <data name="Mã nhân viên, họ tên, mã bộ phận, ngày vào làm." xml:space="preserve"><value>Employee code, full name, department code, join date.</value></data>
   <data name="Mã số thẻ: mã nhân viên, không trùng trong file" xml:space="preserve"><value>Card no.: employee code, unique within the file</value></data>
   <data name="Mã trúng thưởng" xml:space="preserve"><value>Winning code</value></data>
+  <data name="Mũi tên hồng" xml:space="preserve"><value>Pink arrow</value></data>
+  <data name="Mũi tên vàng" xml:space="preserve"><value>Gold arrow</value></data>
   <data name="Mất kết nối máy chủ, vui lòng thử lại." xml:space="preserve"><value>Lost connection to the server, please try again.</value></data>
   <data name="Mật khẩu" xml:space="preserve"><value>Password</value></data>
   <data name="Mật khẩu mới" xml:space="preserve"><value>New password</value></data>
@@ -285,6 +293,8 @@
   <data name="Nhạc cho từng giải" xml:space="preserve"><value>Music per prize</value></data>
   <data name="Nhạc nền" xml:space="preserve"><value>Background music</value></data>
   <data name="Nhập lại mật khẩu" xml:space="preserve"><value>Confirm password</value></data>
+  <data name="Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/photos/VN000123.jpg) hoặc URL http(s). Để trống nếu không dùng ảnh. Nên dùng ảnh vuông, mặt ở giữa." xml:space="preserve"><value>Enter an image path relative to the wwwroot folder (e.g. /images/photos/VN000123.jpg) or an http(s) URL. Leave blank for no photo. A square photo with the face centered works best.</value></data>
+  <data name="Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc URL http(s). Để trống nếu không dùng ảnh. Hiển thị trên màn chiếu khi quay giải này." xml:space="preserve"><value>Enter an image path relative to the wwwroot folder (e.g. /images/prizes/tv.png) or an http(s) URL. Leave blank for no image. Shown on the screen when drawing this prize.</value></data>
   <data name="Nhật ký" xml:space="preserve"><value>Audit log</value></data>
   <data name="Nhật ký thao tác" xml:space="preserve"><value>Audit log</value></data>
   <data name="Nên import bộ phận trước để mã bộ phận của người tham dự hợp lệ." xml:space="preserve"><value>Import departments first so participants' department codes are valid.</value></data>
@@ -304,12 +314,15 @@
   <data name="Quay lại người vắng mặt thì chỉ quay 1 người." xml:space="preserve"><value>Redrawing for an absentee draws only 1 person.</value></data>
   <data name="Quay số trúng thưởng" xml:space="preserve"><value>Lucky draw</value></data>
   <data name="Quyền của từng vai trò" xml:space="preserve"><value>Permissions by role</value></data>
+  <data name="Quyền trượng hào quang" xml:space="preserve"><value>Scepter with halo</value></data>
   <data name="Quản lý" xml:space="preserve"><value>Manage</value></data>
   <data name="Quản lý giải" xml:space="preserve"><value>Manage prizes</value></data>
   <data name="Quản lý tài khoản" xml:space="preserve"><value>Manage accounts</value></data>
   <data name="Reset" xml:space="preserve"><value>Reset</value></data>
   <data name="Reset kết quả" xml:space="preserve"><value>Reset results</value></data>
   <data name="Reset toàn bộ kết quả" xml:space="preserve"><value>Reset all results</value></data>
+  <data name="Rê chuột lên từng ô để thử. Ảnh thứ hai là con trỏ khi rê vào nút bấm được." xml:space="preserve"><value>Hover over each tile to try it. The second image is the cursor shown over clickable buttons.</value></data>
+  <data name="Rồng vờn ngọc" xml:space="preserve"><value>Dragon chasing the pearl</value></data>
   <data name="STT" xml:space="preserve"><value>No.</value></data>
   <data name="Sai tên đăng nhập hoặc mật khẩu, hoặc tài khoản đã bị khoá." xml:space="preserve"><value>Wrong username or password, or the account is locked.</value></data>
   <data name="Sau khi tạo sự kiện" xml:space="preserve"><value>After creating the event</value></data>
@@ -496,8 +509,11 @@
   <data name="{0} chỉ gồm chữ, số và ký tự . _ -" xml:space="preserve"><value>{0} may contain only letters, digits and . _ -</value></data>
   <data name="{0} dài từ {2} đến {1} ký tự." xml:space="preserve"><value>{0} must be {2} to {1} characters long.</value></data>
   <data name="{0} lượt" xml:space="preserve"><value>{0} draws</value></data>
+  <data name="{0} năm" xml:space="preserve"><value>{0} years</value></data>
+  <data name="{0} năm {1} tháng" xml:space="preserve"><value>{0} years {1} months</value></data>
   <data name="{0} phải là số nguyên từ {1} đến {2}" xml:space="preserve"><value>{0} must be an integer from {1} to {2}</value></data>
   <data name="{0} phải là số." xml:space="preserve"><value>{0} must be a number.</value></data>
+  <data name="{0} phải tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc là URL http(s), không dùng đường dẫn ổ đĩa như C:\..." xml:space="preserve"><value>{0} must be relative to the wwwroot folder (e.g. /images/prizes/tv.png) or an http(s) URL, not a drive path like C:\...</value></data>
   <data name="{0} phải từ {1} đến {2}." xml:space="preserve"><value>{0} must be between {1} and {2}.</value></data>
   <data name="{0} suất" xml:space="preserve"><value>{0} slots</value></data>
   <data name="{0} suất · mỗi lượt {1} người" xml:space="preserve"><value>{0} slots · {1} per draw</value></data>
@@ -556,6 +572,7 @@
   <data name="Đã xoá tài khoản {0}." xml:space="preserve"><value>Account {0} deleted.</value></data>
   <data name="Đã xoá {0} người (giữ lại người đã có kết quả quay)." xml:space="preserve"><value>Deleted {0} people (kept those with draw results).</value></data>
   <data name="Đã đổi mật khẩu cho {0}." xml:space="preserve"><value>Password changed for {0}.</value></data>
+  <data name="Đèn lồng" xml:space="preserve"><value>Lantern</value></data>
   <data name="Đóng" xml:space="preserve"><value>Close</value></data>
   <data name="Đăng nhập" xml:space="preserve"><value>Sign in</value></data>
   <data name="Đăng nhập MC" xml:space="preserve"><value>MC sign in</value></data>
@@ -563,10 +580,13 @@
   <data name="Đăng nhập tài khoản khác" xml:space="preserve"><value>Sign in with another account</value></data>
   <data name="Đăng nhập với" xml:space="preserve"><value>Signed in as</value></data>
   <data name="Đăng xuất" xml:space="preserve"><value>Sign out</value></data>
+  <data name="Đũa thần pháo bông" xml:space="preserve"><value>Magic wand with sparks</value></data>
+  <data name="Đường dẫn ảnh" xml:space="preserve"><value>Image path</value></data>
   <data name="Đặt tên file ảnh theo mã số thẻ, ví dụ VN000032.jpg (hoặc “VN000032 - Tô Văn Thọ.jpg”). Ảnh sẽ tự gắn vào đúng người; ảnh trùng mã thay ảnh cũ." xml:space="preserve"><value>Name each photo file by card number, e.g. VN000032.jpg (or “VN000032 - Tô Văn Thọ.jpg”). Photos are matched to the right person automatically; a new photo replaces the old one.</value></data>
   <data name="Để trống thì màn chiếu tạm dùng tên phồn thể. Chuyển phồn → giản tự động chỉ đổi từng chữ, nên xem lại từ vựng." xml:space="preserve"><value>If empty, the stage screen uses the Traditional name. Automatic conversion is character-by-character, so review the wording.</value></data>
   <data name="Địa điểm" xml:space="preserve"><value>Venue</value></data>
   <data name="Đối tượng" xml:space="preserve"><value>Target</value></data>
+  <data name="Đồng tiền vàng" xml:space="preserve"><value>Gold coin</value></data>
   <data name="Đổi giải thì đổi nhạc" xml:space="preserve"><value>Music changes with each prize</value></data>
   <data name="Đổi mật khẩu" xml:space="preserve"><value>Change password</value></data>
   <data name="Đủ điều kiện" xml:space="preserve"><value>Eligible</value></data>
@@ -577,11 +597,4 @@
   <data name="— Không phát —" xml:space="preserve"><value>— No music —</value></data>
   <data name="— Không —" xml:space="preserve"><value>— None —</value></data>
   <data name="姓名, Bộ phận, 現任單位, Chức vụ: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名, department, 現任單位, position: optional. You can paste the HR file directly (STT, 工齡 columns are ignored).</value></data>
-  <data name="{0} năm" xml:space="preserve"><value>{0} years</value></data>
-  <data name="{0} năm {1} tháng" xml:space="preserve"><value>{0} years {1} months</value></data>
-  <data name="Đường dẫn ảnh" xml:space="preserve"><value>Image path</value></data>
-  <data name="{0} phải tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc là URL http(s), không dùng đường dẫn ổ đĩa như C:\..." xml:space="preserve"><value>{0} must be relative to the wwwroot folder (e.g. /images/prizes/tv.png) or an http(s) URL, not a drive path like C:\...</value></data>
-  <data name="Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc URL http(s). Để trống nếu không dùng ảnh. Hiển thị trên màn chiếu khi quay giải này." xml:space="preserve"><value>Enter an image path relative to the wwwroot folder (e.g. /images/prizes/tv.png) or an http(s) URL. Leave blank for no image. Shown on the screen when drawing this prize.</value></data>
-  <data name="Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/photos/VN000123.jpg) hoặc URL http(s). Để trống nếu không dùng ảnh. Nên dùng ảnh vuông, mặt ở giữa." xml:space="preserve"><value>Enter an image path relative to the wwwroot folder (e.g. /images/photos/VN000123.jpg) or an http(s) URL. Leave blank for no photo. A square photo with the face centered works best.</value></data>
-  <data name="Không tải được ảnh từ đường dẫn này. Kiểm tra lại tên file và thư mục." xml:space="preserve"><value>Could not load an image from this path. Check the file name and folder.</value></data>
 </root>

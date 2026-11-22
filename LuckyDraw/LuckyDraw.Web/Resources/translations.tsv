@@ -582,3 +582,16 @@ Tốc độ bay của pháo hoa	Firework speed	煙火飛行速度	烟花飞行�
 Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/prizes/tivi.png) hoặc URL http(s). Để trống nếu không dùng ảnh. Hiển thị trên màn chiếu khi quay giải này.	Enter an image path relative to the wwwroot folder (e.g. /images/prizes/tv.png) or an http(s) URL. Leave blank for no image. Shown on the screen when drawing this prize.	輸入相對於 wwwroot 資料夾的圖片路徑（例：/images/prizes/tv.png）或 http(s) 網址。不使用圖片請留空。抽此獎項時會顯示在投影畫面上。	输入相对于 wwwroot 文件夹的图片路径（例：/images/prizes/tv.png）或 http(s) 网址。不使用图片请留空。抽此奖项时会显示在投影画面上。
 Nhập đường dẫn ảnh tính từ thư mục wwwroot (vd: /images/photos/VN000123.jpg) hoặc URL http(s). Để trống nếu không dùng ảnh. Nên dùng ảnh vuông, mặt ở giữa.	Enter an image path relative to the wwwroot folder (e.g. /images/photos/VN000123.jpg) or an http(s) URL. Leave blank for no photo. A square photo with the face centered works best.	輸入相對於 wwwroot 資料夾的圖片路徑（例：/images/photos/VN000123.jpg）或 http(s) 網址。不使用照片請留空。建議使用正方形、臉部置中的照片。	输入相对于 wwwroot 文件夹的图片路径（例：/images/photos/VN000123.jpg）或 http(s) 网址。不使用照片请留空。建议使用正方形、脸部居中的照片。
 Không tải được ảnh từ đường dẫn này. Kiểm tra lại tên file và thư mục.	Could not load an image from this path. Check the file name and folder.	無法從此路徑載入圖片，請檢查檔名與資料夾。	无法从此路径加载图片，请检查文件名与文件夹。
+Con trỏ chuột	Mouse cursor	滑鼠游標	鼠标指针
+Mũi tên vàng	Gold arrow	金色箭頭	金色箭头
+Đũa thần pháo bông	Magic wand with sparks	煙火魔法棒	烟火魔法棒
+Hoa mai	Apricot blossom	梅花	梅花
+Đèn lồng	Lantern	燈籠	灯笼
+Đồng tiền vàng	Gold coin	金幣	金币
+Mũi tên hồng	Pink arrow	粉紅箭頭	粉红箭头
+Con trỏ hệ thống	System cursor	系統游標	系统指针
+Rê chuột lên từng ô để thử. Ảnh thứ hai là con trỏ khi rê vào nút bấm được.	Hover over each tile to try it. The second image is the cursor shown over clickable buttons.	將滑鼠移到各選項上試用。第二張圖是指向可點擊按鈕時的游標。	将鼠标移到各选项上试用。第二张图是指向可点击按钮时的指针。
+Quyền trượng hào quang	Scepter with halo	光環權杖	光环权杖
+Rồng vờn ngọc	Dragon chasing the pearl	龍戲珠	龙戏珠
+Kích thước con trỏ	Cursor size	游標大小	指针大小
+100% = cỡ gốc. Hiệu ứng đi kèm (tia lửa, hào quang, con rồng) to theo.	100% = original size. Attached effects (sparks, halo, dragon) scale with it.	100% = 原始大小。附帶特效（火花、光環、龍）會一起放大。	100% = 原始大小。附带特效（火花、光环、龙）会一起放大。

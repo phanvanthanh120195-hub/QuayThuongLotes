@@ -6,6 +6,10 @@
    Màu, font, nền lấy từ theme_json (draw.js gán vào các biến bên dưới).
    ===================================================================== */
 :root {
+    /* Con trỏ chuột riêng của màn chiếu. Mặc định mũi tên vàng; draw.js đổi theo theme (Admin → Giao diện → Con trỏ chuột).
+       Số sau url = điểm bấm. */
+    --cur-default: url('/images/cursor/gold.svg') 3 2, default;
+    --cur-pointer: url('/images/cursor/gold-hover.svg') 3 2, pointer;
     --bg: url('/images/themes/tet-dinh-mui.jpg') center / cover no-repeat, #8b0000;
     --accent: #ffd86b;
     --ink: #ffffff;
@@ -172,10 +176,14 @@ body.light .gold-text {
 
 /* Mọi chữ dùng font tiêu đề: lấy nét đậm nhất có sẵn (Playfair 900…). Font chỉ có 1 nét (Anton, Lobster…)
    giữ nguyên nét đó — font-synthesis:none để trình duyệt không tô đậm giả làm chữ bị nhoè. */
-.event-title, .prize-name, .congrats-title, .empty-stage h1 {
+.event-title,
+.prize-name,
+.congrats-title,
+.empty-stage h1 {
     font-weight: 900;
     font-synthesis: none;
-    font-variant-numeric: lining-nums;  /* số cao đều (2027), không dùng số kiểu cổ */
+    font-variant-numeric: lining-nums;
+    /* số cao đều (2027), không dùng số kiểu cổ */
 }
 
 /* Mũi tên ôm sát hai bên tên giải (không đặt độ rộng tối thiểu cho tên → tên ngắn không bị hở) */
@@ -195,7 +203,7 @@ body.light .gold-text {
     border: 1px solid transparent;
     background: transparent;
     color: color-mix(in srgb, var(--accent) 80%, #fff);
-    cursor: pointer;
+    cursor: var(--cur-pointer);
     display: grid;
     place-items: center;
     border-radius: 50%;
@@ -219,7 +227,7 @@ body.light .gold-text {
 
 .nav-btn:disabled {
     opacity: .22;
-    cursor: default;
+    cursor: var(--cur-default);
 }
 
 .prize-name {
@@ -292,6 +300,7 @@ body.light .gold-text {
 
 /* ---------- Ô quay số ---------- */
 .slots {
+    transition: opacity .25s ease;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
@@ -421,18 +430,76 @@ body.light .gold-text {
 
 .start-btn {
     border: 0;
-    cursor: pointer;
+    cursor: var(--cur-pointer);
     font: 800 clamp(14px, 1.15vw, 24px) var(--ui);
     letter-spacing: 2px;
     text-transform: uppercase;
     padding: clamp(10px, 1.3vh, 20px) clamp(36px, 3.6vw, 76px);
     color: #6b2300;
     background: linear-gradient(180deg, #ffe9a6 0%, #f6c445 55%, #e29a1c 100%);
-    transition: transform .12s, filter .12s;
+    transition: transform .12s, filter .12s, opacity .25s ease, background-position .6s ease, color .2s ease, text-shadow .2s ease;
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+    /* vệt sáng (z-index:-1) nằm trên nền nút nhưng dưới chữ */
+}
+
+/* Vệt sáng khi rê chuột: chạy trái → phải rồi phải → trái (alternate) */
+.start-btn::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(100deg, transparent 32%, rgba(255, 255, 255, .95) 50%, transparent 68%);
+    transform: translateX(-110%);
+    pointer-events: none;
+}
+
+.start-btn:hover:not(:disabled)::after {
+    animation: btnSweep 1.2s ease-in-out infinite alternate;
+}
+
+@keyframes btnSweep {
+    from {
+        transform: translateX(-110%);
+    }
+
+    to {
+        transform: translateX(110%);
+    }
+}
+
+/* Không động chuột 10 giây → nút mờ đi cho màn chiếu gọn (draw.js gắn body.btn-idle); động chuột là hiện lại */
+body.btn-idle .start-btn:not(:hover) {
+    opacity: .22;
+    transition: opacity 1.2s ease;
+    /* mờ dần chậm, hiện lại nhanh */
+}
+
+/* Hàng ô quay số cũng mờ theo – trừ lúc đang quay (body.drawing) để khán giả luôn thấy số chạy */
+body.btn-idle:not(.drawing) .slots {
+    opacity: .22;
+    transition: opacity 1.2s ease;
+}
+
+/* Lớp vẽ hiệu ứng động kèm con trỏ: tia pháo bông (Đũa thần), hào quang (Quyền trượng) – cursor-fx.js */
+.cursor-fx {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2147483000;
 }
 
 .start-btn:hover {
     filter: brightness(1.06);
+}
+
+/* Rê chuột: chữ chuyển trắng (bóng nâu để vẫn đọc rõ trên nền vàng) */
+.start-btn:hover:not(:disabled) {
+    color: #fff;
+    text-shadow: 0 1px 3px rgba(107, 35, 0, .6);
 }
 
 .start-btn:active {
@@ -441,7 +508,7 @@ body.light .gold-text {
 
 .start-btn:disabled {
     opacity: .6;
-    cursor: default;
+    cursor: var(--cur-default);
     transform: none;
 }
 
@@ -449,11 +516,12 @@ body.light .gold-text {
     border-radius: 10px;
 }
 
-.start-btn.s2 {
+.start-btn.s2,
+.start-btn.s6 {
     clip-path: polygon(7% 0, 93% 0, 100% 50%, 93% 100%, 7% 100%, 0 50%);
     border-radius: 0;
-    padding-left: clamp(44px, 4.2vw, 88px);
-    padding-right: clamp(44px, 4.2vw, 88px);
+    padding-left: clamp(44px, 4.2vw, 100px);
+    padding-right: clamp(44px, 4.2vw, 100px);
 }
 
 .start-btn.s3 {
@@ -467,6 +535,45 @@ body.light .gold-text {
     background: linear-gradient(180deg, #ff6a52, #c8102e);
     color: #fff;
     border-radius: 999px;
+}
+
+/* Kiểu 5 – light gradient (viên thuốc bóng, dải màu pastel, chữ trắng, quầng sáng 2 màu bên dưới).
+   Màu lấy theo nền Tết: vàng (--accent của theme) → cam đào → san hô → đỏ hồng. Hover: dải màu trượt ngang.
+   Kiểu 6 = dáng lục giác của Kiểu 2 + màu light gradient của Kiểu 5 (dáng lấy ở rule .s2/.s6 phía trên;
+   clip-path cắt mất quầng sáng ngoài, chỉ còn lớp bóng bên trong). */
+.start-btn.s5,
+.start-btn.s6 {
+    --s5-gold: color-mix(in srgb, var(--accent) 80%, #fff);
+    color: #6b2300;
+    /* chữ nâu như các kiểu vàng; rê chuột → trắng */
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-shadow: 0 1px 0 rgba(255, 240, 220, .55);
+    background: linear-gradient(100deg, var(--s5-gold) 0%, #ffb37a 28%, #ff7f73 55%, #f0506e 78%, #ff8fa8 100%);
+    background-size: 170% 100%;
+    background-position: 0 0;
+    box-shadow:
+        inset 0 1px 1px rgba(255, 255, 255, .85),
+        /* mép trên bóng */
+        inset 0 10px 16px -6px rgba(255, 255, 255, .45),
+        /* lớp kính sáng nửa trên */
+        inset 0 -8px 14px -4px rgba(150, 0, 30, .28),
+        /* đáy đậm hơn → khối tròn */
+        0 0 0 1px rgba(255, 230, 210, .55),
+        -18px 14px 32px -8px color-mix(in srgb, var(--accent) 75%, transparent),
+        /* quầng vàng bên trái */
+        18px 14px 32px -8px rgba(240, 70, 110, .65);
+    /* quầng hồng bên phải */
+}
+
+.start-btn.s5 {
+    border-radius: 999px;
+}
+
+.start-btn.s5:hover:not(:disabled),
+.start-btn.s6:hover:not(:disabled) {
+    background-position: 100% 0;
+    filter: brightness(1.05) saturate(1.05);
 }
 
 .start-btn.stop {
@@ -534,7 +641,7 @@ body.light .warn {
     color: var(--ink);
     font: 600 clamp(12px, .82vw, 15px) var(--ui);
     text-decoration: none;
-    cursor: pointer;
+    cursor: var(--cur-pointer);
     white-space: nowrap;
 }
 
@@ -644,7 +751,7 @@ body.pos-right .results {
     background: transparent;
     color: var(--ink-soft);
     font: 600 clamp(12px, .85vw, 15px) var(--ui);
-    cursor: pointer;
+    cursor: var(--cur-pointer);
     white-space: nowrap;
     border-bottom: 2px solid transparent;
 }
@@ -769,7 +876,7 @@ body.pos-right .rtable td:nth-child(4) {
     border-radius: 8px;
     padding: 3px 9px;
     font: 600 12px var(--ui);
-    cursor: pointer;
+    cursor: var(--cur-pointer);
     white-space: nowrap;
 }
 
@@ -810,7 +917,7 @@ body.light .absent-btn {
     border: 1px solid var(--panel-line);
     background: var(--panel);
     color: var(--ink);
-    cursor: pointer;
+    cursor: var(--cur-pointer);
     text-decoration: none;
     backdrop-filter: blur(8px);
 }
@@ -899,7 +1006,7 @@ body.light .absent-btn {
     color: #fff;
     font: 600 14px var(--ui), var(--cjk);
     text-align: left;
-    cursor: pointer;
+    cursor: var(--cur-pointer);
     outline: none;
 }
 
@@ -979,6 +1086,20 @@ body.idle .corner {
     pointer-events: none;
 }
 
+/* Mọi chỗ trên màn chiếu dùng con trỏ vàng; nút / link / select dùng con trỏ "bấm được".
+   Ô nhập chữ (tìm kiếm) giữ con trỏ chữ I mặc định. */
+body.stage {
+    cursor: var(--cur-default);
+}
+
+body.stage :is(button, a[href], select, summary, label[for], [role="button"], [role="option"], [role="tab"]):not(:disabled) {
+    cursor: var(--cur-pointer);
+}
+
+body.stage input:is([type="text"], [type="search"], :not([type])) {
+    cursor: text;
+}
+
 body.idle {
     cursor: none;
 }
@@ -994,7 +1115,7 @@ body.idle {
     background: rgba(30, 0, 4, .6);
     backdrop-filter: blur(6px);
     animation: fadein .35s ease;
-    cursor: pointer;
+    cursor: var(--cur-pointer);
 }
 
 @keyframes fadein {
@@ -1173,7 +1294,7 @@ body.idle {
             rgba(20, 0, 4, calc(var(--cg-dim) * .45)) 100%),
         var(--bg);
     backdrop-filter: none;
-    cursor: default;
+    cursor: var(--cur-default);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -1264,6 +1385,192 @@ body.idle {
     object-fit: cover;
 }
 
+/* ---------- Khung vàng cho 1 người trúng (kiểu khung tranh) ----------
+   Viền ngoài: dải vàng ánh kim (gradient chạy chậm) + mép tối/sáng tạo khối nổi.
+   Bên trong: nền đỏ thẫm + đường chỉ đôi. 4 góc: hoạ tiết vàng (SVG). Mép trên: băng "Chúc mừng". */
+.cgf-frame {
+    --fw: clamp(9px, .9vw, 16px);
+    /* độ dày viền vàng */
+    position: relative;
+    display: inline-block;
+    min-width: min(88vw, 820px);
+    max-width: 92vw;
+    margin-top: 3vh;
+    padding: 6.5vh clamp(28px, 4.5vw, 90px) 5vh;
+    border: var(--fw) solid transparent;
+    border-radius: 14px;
+    background:
+        radial-gradient(ellipse 80% 70% at 50% 40%, rgba(120, 10, 24, .55), rgba(30, 0, 5, .92)) padding-box,
+        linear-gradient(115deg, #7a4c10 0%, #e9b955 12%, #fff3c4 22%, #c8902c 34%, #ffe39a 48%, #9a6418 60%,
+            #ffeeb5 72%, #d29a34 84%, #7a4c10 100%) border-box;
+    background-size: 100% 100%, 260% 260%;
+    box-shadow:
+        inset 0 0 0 2px rgba(90, 50, 6, .9),
+        inset 0 0 0 4px rgba(255, 233, 170, .35),
+        inset 0 0 60px rgba(0, 0, 0, .55),
+        0 0 0 2px #4a2a05,
+        0 0 0 5px rgba(255, 216, 107, .25),
+        0 0 70px rgba(255, 190, 80, .35),
+        0 30px 70px rgba(0, 0, 0, .55);
+    animation: cfGold 7s linear infinite;
+}
+
+/* đường chỉ đôi bên trong viền */
+.cgf-frame::before {
+    content: "";
+    position: absolute;
+    inset: clamp(8px, .9vw, 16px);
+    border: 3px double rgba(255, 216, 107, .55);
+    border-radius: 6px;
+    pointer-events: none;
+}
+
+/* vệt sáng lướt qua mặt khung */
+.cf-shine {
+    position: absolute;
+    inset: 0;
+    border-radius: 6px;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.cf-shine::before {
+    content: "";
+    position: absolute;
+    top: -20%;
+    bottom: -20%;
+    width: 30%;
+    left: -40%;
+    background: linear-gradient(100deg, transparent, rgba(255, 240, 200, .10) 45%, rgba(255, 250, 230, .18) 50%, rgba(255, 240, 200, .10) 55%, transparent);
+    transform: skewX(-18deg);
+    animation: cfSweep 4.5s ease-in-out 1s infinite;
+}
+
+/* hoạ tiết góc: 1 hình SVG, lật cho 4 góc */
+.cf-corner {
+    position: absolute;
+    width: clamp(54px, 6.5vw, 120px);
+    aspect-ratio: 1;
+    pointer-events: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23fff6d2'/%3E%3Cstop offset='.45' stop-color='%23ffd86b'/%3E%3Cstop offset='1' stop-color='%23b8801f'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg stroke='url(%23g)'%3E%3Cpath stroke-width='4' d='M8 66V20Q8 8 20 8h46'/%3E%3Cpath stroke-width='1.8' d='M18 78V30q0-12 12-12h48'/%3E%3Cpath stroke-width='3' d='M66 8q12 0 16 9 3 8-4 11-7 2-8-5 0-4 4-4'/%3E%3Cpath stroke-width='3' d='M8 66q0 12 9 16 8 3 11-4 2-7-5-8-4 0-4 4'/%3E%3Cpath stroke-width='2.4' d='M30 30q14-4 20 8M30 30q-4 14 8 20'/%3E%3Cpath stroke-width='2' d='M30 30l14 14'/%3E%3C/g%3E%3Cpath fill='url(%23g)' d='M8 1l7 7-7 7-7-7z'/%3E%3Ccircle cx='30' cy='30' r='5' fill='url(%23g)'/%3E%3Ccircle cx='47' cy='47' r='2.6' fill='url(%23g)'/%3E%3C/svg%3E") center / contain no-repeat;
+    filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .6)) drop-shadow(0 0 8px rgba(255, 200, 90, .35));
+}
+
+.cf-corner.tl {
+    top: calc(var(--fw) * -1 - 6px);
+    left: calc(var(--fw) * -1 - 6px);
+}
+
+.cf-corner.tr {
+    top: calc(var(--fw) * -1 - 6px);
+    right: calc(var(--fw) * -1 - 6px);
+    transform: scaleX(-1);
+}
+
+.cf-corner.bl {
+    bottom: calc(var(--fw) * -1 - 6px);
+    left: calc(var(--fw) * -1 - 6px);
+    transform: scaleY(-1);
+}
+
+.cf-corner.br {
+    bottom: calc(var(--fw) * -1 - 6px);
+    right: calc(var(--fw) * -1 - 6px);
+    transform: scale(-1);
+}
+
+/* băng "Chúc mừng" gắn trên mép trên của khung */
+.cgf-hello.cf-ribbon {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, calc(-50% - var(--fw) / 2));
+    z-index: 2;
+    white-space: nowrap;
+    padding: .38em 1.6em .42em;
+    font-size: clamp(18px, 1.9vw, 38px);
+    letter-spacing: .18em;
+    color: #5a0710;
+    text-shadow: 0 1px 0 rgba(255, 246, 220, .7);
+    background: linear-gradient(180deg, #fff3c4 0%, #ffd86b 48%, #d99a2e 100%);
+    border-radius: 6px;
+    box-shadow: inset 0 0 0 2px rgba(255, 250, 230, .55), inset 0 -3px 0 rgba(120, 70, 8, .35),
+        0 0 0 2px #6b3f08, 0 8px 18px rgba(0, 0, 0, .45), 0 0 26px rgba(255, 200, 90, .45);
+}
+
+/* đuôi băng hai bên */
+.cgf-hello.cf-ribbon::before,
+.cgf-hello.cf-ribbon::after {
+    content: "";
+    position: absolute;
+    top: 22%;
+    width: .8em;
+    height: 78%;
+    background: linear-gradient(180deg, #d99a2e, #8a5512);
+}
+
+.cgf-hello.cf-ribbon::before {
+    left: -.8em;
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 35% 50%);
+}
+
+.cgf-hello.cf-ribbon::after {
+    right: -.8em;
+    clip-path: polygon(0 0, 100% 0, 65% 50%, 100% 100%, 0 100%);
+}
+
+.cgf-frame>.cf-ribbon+.cgf-code,
+.cgf-frame>.cf-ribbon+.cgf-photo {
+    margin-top: 0;
+}
+
+/* Trong khung: chữ/ảnh co theo cả chiều cao màn hình → màn thấp (laptop 768, có ảnh) không đè lên nút */
+.cgf-frame .cgf-code {
+    font-size: clamp(44px, min(7.2vw, 12.5vh), 150px);
+}
+
+.cgf-frame .cgf-name {
+    font-size: clamp(28px, min(3.9vw, 7vh), 82px);
+    margin-top: 2vh;
+}
+
+.cgf-frame .cgf-pos {
+    font-size: clamp(16px, min(2vw, 4vh), 40px);
+    margin-top: 1.2vh;
+}
+
+.cgf-frame .cgf-prize {
+    font-size: clamp(24px, min(2.9vw, 5.6vh), 58px);
+}
+
+.cgf-frame .cgf-photo {
+    width: clamp(84px, 17vh, 240px);
+    height: clamp(84px, 17vh, 240px);
+}
+
+@keyframes cfGold {
+    0% {
+        background-position: 0 0, 0% 50%;
+    }
+
+    100% {
+        background-position: 0 0, 162.5% 50%;
+    }
+
+    /* dịch đúng 1 ô gradient → lặp liền mạch */
+}
+
+@keyframes cfSweep {
+    0% {
+        left: -40%;
+    }
+
+    55%,
+    100% {
+        left: 130%;
+    }
+}
+
 /* Lưới thẻ nhiều người trúng: co theo khung (không tràn mép), thẻ rộng tối đa 300px,
    các hàng (kể cả hàng cuối lẻ) đều căn giữa */
 .cgf-grid {
@@ -1349,7 +1656,7 @@ body.idle {
     font: 800 14px var(--ui);
     letter-spacing: .08em;
     text-transform: uppercase;
-    cursor: pointer;
+    cursor: var(--cur-pointer);
 }
 
 .cgf-btn.ghost {
@@ -1414,7 +1721,7 @@ body.idle {
     background: rgba(255, 255, 255, .06);
     color: #fff;
     font-size: 18px;
-    cursor: pointer;
+    cursor: var(--cur-pointer);
 }
 
 .dm-bar {
@@ -1720,7 +2027,7 @@ body.idle {
     background: rgba(30, 0, 5, .35);
     color: #ffe4e8;
     font: 700 13.5px var(--ui);
-    cursor: pointer;
+    cursor: var(--cur-pointer);
 }
 
 .dm-page:hover:not(:disabled) {
@@ -1732,12 +2039,12 @@ body.idle {
     background: linear-gradient(180deg, #ffe48a, #f5b82e);
     border-color: transparent;
     color: #4a0410;
-    cursor: default;
+    cursor: var(--cur-default);
 }
 
 .dm-page:disabled:not(.active) {
     opacity: .35;
-    cursor: default;
+    cursor: var(--cur-default);
 }
 
 .dm-page.nav {
@@ -1771,7 +2078,7 @@ body.idle {
     background: transparent;
     color: #fff;
     font: 700 14px var(--ui);
-    cursor: pointer;
+    cursor: var(--cur-pointer);
     text-decoration: none;
 }
 
@@ -2006,7 +2313,7 @@ body.idle {
     width: 32px;
     height: 32px;
     border-radius: 8px;
-    cursor: pointer;
+    cursor: var(--cur-pointer);
     font-size: 18px;
 }
 
@@ -2106,7 +2413,7 @@ body.idle {
     background: #fff;
     border-radius: 8px;
     padding: 6px 12px;
-    cursor: pointer;
+    cursor: var(--cur-pointer);
     font: 600 13px var(--ui);
 }
 
@@ -2247,7 +2554,8 @@ body.idle {
         animation: none;
     }
 
-    .start-btn.stop {
+    .start-btn.stop,
+    .start-btn:hover:not(:disabled)::after {
         animation: none;
     }
 }
