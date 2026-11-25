@@ -600,4 +600,5 @@
   <data name="— Không phát —" xml:space="preserve"><value>— No music —</value></data>
   <data name="— Không —" xml:space="preserve"><value>— None —</value></data>
   <data name="姓名, Bộ phận, 現任單位, Chức vụ: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名, department, 現任單位, position: optional. You can paste the HR file directly (STT, 工齡 columns are ignored).</value></data>
+  <data name="Đồng ý" xml:space="preserve"><value>OK</value></data>
 </root>

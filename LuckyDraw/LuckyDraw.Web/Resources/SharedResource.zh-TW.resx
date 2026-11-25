@@ -600,4 +600,5 @@
   <data name="— Không phát —" xml:space="preserve"><value>— 不播放 —</value></data>
   <data name="— Không —" xml:space="preserve"><value>— 無 —</value></data>
   <data name="姓名, Bộ phận, 現任單位, Chức vụ: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名、部門、現任單位、職務：可留空。可直接貼上人事檔（STT、工齡欄位會略過）。</value></data>
+  <data name="Đồng ý" xml:space="preserve"><value>確定</value></data>
 </root>

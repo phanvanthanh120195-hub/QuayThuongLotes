@@ -8,12 +8,36 @@
     });
 
     // Hỏi lại trước khi gửi form nguy hiểm: <form data-confirm="...">
+    // Dùng popup #confirmModal (_AdminLayout) thay cho confirm() của trình duyệt; thiếu popup thì quay về confirm().
+    var cfmEl = document.getElementById('confirmModal');
+    var cfmModal = cfmEl && window.bootstrap ? bootstrap.Modal.getOrCreateInstance(cfmEl) : null;
+    var cfmPending = null;   // { form, submitter } đang chờ bấm Đồng ý
+    if (cfmModal) {
+        document.getElementById('confirmModalOk').addEventListener('click', function () {
+            var p = cfmPending;
+            cfmPending = null;
+            cfmModal.hide();
+            if (!p) return;
+            p.form._confirmed = true;
+            // requestSubmit giữ nút đã bấm (name/value) và chạy lại validate; trình duyệt cũ thì submit() thẳng
+            if (p.form.requestSubmit) p.form.requestSubmit(p.submitter || undefined);
+            else p.form.submit();
+            // Form không hợp lệ thì không có sự kiện submit → xoá cờ để lần sau vẫn hỏi lại
+            p.form._confirmed = false;
+        });
+        cfmEl.addEventListener('shown.bs.modal', function () { document.getElementById('confirmModalOk').focus(); });
+        cfmEl.addEventListener('hidden.bs.modal', function () { cfmPending = null; });
+    }
     document.addEventListener('submit', function (e) {
         var form = e.target;
         var msg = form.getAttribute && form.getAttribute('data-confirm');
-        if (msg && !window.confirm(msg)) {
-            e.preventDefault();
-        }
+        if (!msg) return;
+        if (form._confirmed) { form._confirmed = false; return; }   // đã bấm Đồng ý → cho gửi
+        e.preventDefault();
+        if (!cfmModal) { if (window.confirm(msg)) { form._confirmed = true; form.requestSubmit ? form.requestSubmit(e.submitter || undefined) : form.submit(); } return; }
+        cfmPending = { form: form, submitter: e.submitter };
+        document.getElementById('confirmModalMsg').textContent = msg;
+        cfmModal.show();
     }, true);
 
     // Menu bên trên điện thoại

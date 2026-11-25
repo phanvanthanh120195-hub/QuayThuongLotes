@@ -134,6 +134,25 @@
         </main>
     </div>
 
+    @* Popup xác nhận dùng chung cho mọi <form data-confirm="..."> (admin.js) – thay cho confirm() của trình duyệt *@
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-hidden="true" aria-labelledby="confirmModalTitle" aria-describedby="confirmModalMsg">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalTitle">@L["Xác nhận"]</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="@L["Đóng"]"></button>
+                </div>
+                <div class="modal-body">
+                    <p class="mb-0" id="confirmModalMsg"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">@L["Huỷ"]</button>
+                    <button type="button" class="btn btn-primary" id="confirmModalOk">@Html.Icon("check") @L["Đồng ý"]</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/admin/admin.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
