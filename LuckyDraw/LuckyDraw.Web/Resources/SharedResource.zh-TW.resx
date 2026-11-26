@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!-- File sinh tự động từ translations.tsv bằng tools/build_resx.py. Đừng sửa tay. -->
+<!-- Bản dịch: name = câu tiếng Việt trong code (L["..."]), value = bản dịch. Thêm câu mới thì thêm 1 dòng data vào cả 3 file. -->
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
