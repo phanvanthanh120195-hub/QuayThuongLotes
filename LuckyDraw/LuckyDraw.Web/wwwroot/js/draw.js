@@ -954,8 +954,10 @@
         pickSrc: function () {
             var c = this.cfg, p = cur();
             if (!c || c.mode === 'none') return null;
-            if (c.mode === 'perPrize') { this.bg.loop = true; return p ? (c.prizeTracks[String(p.prizeId)] || null) : null; }
-            if (!c.playlist.length) return null;
+            // Nhạc nền chung của sự kiện: dùng khi giải chưa có nhạc riêng / danh sách phát trống
+            var main = c.main || null;
+            if (c.mode === 'perPrize') { this.bg.loop = true; return (p && c.prizeTracks[String(p.prizeId)]) || main; }
+            if (!c.playlist.length) { this.bg.loop = true; return main; }
             this.bg.loop = c.playlist.length === 1;
             return c.playlist[this.pi % c.playlist.length];
         },

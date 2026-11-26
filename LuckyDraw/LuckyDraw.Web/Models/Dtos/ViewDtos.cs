@@ -27,7 +27,9 @@ public record SoundViewDto(
     string PlaylistEnd,
     IReadOnlyList<string> Playlist,
     IReadOnlyDictionary<string, string> PrizeTracks,
-    IReadOnlyDictionary<string, string> Effects);
+    IReadOnlyDictionary<string, string> Effects,
+    // Nhạc nền chung – phát khi không có danh sách phát / nhạc riêng của giải
+    string? Main);
 
 public record PrizeViewDto(
     int PrizeId,

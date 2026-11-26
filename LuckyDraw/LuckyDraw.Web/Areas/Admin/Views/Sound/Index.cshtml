@@ -84,6 +84,36 @@
     </div>
 
     <div class="col-xl-7 order-xl-1">
+        <div class="card-ld mb-3">
+            <div class="card-head">
+                <h2>@Html.Icon("music") @L["Nhạc nền chung của sự kiện"]</h2>
+            </div>
+            <div class="card-body">
+                <p class="small-note">@L["Phát lặp lại suốt chương trình (vd. nhạc xuân). Nếu có danh sách phát hoặc nhạc riêng cho giải thì các bài đó được ưu tiên."]</p>
+                @if (s.MainTrack is { } main)
+                {
+                    <div class="track-row">
+                        <span class="stat-icon gold" style="width:34px;height:34px;border-radius:9px">@Html.Icon("music")</span>
+                        <div class="flex-grow-1 min-w-0">
+                            <div class="fw-semibold text-truncate">@main.Name</div>
+                            <audio controls preload="none" src="@main.Path"></audio>
+                        </div>
+                        <form method="post" asp-action="DeleteMain" data-confirm="@L["Xoá nhạc nền chung?"]">
+                            <button class="btn btn-ghost btn-icon danger" type="submit" title="@L["Xoá"]">@Html.Icon("trash")</button>
+                        </form>
+                    </div>
+                }
+                <form method="post" asp-action="UploadMain" enctype="multipart/form-data" class="d-flex gap-2 mt-2">
+                    <input type="file" name="file" class="form-control" accept=".mp3,audio/mpeg" required />
+                    <button class="btn btn-primary text-nowrap" type="submit">@Html.Icon("upload") @(s.MainTrack is null ? L["Tải lên"] : L["Thay bài"])</button>
+                </form>
+                @if (s.Mode == "none")
+                {
+                    <p class="small-note text-danger mt-2 mb-0">@L["Đang chọn “Không phát nhạc” nên nhạc nền chung sẽ không phát."]</p>
+                }
+            </div>
+        </div>
+
         <form method="post" asp-action="Index" class="card-ld">
             <div class="form-section">
                 <h3>@L["Nhạc nền"]</h3>

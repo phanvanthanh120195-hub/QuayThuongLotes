@@ -108,6 +108,51 @@ public class SoundController : AdminControllerBase
         return RedirectToAction(nameof(Index));
     }
 
+    /// <summary>Tải lên / thay nhạc nền chung của sự kiện.</summary>
+    [HttpPost]
+    [RequestSizeLimit(MaxAudioBytes + 64 * 1024)]
+    public async Task<IActionResult> UploadMain(IFormFile? file)
+    {
+        var ev = await WorkingEventAsync();
+        if (ev is null) return NoEvent();
+        if (file is null || file.Length == 0)
+        {
+            Error(L["Hãy chọn file .mp3."]);
+            return RedirectToAction(nameof(Index));
+        }
+        var up = await _files.SaveAsync(file, ev.EventId, "music", UploadKind.Audio, MaxAudioBytes);
+        if (!up.Ok)
+        {
+            Error(UploadError(up));
+            return RedirectToAction(nameof(Index));
+        }
+
+        var s = SettingsJson.Read<SoundSettings>(ev.SoundJson);
+        var old = s.MainTrack;
+        var title = Path.GetFileNameWithoutExtension(file.FileName);
+        s.MainTrack = new SoundTrack { Id = "main", Name = title.Length > 80 ? title[..80] : title, Path = up.Path! };
+        await Save(ev.EventId, s);
+        if (old != null) _files.Delete(old.Path);
+        Success(L["Đã đặt nhạc nền chung “{0}”.", s.MainTrack.Name]);
+        return RedirectToAction(nameof(Index));
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> DeleteMain()
+    {
+        var ev = await WorkingEventAsync();
+        if (ev is null) return NoEvent();
+        var s = SettingsJson.Read<SoundSettings>(ev.SoundJson);
+        var old = s.MainTrack;
+        if (old is null) return RedirectToAction(nameof(Index));
+
+        s.MainTrack = null;
+        await Save(ev.EventId, s);
+        _files.Delete(old.Path);
+        Success(L["Đã xoá nhạc nền chung."]);
+        return RedirectToAction(nameof(Index));
+    }
+
     [HttpPost]
     public async Task<IActionResult> DeleteTrack(string id)
     {

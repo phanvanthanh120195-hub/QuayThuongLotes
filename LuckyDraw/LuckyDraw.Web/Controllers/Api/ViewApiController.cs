@@ -161,6 +161,7 @@ public class ViewApiController : ControllerBase
             s.Mode, s.Volume, s.DuckOnSpin, s.PlaylistEnd,
             s.Playlist.Select(P).OfType<string>().ToList(),
             s.PrizeTracks.Where(kv => P(kv.Value) != null).ToDictionary(kv => kv.Key, kv => P(kv.Value)!),
-            effects);
+            effects,
+            s.MainTrack?.Path);
     }
 }

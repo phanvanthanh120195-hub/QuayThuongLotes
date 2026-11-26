@@ -67,6 +67,11 @@ public class SoundSettings
     public bool DuckOnSpin { get; set; } = true;
     /// <summary>repeat | shuffle khi hết danh sách</summary>
     public string PlaylistEnd { get; set; } = "repeat";
+    /// <summary>
+    /// Nhạc nền chung của cả sự kiện (vd. nhạc xuân) – phát suốt chương trình, lặp lại.
+    /// Danh sách phát (single) hoặc nhạc riêng của giải (perPrize) được ưu tiên hơn nếu có.
+    /// </summary>
+    public SoundTrack? MainTrack { get; set; }
     public List<SoundTrack> Tracks { get; set; } = new();
     /// <summary>Id các bài trong danh sách phát (theo thứ tự).</summary>
     public List<string> Playlist { get; set; } = new();

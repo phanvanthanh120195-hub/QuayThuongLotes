@@ -617,4 +617,11 @@
   <data name="Thưởng thêm" xml:space="preserve"><value>Bonus</value></data>
   <data name="Lên cấp" xml:space="preserve"><value>Level up</value></data>
   <data name="Khán giả reo hò" xml:space="preserve"><value>Crowd cheering</value></data>
+  <data name="Nhạc nền chung của sự kiện" xml:space="preserve"><value>Event background music</value></data>
+  <data name="Phát lặp lại suốt chương trình (vd. nhạc xuân). Nếu có danh sách phát hoặc nhạc riêng cho giải thì các bài đó được ưu tiên." xml:space="preserve"><value>Loops throughout the event (e.g. spring music). A playlist or a prize's own track takes priority if set.</value></data>
+  <data name="Xoá nhạc nền chung?" xml:space="preserve"><value>Delete the event background music?</value></data>
+  <data name="Thay bài" xml:space="preserve"><value>Replace</value></data>
+  <data name="Đang chọn “Không phát nhạc” nên nhạc nền chung sẽ không phát." xml:space="preserve"><value>“No music” is selected, so the background music will not play.</value></data>
+  <data name="Đã đặt nhạc nền chung “{0}”." xml:space="preserve"><value>Background music set to “{0}”.</value></data>
+  <data name="Đã xoá nhạc nền chung." xml:space="preserve"><value>Background music deleted.</value></data>
 </root>

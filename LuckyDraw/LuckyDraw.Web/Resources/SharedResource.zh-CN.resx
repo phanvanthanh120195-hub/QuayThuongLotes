@@ -617,4 +617,11 @@
   <data name="Thưởng thêm" xml:space="preserve"><value>奖励</value></data>
   <data name="Lên cấp" xml:space="preserve"><value>升级</value></data>
   <data name="Khán giả reo hò" xml:space="preserve"><value>观众欢呼</value></data>
+  <data name="Nhạc nền chung của sự kiện" xml:space="preserve"><value>活动背景音乐</value></data>
+  <data name="Phát lặp lại suốt chương trình (vd. nhạc xuân). Nếu có danh sách phát hoặc nhạc riêng cho giải thì các bài đó được ưu tiên." xml:space="preserve"><value>整个活动循环播放（例如新春音乐）。若有播放列表或奖项专属音乐，则优先播放。</value></data>
+  <data name="Xoá nhạc nền chung?" xml:space="preserve"><value>删除活动背景音乐？</value></data>
+  <data name="Thay bài" xml:space="preserve"><value>更换</value></data>
+  <data name="Đang chọn “Không phát nhạc” nên nhạc nền chung sẽ không phát." xml:space="preserve"><value>当前选择“不播放音乐”，背景音乐不会播放。</value></data>
+  <data name="Đã đặt nhạc nền chung “{0}”." xml:space="preserve"><value>已设置背景音乐“{0}”。</value></data>
+  <data name="Đã xoá nhạc nền chung." xml:space="preserve"><value>已删除背景音乐。</value></data>
 </root>
