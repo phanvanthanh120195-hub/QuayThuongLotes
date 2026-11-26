@@ -29,6 +29,7 @@
         results: [],
         phase: 'idle',          // idle | spinning | stopping | congrats
         req: null,
+        pendingDraw: null,      // { prizeId, requestId } lượt quay gửi chưa chắc thành công (lỗi mạng)
         lastRes: null,
         freshBatch: null,
         autoTimer: 0,
@@ -36,7 +37,10 @@
         slotCount: 1,
         viewPrizeId: null,      // tab đang xem trong bảng "Danh sách trúng giải"
         needRefresh: false,
-        needReload: false
+        needReload: false,
+        allDone: null,          // tất cả giải đã đủ người? (null = chưa tải lần nào)
+        honorPending: false,    // vừa xong hết giải → chờ về màn chính để tự mở vinh danh
+        honorTimer: 0
     };
 
     // ------------------------------------------------------------------ API
@@ -48,8 +52,18 @@
             init.body = JSON.stringify(opts.body);
         }
         if (init.method !== 'GET') init.headers.RequestVerificationToken = LD.token;
+        // opts.timeout: quá thời gian thì huỷ, coi như lỗi mạng
+        var ctl = opts.timeout && window.AbortController ? new AbortController() : null, tm = 0;
+        if (ctl) { init.signal = ctl.signal; tm = setTimeout(function () { ctl.abort(); }, opts.timeout); }
+        function netErr() {
+            clearTimeout(tm);
+            var err = new Error(T('networkError'));
+            err.network = true;     // không tới được máy chủ (rớt mạng / quá thời gian)
+            throw err;
+        }
         return fetch(url, init).then(function (r) {
             return r.text().then(function (t) {
+                clearTimeout(tm);
                 var data = null;
                 try { data = t ? JSON.parse(t) : null; } catch (e) { /* không phải JSON */ }
                 if (!r.ok) {
@@ -59,8 +73,98 @@
                     throw err;
                 }
                 return data;
+            }, netErr);
+        }, netErr);
+    }
+
+    /** Lỗi tạm thời đáng thử lại: rớt mạng tới máy chủ, hoặc máy chủ không tới được database (503). */
+    function isTransient(e) {
+        return !!(e && (e.network || e.status === 502 || e.status === 503 || e.status === 504));
+    }
+
+    // ------------------------------------------------------------------ Trạng thái kết nối
+    // Hỏi /api/health định kỳ (10 giây; khi đang lỗi thì 3 giây). Mất kết nối → hiện dải đỏ ở trên cùng;
+    // có lại → báo xanh vài giây rồi tải lại dữ liệu cho khớp.
+    var Conn = {
+        ok: true,
+        timer: 0,
+        hideTimer: 0,
+        start: function () {
+            var self = this;
+            window.addEventListener('online', function () { self.check(); });
+            window.addEventListener('offline', function () { self.set(false, 'server'); });
+            this.check();
+        },
+        check: function () {
+            var self = this;
+            clearTimeout(this.timer);
+            api('/api/health', { timeout: 6000 }).then(function () {
+                self.set(true);
+            }, function (e) {
+                self.set(false, e.network ? 'server' : 'db');
+            }).then(function () {
+                clearTimeout(self.timer);
+                self.timer = setTimeout(function () { self.check(); }, self.ok ? 10000 : 3000);
             });
-        }, function () { throw new Error(T('networkError')); });
+        },
+        /** kind: 'server' | 'db' | 'retry' (đang thử quay lại) */
+        set: function (ok, kind) {
+            var box = $('#connStatus'), was = this.ok;
+            this.ok = ok;
+            if (!box) return;
+            clearTimeout(this.hideTimer);
+            if (!ok) {
+                box.textContent = T(kind === 'db' ? 'connDb' : kind === 'retry' ? 'connRetry' : 'connServer');
+                box.className = 'conn-status bad';
+                box.hidden = false;
+                if (was) { clearTimeout(this.timer); this.timer = setTimeout(this.check.bind(this), 3000); }
+                return;
+            }
+            if (was) { box.hidden = true; return; }
+            box.textContent = T('connBack');
+            box.className = 'conn-status good';
+            box.hidden = false;
+            this.hideTimer = setTimeout(function () { box.hidden = true; }, 3000);
+            if (!state.ev) return;
+            if (state.phase === 'idle') refreshData(false); else state.needRefresh = true;
+        }
+    };
+
+    /** Mã lượt quay (UUID v4). Không dùng crypto.randomUUID vì nó cần HTTPS, còn màn chiếu hay mở qua http://IP-LAN. */
+    function newRequestId() {
+        var b = new Uint8Array(16);
+        window.crypto.getRandomValues(b);
+        b[6] = (b[6] & 0x0f) | 0x40;
+        b[8] = (b[8] & 0x3f) | 0x80;
+        var h = Array.prototype.map.call(b, function (x) { return (x + 256).toString(16).slice(1); }).join('');
+        return h.slice(0, 8) + '-' + h.slice(8, 12) + '-' + h.slice(12, 16) + '-' + h.slice(16, 20) + '-' + h.slice(20);
+    }
+
+    var DRAW_RETRY_MS = 60000;   // thử lại tối đa 60 giây trong lúc các ô vẫn quay
+    /**
+     * Gửi lệnh quay; gặp lỗi mạng thì tự thử lại với CÙNG mã lượt quay.
+     * Server thấy mã đã ghi → trả lại đúng kết quả cũ, nên không bao giờ quay trùng.
+     * Bỏ cuộc thì vẫn giữ mã (state.pendingDraw): bấm quay lại cùng giải sẽ dùng lại mã đó.
+     */
+    function drawWithRetry(prizeId) {
+        var pd = state.pendingDraw;
+        if (!pd || pd.prizeId !== prizeId) pd = state.pendingDraw = { prizeId: prizeId, requestId: newRequestId() };
+        var body = { prizeId: prizeId, requestId: pd.requestId }, t0 = Date.now(), n = 0;
+        return new Promise(function (resolve, reject) {
+            (function attempt() {
+                api('/api/draw', { method: 'POST', body: body, timeout: 20000 }).then(function (res) {
+                    if (state.pendingDraw === pd) state.pendingDraw = null;
+                    if (n > 0) Conn.check();
+                    resolve(res);
+                }, function (e) {
+                    if (!isTransient(e)) { if (state.pendingDraw === pd) state.pendingDraw = null; reject(e); return; }
+                    if (Date.now() - t0 > DRAW_RETRY_MS) { reject(e); return; }
+                    n++;
+                    Conn.set(false, 'retry');
+                    setTimeout(attempt, Math.min(5000, 1000 * n));
+                });
+            })();
+        });
     }
 
     // ------------------------------------------------------------------ Chữ theo ngôn ngữ trong theme_json
@@ -137,6 +241,7 @@
             if (rebuild || prizeChanged || (state.lastRes == null && want !== state.slotCount)) buildSlots(want);
             renderAll();
             Sound.update();
+            trackAllDone();
         }).catch(function (e) { toast(e.message, true); });
     }
 
@@ -402,8 +507,12 @@
         StageFx.spin(state.ev.theme.spinEffect !== 'none');
         renderAll();
 
-        state.req = api('/api/draw', { method: 'POST', body: { prizeId: p.prizeId } });
-        state.req.catch(function (e) { abortSpin(); toast(e.message, true); refreshData(true); });
+        state.req = drawWithRetry(p.prizeId);
+        state.req.catch(function (e) {
+            abortSpin();
+            toast(isTransient(e) ? T('drawFailed') : e.message, true);
+            refreshData(true);
+        });
         if (p.drawType === 2) state.autoTimer = setTimeout(doStop, Math.max(1, p.spinSeconds) * 1000);
     }
 
@@ -875,7 +984,7 @@
             wrap.appendChild(el('div', 'cgf-hello', hello));
             wrap.appendChild(el('div', 'cgf-won', T('wonLabel')));
             wrap.appendChild(el('div', 'cgf-prize', winners[0].prizeName));
-            var grid = el('div', 'cgf-grid'), anyPhoto = winners.some(function (x) { return !!x.photo; });
+            var grid = el('div', 'cgf-grid' + (winners.length > 8 ? ' dense' : '')), anyPhoto = winners.some(function (x) { return !!x.photo; });
             winners.forEach(function (x, i) {
                 var c = el('div', 'cgf-card');
                 c.style.animationDelay = Math.min(i * 70, 2000) + 'ms';
@@ -1048,6 +1157,181 @@
     };
     Sound.bg.addEventListener('ended', function () { Sound.next(); });
 
+    // ------------------------------------------------------------------ Vinh danh cuối chương trình
+    // Tự mở 5 giây sau khi giải cuối cùng quay đủ người (và MC đã đóng màn chúc mừng lượt cuối).
+    // Danh sách người trúng theo thứ tự giải chạy dần lên như "credits" phim; hết thì dừng ở lời chúc 10 giây
+    // rồi tự đóng. Chỉ dịch chuyển 1 lớp bằng transform (GPU) nên máy yếu vẫn mượt. Phím V: mở / đóng bằng tay.
+    var HONOR_DELAY_MS = 5000, HONOR_END_MS = 10000;
+
+    function allPrizesDone() {
+        return state.prizes.length > 0 && state.prizes.every(function (p) { return p.remaining <= 0; });
+    }
+
+    /**
+     * Gọi sau mỗi lần tải dữ liệu. Chỉ hẹn mở vinh danh khi vừa CHUYỂN từ "còn giải" sang "xong hết" trong lúc
+     * đang chiếu (tải lại trang khi đã xong hết thì không tự mở). Huỷ hẹn nếu lại có giải còn suất (vd. vắng mặt).
+     */
+    function trackAllDone() {
+        var done = allPrizesDone();
+        if (done && state.allDone === false) state.honorPending = true;
+        if (!done) { state.honorPending = false; clearTimeout(state.honorTimer); }
+        state.allDone = done;
+        var b = $('#btnHonor');
+        if (b) {
+            b.disabled = !done;
+            b.title = b.getAttribute(done ? 'data-title-on' : 'data-title-off');
+        }
+        autoHonor();
+    }
+
+    function autoHonor() {
+        if (!state.honorPending || state.phase !== 'idle' || Honor.open) return;
+        clearTimeout(state.honorTimer);
+        state.honorTimer = setTimeout(function () {
+            if (!state.honorPending || state.phase !== 'idle' || !allPrizesDone()) return;
+            state.honorPending = false;
+            Honor.show();
+        }, HONOR_DELAY_MS);
+    }
+
+    var Honor = {
+        open: false,
+        paused: false,
+        speed: 1,            // hệ số tốc độ (↑ ↓)
+        y: 0,                // đã cuộn bao nhiêu px
+        hold: 0,             // thời điểm (performance.now) tự đóng khi đang dừng ở lời chúc cuối; 0 = đang chạy
+        raf: 0,
+        last: 0,
+        show: function () {
+            if (this.open || state.phase !== 'idle' || !state.ev || !allPrizesDone()) return;   // chỉ khi đã quay xong hết
+            var self = this;
+            state.honorPending = false;          // mở bằng tay (phím V) thì không tự mở lại nữa
+            clearTimeout(state.honorTimer);
+            $$('.modal').forEach(function (m) { m.hidden = true; });
+            refreshData(false).then(function () {
+                state.honorPending = false;
+                clearTimeout(state.honorTimer);
+                if (self.open || state.phase !== 'idle') return;
+                self.render();
+                self.start();
+            });
+        },
+        render: function () {
+            var track = $('#honorTrack'), total = 0, by = {};
+            track.innerHTML = '';
+            $('#honorTitle').textContent = state.ev.name;
+            state.results.forEach(function (r) { (by[r.prizeId] = by[r.prizeId] || []).push(r); });
+            state.prizes.forEach(function (p) {
+                var list = by[p.prizeId];
+                if (!list || !list.length) return;
+                list.sort(function (a, b) { return a.resultId - b.resultId; });   // theo thứ tự đã quay
+                total += list.length;
+                var sec = el('section', 'honor-prize' + (list.length <= 3 ? ' few' : ''));
+                var head = el('div', 'hp-head');
+                if (p.imagePath) {
+                    var im = document.createElement('img');
+                    im.className = 'hp-img';
+                    im.src = p.imagePath;
+                    im.alt = '';
+                    head.appendChild(im);
+                }
+                var txt = el('div', 'hp-text');
+                txt.appendChild(el('h3', 'hp-name gold-text', p.name));
+                txt.appendChild(el('div', 'hp-count', T('honorCount', list.length)));
+                head.appendChild(txt);
+                sec.appendChild(head);
+                var grid = el('div', 'hp-grid');
+                list.forEach(function (w) {
+                    var card = el('div', 'hp-card');
+                    var ph = photoEl(w, 'hp-photo'), img = ph.querySelector('img');
+                    if (img) img.loading = 'lazy';
+                    card.appendChild(ph);
+                    var info = el('div', 'hp-info');
+                    info.appendChild(el('div', 'hp-person', w.name));
+                    var meta = [w.department, w.position].filter(Boolean).join(' · ');
+                    if (meta) info.appendChild(el('div', 'hp-meta', meta));
+                    info.appendChild(el('div', 'hp-code', w.code));
+                    card.appendChild(info);
+                    grid.appendChild(card);
+                });
+                sec.appendChild(grid);
+                track.appendChild(sec);
+            });
+            var end = el('div', 'honor-end');
+            end.appendChild(el('div', 'he-big gold-text', total ? T('honorThanks') : T('honorEmpty')));
+            track.appendChild(end);
+        },
+        start: function () {
+            this.open = true;
+            this.paused = false;
+            this.hold = 0;
+            $('#honor').hidden = false;
+            this.fit();
+            this.y = -this.viewH * 0.8;             // bắt đầu từ gần đáy màn hình
+            this.apply();
+            StageFx.setAmbient('none');             // nền bị che hết → tắt hiệu ứng nền cho nhẹ máy
+            StageFx.burst(state.ev.theme.congratsEffect || 'confetti');
+            Sound.duck(false);
+            Sound.sfx('congrats');
+            this.last = performance.now();
+            this.raf = requestAnimationFrame(this.frame);
+        },
+        close: function () {
+            if (!this.open) return;
+            this.open = false;
+            cancelAnimationFrame(this.raf);
+            $('#honor').hidden = true;
+            $('#honorTrack').innerHTML = '';
+            StageFx.setAmbient(state.ev.theme.stageEffect);
+            Sound.stopSfx('congrats');
+            if (state.needReload) { state.needReload = false; loadAll(); }
+        },
+        /** Đo lại khung nhìn; lời chúc cuối cao bằng khung nhìn để dừng đúng giữa màn hình. */
+        fit: function () {
+            this.viewH = $('#honorView').clientHeight;
+            var end = $('#honorTrack .honor-end');
+            if (end) end.style.minHeight = this.viewH + 'px';
+        },
+        maxY: function () { return Math.max(0, $('#honorTrack').scrollHeight - this.viewH); },
+        apply: function () { $('#honorTrack').style.transform = 'translate3d(0,' + (-this.y).toFixed(1) + 'px,0)'; },
+        frame: function (now) {
+            var h = Honor, dt = Math.min(100, now - h.last);
+            h.last = now;
+            if (!h.open) return;
+            if (h.paused && h.hold > 0) h.hold += dt;        // tạm dừng thì hoãn luôn giờ tự đóng
+            if (!h.paused) {
+                if (h.hold > 0) {
+                    // đếm theo đồng hồ thật (không cộng dồn theo khung hình) → đúng 10 giây kể cả máy yếu ít khung hình
+                    if (now >= h.hold) { h.close(); return; }    // dừng ở lời chúc đủ lâu → tự đóng
+                } else {
+                    h.y += h.viewH * 0.06 * h.speed * dt / 1000;   // ~65px/giây ở màn 1080p
+                    var max = h.maxY();
+                    if (h.y >= max) { h.y = max; h.hold = now + HONOR_END_MS; }
+                }
+                h.apply();
+            }
+            h.raf = requestAnimationFrame(h.frame);
+        },
+        scrollBy: function (dy) {
+            this.y = Math.max(-this.viewH * 0.8, Math.min(this.maxY(), this.y + dy));
+            this.hold = 0;
+            this.apply();
+        },
+        key: function (e) {
+            var k = e.key;
+            if (k === 'Escape' || k === 'v' || k === 'V') this.close();
+            else if (k === ' ' || k === 'Enter') this.paused = !this.paused;
+            else if (k === 'ArrowUp') this.speed = Math.min(4, this.speed * 1.25);
+            else if (k === 'ArrowDown') this.speed = Math.max(0.25, this.speed / 1.25);
+            else if (k === 'PageDown') this.scrollBy(this.viewH * 0.8);
+            else if (k === 'PageUp') this.scrollBy(-this.viewH * 0.8);
+            else if (k === 'f' || k === 'F') { toggleFullscreen(); return; }
+            else if (k === 'm' || k === 'M') { Sound.toggle(); return; }
+            else return;
+            e.preventDefault();
+        }
+    };
+
     // ------------------------------------------------------------------ Người tham dự
     var people = { page: 1, q: '', timer: 0, size: 50, req: 0 };
     function openPeople() {
@@ -1133,18 +1417,23 @@
     // ------------------------------------------------------------------ Realtime (SignalR)
     function connectHub() {
         if (!window.signalR) return;
-        var conn = new signalR.HubConnectionBuilder().withUrl('/hubs/draw').withAutomaticReconnect().build();
+        // Thử kết nối lại mãi (mặc định SignalR bỏ cuộc sau ~4 lần), giãn dần tới 10 giây
+        var conn = new signalR.HubConnectionBuilder().withUrl('/hubs/draw')
+            .withAutomaticReconnect({ nextRetryDelayInMilliseconds: function (ctx) { return Math.min(10000, 1000 * (ctx.previousRetryCount + 1)); } })
+            .build();
         conn.on('ResultChanged', function (eventId) {
             if (!state.ev || eventId !== state.ev.eventId) return;
             if (state.phase === 'idle') refreshData(false); else state.needRefresh = true;
         });
         conn.on('ConfigChanged', function (eventId) {
             if (!state.ev || eventId !== state.ev.eventId) return;
-            if (state.phase === 'idle') loadAll(); else state.needReload = true;
+            if (state.phase === 'idle' && !Honor.open) loadAll(); else state.needReload = true;
         });
         conn.on('ActiveEventChanged', function () { if (state.phase === 'idle') location.reload(); else state.needReload = true; });
-        conn.onreconnected(function () { loadAll(); });
+        conn.onreconnecting(function () { Conn.check(); });
+        conn.onreconnected(function () { if (state.phase === 'idle') loadAll(); else state.needReload = true; });
         var start = function () { conn.start().catch(function () { setTimeout(start, 5000); }); };
+        conn.onclose(function () { setTimeout(start, 5000); });   // phòng khi vẫn bị đóng hẳn
         start();
     }
 
@@ -1162,6 +1451,10 @@
         $('#sumSearch').addEventListener('input', renderSummary);
         $('#sumPrize').addEventListener('change', renderSummary);
         $('#btnLast').addEventListener('click', openLast);
+        $('#btnHonor').addEventListener('click', function () { Honor.show(); });
+        $('#honorClose').addEventListener('click', function () { Honor.close(); });
+        $('#honorView').addEventListener('click', function () { Honor.paused = !Honor.paused; });
+        $('#honorView').addEventListener('wheel', function (e) { e.preventDefault(); Honor.scrollBy(e.deltaY); }, { passive: false });
         $$('.modal').forEach(function (m) {
             m.addEventListener('click', function (e) {
                 if (e.target === m || (e.target.closest && e.target.closest('[data-close]'))) m.hidden = true;
@@ -1193,6 +1486,7 @@
                 }
                 return;                                    // Enter/Space: để nút đang focus tự xử lý
             }
+            if (Honor.open) { Honor.key(e); return; }
             var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)
                 || !!(e.target.closest && e.target.closest('.lang-pick'));      // đang thao tác menu ngôn ngữ
             var modalOpen = $$('.modal').some(function (m) { return !m.hidden; });
@@ -1203,9 +1497,13 @@
             else if (e.key === 'ArrowRight') selectPrize(state.idx + 1);
             else if (e.key === 'f' || e.key === 'F') toggleFullscreen();
             else if (e.key === 'm' || e.key === 'M') Sound.toggle();
+            else if (e.key === 'v' || e.key === 'V') Honor.show();
         });
         var rt = 0;
-        window.addEventListener('resize', function () { clearTimeout(rt); rt = setTimeout(sizeSlots, 120); });
+        window.addEventListener('resize', function () {
+            clearTimeout(rt);
+            rt = setTimeout(function () { sizeSlots(); if (Honor.open) Honor.fit(); }, 120);
+        });
     }
 
     StageFx.init($('#fxAmbient'), $('#fxBurst'));
@@ -1213,4 +1511,5 @@
     Sound.renderButton();
     loadAll();
     connectHub();
+    Conn.start();
 })();

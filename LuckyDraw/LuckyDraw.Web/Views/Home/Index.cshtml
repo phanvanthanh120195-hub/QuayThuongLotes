@@ -55,6 +55,14 @@
         ["soundOn"] = L["Bật âm thanh"],
         ["soundOff"] = L["Tắt âm thanh"],
         ["networkError"] = L["Mất kết nối máy chủ, vui lòng thử lại."],
+        ["honorCount"] = L["{0} người"],
+        ["honorThanks"] = L["Chúc mừng tất cả các bạn!"],
+        ["honorEmpty"] = L["Chưa có người trúng thưởng."],
+        ["connServer"] = L["Mất kết nối máy chủ – đang thử kết nối lại…"],
+        ["connDb"] = L["Mất kết nối database – đang thử kết nối lại…"],
+        ["connRetry"] = L["Mạng chập chờn – đang thử quay lại…"],
+        ["connBack"] = L["Đã kết nối lại"],
+        ["drawFailed"] = L["Không quay được do mất kết nối. Kiểm tra mạng rồi bấm quay lại – kết quả không bị trùng."],
         ["sessionExpired"] = L["Phiên đăng nhập đã hết hạn, hãy đăng nhập lại."]
     };
     var cfg = new { i18n, token = Antiforgery.GetAndStoreTokens(Context).RequestToken, canDraw, culture };
@@ -79,6 +87,7 @@
         <symbol id="s-list" viewBox="0 0 24 24"><path d="M3 6h2M3 12h2M3 18h2M8 6h13M8 12h10M8 18h7"/></symbol>
         <symbol id="s-palette" viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="1.5"/><circle cx="17.5" cy="10.5" r="1.5"/><circle cx="8.5" cy="7.5" r="1.5"/><circle cx="6.5" cy="12.5" r="1.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.93 0 1.65-.75 1.65-1.69 0-.44-.18-.84-.44-1.13-.29-.29-.44-.65-.44-1.13a1.64 1.64 0 0 1 1.67-1.67h2c3.05 0 5.56-2.5 5.56-5.55C21.97 6.01 17.46 2 12 2z"/></symbol>
         <symbol id="s-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+        <symbol id="s-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/></symbol>
         <symbol id="s-trophy" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0V4z"/><path d="M17 5h3v2a3 3 0 0 1-3 3M7 5H4v2a3 3 0 0 0 3 3"/></symbol>
         <symbol id="s-download" viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></symbol>
         <symbol id="s-vol" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4V5z"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
@@ -141,6 +150,10 @@
                 <button class="pill-btn" id="btnPeople" type="button"><svg><use href="#s-clip"/></svg><span class="lbl">@L["Người tham dự"]</span></button>
                 <button class="pill-btn" id="btnSummary" type="button"><svg><use href="#s-list"/></svg><span class="lbl">@L["Kết quả tổng"]</span></button>
                 <button class="pill-btn" id="btnLast" type="button"><svg><use href="#s-trophy"/></svg><span class="lbl">@L["Kết quả vừa quay"]</span></button>
+                @* Chỉ bật khi đã quay xong tất cả các giải (draw.js → trackAllDone) *@
+                <button class="pill-btn" id="btnHonor" type="button" disabled
+                        title="@L["Mở được khi đã quay xong tất cả các giải"]"
+                        data-title-on="@L["Vinh danh"] (V)" data-title-off="@L["Mở được khi đã quay xong tất cả các giải"]"><svg><use href="#s-star"/></svg><span class="lbl">@L["Vinh danh"]</span></button>
             </nav>
         </main>
 
@@ -174,6 +187,17 @@
         </div>
 
         <div class="congrats" id="congrats" hidden role="dialog" aria-live="assertive"></div>
+
+        @* Màn vinh danh cuối chương trình: danh sách người trúng chạy dần lên theo từng giải (draw.js → Honor) *@
+        <div class="honor" id="honor" hidden role="dialog" aria-labelledby="honorTitle">
+            <div class="honor-head">
+                <div class="honor-kicker">@L["Vinh danh người trúng thưởng"]</div>
+                <h2 class="honor-title gold-text" id="honorTitle"></h2>
+            </div>
+            <div class="honor-view" id="honorView"><div class="honor-track" id="honorTrack"></div></div>
+            <div class="honor-hint">@L["Space: tạm dừng · ↑↓: tốc độ · lăn chuột: cuộn · Esc: đóng"]</div>
+            <button class="honor-x" type="button" id="honorClose" aria-label="@L["Đóng"]">×</button>
+        </div>
 
         <div class="modal" id="peopleModal" hidden>
             <div class="dmodal" role="dialog" aria-labelledby="peopleTitle">
@@ -307,6 +331,7 @@
         </div>
 
         <div class="sound-hint" id="soundHint" hidden>@L["Chạm vào màn hình để bật nhạc"]</div>
+        <div class="conn-status" id="connStatus" role="status" aria-live="polite" hidden></div>
         <div class="toast" id="toast" hidden></div>
     }
 

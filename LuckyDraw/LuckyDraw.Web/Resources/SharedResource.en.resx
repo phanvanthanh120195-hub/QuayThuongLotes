@@ -624,4 +624,17 @@
   <data name="Đang chọn “Không phát nhạc” nên nhạc nền chung sẽ không phát." xml:space="preserve"><value>“No music” is selected, so the background music will not play.</value></data>
   <data name="Đã đặt nhạc nền chung “{0}”." xml:space="preserve"><value>Background music set to “{0}”.</value></data>
   <data name="Đã xoá nhạc nền chung." xml:space="preserve"><value>Background music deleted.</value></data>
+  <data name="Mất kết nối máy chủ – đang thử kết nối lại…" xml:space="preserve"><value>Server connection lost – reconnecting…</value></data>
+  <data name="Mất kết nối database – đang thử kết nối lại…" xml:space="preserve"><value>Database connection lost – reconnecting…</value></data>
+  <data name="Mạng chập chờn – đang thử quay lại…" xml:space="preserve"><value>Unstable network – retrying the draw…</value></data>
+  <data name="Đã kết nối lại" xml:space="preserve"><value>Reconnected</value></data>
+  <data name="Không quay được do mất kết nối. Kiểm tra mạng rồi bấm quay lại – kết quả không bị trùng." xml:space="preserve"><value>Draw failed due to a lost connection. Check the network and press draw again – results will not be duplicated.</value></data>
+  <data name="Mất kết nối database, đang thử lại…" xml:space="preserve"><value>Database connection lost, retrying…</value></data>
+  <data name="Vinh danh" xml:space="preserve"><value>Honor roll</value></data>
+  <data name="Vinh danh người trúng thưởng" xml:space="preserve"><value>Honoring our winners</value></data>
+  <data name="Space: tạm dừng · ↑↓: tốc độ · lăn chuột: cuộn · Esc: đóng" xml:space="preserve"><value>Space: pause · ↑↓: speed · mouse wheel: scroll · Esc: close</value></data>
+  <data name="{0} người" xml:space="preserve"><value>{0} people</value></data>
+  <data name="Chúc mừng tất cả các bạn!" xml:space="preserve"><value>Congratulations to all winners!</value></data>
+  <data name="Chưa có người trúng thưởng." xml:space="preserve"><value>No winners yet.</value></data>
+  <data name="Mở được khi đã quay xong tất cả các giải" xml:space="preserve"><value>Available once all prizes have been drawn</value></data>
 </root>

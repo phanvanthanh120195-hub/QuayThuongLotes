@@ -624,4 +624,17 @@
   <data name="Đang chọn “Không phát nhạc” nên nhạc nền chung sẽ không phát." xml:space="preserve"><value>目前選擇「不播放音樂」，背景音樂不會播放。</value></data>
   <data name="Đã đặt nhạc nền chung “{0}”." xml:space="preserve"><value>已設定背景音樂「{0}」。</value></data>
   <data name="Đã xoá nhạc nền chung." xml:space="preserve"><value>已刪除背景音樂。</value></data>
+  <data name="Mất kết nối máy chủ – đang thử kết nối lại…" xml:space="preserve"><value>與伺服器的連線中斷 – 正在重新連線…</value></data>
+  <data name="Mất kết nối database – đang thử kết nối lại…" xml:space="preserve"><value>資料庫連線中斷 – 正在重新連線…</value></data>
+  <data name="Mạng chập chờn – đang thử quay lại…" xml:space="preserve"><value>網路不穩 – 正在重試抽獎…</value></data>
+  <data name="Đã kết nối lại" xml:space="preserve"><value>已重新連線</value></data>
+  <data name="Không quay được do mất kết nối. Kiểm tra mạng rồi bấm quay lại – kết quả không bị trùng." xml:space="preserve"><value>因連線中斷無法抽獎。請檢查網路後再按抽獎 – 結果不會重複。</value></data>
+  <data name="Mất kết nối database, đang thử lại…" xml:space="preserve"><value>資料庫連線中斷，正在重試…</value></data>
+  <data name="Vinh danh" xml:space="preserve"><value>榮耀榜</value></data>
+  <data name="Vinh danh người trúng thưởng" xml:space="preserve"><value>得獎者榮耀榜</value></data>
+  <data name="Space: tạm dừng · ↑↓: tốc độ · lăn chuột: cuộn · Esc: đóng" xml:space="preserve"><value>空白鍵：暫停 · ↑↓：速度 · 滾輪：捲動 · Esc：關閉</value></data>
+  <data name="{0} người" xml:space="preserve"><value>{0} 人</value></data>
+  <data name="Chúc mừng tất cả các bạn!" xml:space="preserve"><value>恭喜所有得獎者！</value></data>
+  <data name="Chưa có người trúng thưởng." xml:space="preserve"><value>尚無得獎者。</value></data>
+  <data name="Mở được khi đã quay xong tất cả các giải" xml:space="preserve"><value>所有獎項抽完後才能開啟</value></data>
 </root>

@@ -45,13 +45,18 @@ public class DrawService
         _log = log;
     }
 
-    public async Task<DrawOutcome> DrawAsync(int prizeId)
+    /// <param name="requestId">
+    /// Mã lượt quay từ màn chiếu (dùng làm batch_id). Thử lại cùng mã sau lỗi mạng thì trả lại kết quả đã ghi,
+    /// không quay thêm – tránh trường hợp DB đã COMMIT nhưng phản hồi bị mất.
+    /// </param>
+    public async Task<DrawOutcome> DrawAsync(int prizeId, Guid? requestId = null)
     {
+        var batchId = requestId is { } id && id != Guid.Empty ? id : Guid.NewGuid();
         for (var attempt = 1; ; attempt++)
         {
             try
             {
-                return await DrawOnceAsync(prizeId);
+                return await DrawOnceAsync(prizeId, batchId);
             }
             catch (Exception ex) when (attempt < MaxAttempts
                                        && PgErrors.Is(ex, PgErrors.UniqueViolation, "ux_draw_result_one_win"))
@@ -63,9 +68,8 @@ public class DrawService
         }
     }
 
-    private async Task<DrawOutcome> DrawOnceAsync(int prizeId)
+    private async Task<DrawOutcome> DrawOnceAsync(int prizeId, Guid batchId)
     {
-        Guid batchId;
         LockedPrize prize;
         int take, poolSize, wonAfter;
 
@@ -81,6 +85,15 @@ public class DrawService
             prize = locked;
 
             var active = await _draws.CountActiveAsync(conn, tx, prizeId);
+
+            // Thử lại một lượt đã ghi xong (đang khoá dòng giải nên không chạy song song được với chính nó)
+            if (await _draws.BatchExistsAsync(conn, tx, prizeId, batchId))
+            {
+                await tx.RollbackAsync();
+                _log.LogInformation("Draw replay on prize {PrizeId}, batch {BatchId}", prizeId, batchId);
+                var done = await _results.ListBatchAsync(batchId);
+                return new(DrawStatus.Ok, batchId, done, prize.Quantity, active, 0, done.Count);
+            }
             var remaining = prize.Quantity - active;
             if (remaining <= 0)
             {
@@ -99,7 +112,6 @@ public class DrawService
             }
 
             var chosen = PickRandom(pool, take);
-            batchId = Guid.NewGuid();
             await _draws.InsertResultsAsync(conn, tx, prize, chosen.Select(c => c.ParticipantId).ToList(), batchId, _audit.CurrentUser);
             await _auditRepo.InsertAsync(_audit.Build(AuditActions.Draw, prize.EventId, "prize", prizeId, new
             {

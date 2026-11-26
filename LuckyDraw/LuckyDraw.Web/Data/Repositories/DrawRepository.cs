@@ -57,6 +57,12 @@ public class DrawRepository
                                  AND NOT r.is_removed)", p, tx)).AsList();
 
     /// <summary>Bước 7: ghi kết quả (cùng batch_id) trong 1 lệnh.</summary>
+    /// <summary>Lượt quay (batch) này đã được ghi chưa – dùng khi màn chiếu thử lại sau lỗi mạng.</summary>
+    public Task<bool> BatchExistsAsync(NpgsqlConnection conn, NpgsqlTransaction tx, int prizeId, Guid batchId)
+        => conn.ExecuteScalarAsync<bool>(
+            "SELECT EXISTS (SELECT 1 FROM luckydraw.draw_result WHERE prize_id = @prizeId AND batch_id = @batchId)",
+            new { prizeId, batchId }, tx);
+
     public Task<int> InsertResultsAsync(NpgsqlConnection conn, NpgsqlTransaction tx, LockedPrize p,
         IReadOnlyList<int> participantIds, Guid batchId, string user)
         => conn.ExecuteAsync(@"

@@ -67,7 +67,11 @@ public record ResultViewDto(
 
 public record ParticipantViewDto(string Code, string Name, string? Department, string Status, string? Prize, string? Photo, string? Position);
 
-public record DrawRequest(int PrizeId);
+/// <param name="RequestId">
+/// Mã lượt quay do màn chiếu tạo, gửi lại y nguyên khi thử lại sau lỗi mạng.
+/// Server dùng làm batch_id: nếu lượt này đã được ghi thì trả lại kết quả cũ, không quay thêm.
+/// </param>
+public record DrawRequest(int PrizeId, Guid? RequestId = null);
 
 public record DrawResponse(Guid BatchId, IReadOnlyList<ResultViewDto> Winners, int Won, int Quantity);
 

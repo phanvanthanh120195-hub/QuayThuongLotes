@@ -315,8 +315,12 @@
         if (!btnSpark || document.hidden) return null;
         var b = document.getElementById('btnStart'), bl = document.body.classList;
         if (!b || b.hidden || !b.offsetParent || bl.contains('btn-idle') || bl.contains('idle')) return null;
-        var cg = document.getElementById('congrats'), cf = document.getElementById('confirmModal');
-        if ((cg && !cg.hidden) || (cf && !cf.hidden)) return null;
+        // Nút bị che bởi lớp phủ toàn màn hình (chúc mừng / xác nhận / vinh danh) → không vẽ pháo bông quanh nút
+        var overlays = ['congrats', 'confirmModal', 'honor'];
+        for (var j = 0; j < overlays.length; j++) {
+            var ov = document.getElementById(overlays[j]);
+            if (ov && !ov.hidden) return null;
+        }
         var modals = document.querySelectorAll('.modal');
         for (var i = 0; i < modals.length; i++) if (!modals[i].hidden) return null;
         return b;
