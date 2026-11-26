@@ -601,4 +601,20 @@
   <data name="— Không —" xml:space="preserve"><value>— 无 —</value></data>
   <data name="姓名, Bộ phận, 現任單位, Chức vụ: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名、部门、现任单位、职务：可留空。可直接粘贴人事档（STT、工龄列会被忽略）。</value></data>
   <data name="Đồng ý" xml:space="preserve"><value>确定</value></data>
+  <data name="Khi bấm dừng" xml:space="preserve"><value>按下停止时</value></data>
+  <data name="Mỗi cột chốt số" xml:space="preserve"><value>每栏数字停定</value></data>
+  <data name="Âm thanh có sẵn" xml:space="preserve"><value>内置音效</value></data>
+  <data name="Đi kèm ứng dụng, dùng được cho hiệu ứng âm thanh. Không xoá được." xml:space="preserve"><value>随应用程序提供，可用作音效，无法删除。</value></data>
+  <data name="Chọn file trong thư viện hoặc âm thanh có sẵn cho từng thời điểm." xml:space="preserve"><value>为每个时刻选择音效库文件或内置音效。</value></data>
+  <data name="Nghe thử" xml:space="preserve"><value>试听</value></data>
+  <data name="Bấm nút quay" xml:space="preserve"><value>按下抽奖钮</value></data>
+  <data name="Quay số" xml:space="preserve"><value>转动号码</value></data>
+  <data name="Vòng quay (lặp)" xml:space="preserve"><value>滚轮转动（循环）</value></data>
+  <data name="Tiếng chốt số" xml:space="preserve"><value>数字停定声</value></data>
+  <data name="Hồi hộp chờ kết quả" xml:space="preserve"><value>紧张等待结果</value></data>
+  <data name="Trúng giải" xml:space="preserve"><value>中奖</value></data>
+  <data name="Ta-da" xml:space="preserve"><value>Ta-da</value></data>
+  <data name="Thưởng thêm" xml:space="preserve"><value>奖励</value></data>
+  <data name="Lên cấp" xml:space="preserve"><value>升级</value></data>
+  <data name="Khán giả reo hò" xml:space="preserve"><value>观众欢呼</value></data>
 </root>

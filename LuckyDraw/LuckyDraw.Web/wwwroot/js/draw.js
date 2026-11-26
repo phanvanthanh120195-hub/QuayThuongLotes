@@ -359,7 +359,7 @@
                             var b = slot.children[i];
                             if (b) land(b, codes[si] ? codes[si].charAt(i) : ' ');
                         });
-                        setTimeout(function () { Sound.sfx('click', 0.35); }, LAND_MS * 0.55);
+                        setTimeout(function () { Sound.sfx('land', 0.6); }, LAND_MS * 0.55);
                     }, per * (i + 1) - LAND_MS * 0.5);
                 })(i);
             }
@@ -412,6 +412,7 @@
         StageFx.spin(false);
         clearTimeout(state.autoTimer);
         Sound.loop('spin', false);
+        Sound.stopSfx('stopping');
         Sound.duck(false);
         state.phase = 'idle';
         buildSlots(wantedSlots());
@@ -422,6 +423,7 @@
         if (state.phase !== 'spinning') return;
         state.phase = 'stopping';
         clearTimeout(state.autoTimer);
+        Sound.sfx('stopping', 0.8);
         renderButton();
         var p = cur();
         state.req.then(function (res) {
@@ -432,6 +434,7 @@
 
     function reveal(res) {
         Sound.loop('spin', false);
+        Sound.stopSfx('stopping');
         StageFx.spin(false);
         state.phase = 'congrats';
         state.lastRes = res;
@@ -473,6 +476,7 @@
     function closeCongrats() {
         $('#congrats').hidden = true;
         state.phase = 'idle';
+        Sound.stopSfx('congrats');
         Sound.duck(false);
         if (state.needReload) { state.needReload = false; loadAll(); }
         else { state.needRefresh = false; refreshData(false); }
@@ -928,6 +932,14 @@
         loops: {},
         configure: function (cfg) {
             this.cfg = cfg || { mode: 'none', volume: 70, playlist: [], prizeTracks: {}, effects: {} };
+            // Tải trước các hiệu ứng (file ngắn) để lần phát đầu không bị trễ
+            this.preloaded = [];
+            for (var k in this.cfg.effects) {
+                var pa = new Audio();
+                pa.preload = 'auto';
+                pa.src = this.cfg.effects[k];
+                this.preloaded.push(pa);
+            }
             this.pi = 0;
             this.current = undefined;
             this.update();
@@ -977,13 +989,25 @@
             if (this.current && !this.muted) this.play();
             $('#soundHint').hidden = true;
         },
+        last: {},
         sfx: function (name, vol) {
             var src = this.cfg && this.cfg.effects[name];
             if (!src || this.muted || !this.unlocked) return;
             var a = new Audio(src);
             a.volume = this.base() * (vol || 1);
+            this.last[name] = a;   // giữ lại để dừng được (vd. tiếng reo hò khi đóng màn chúc mừng)
             var pr = a.play();
             if (pr && pr.catch) pr.catch(function () { });
+        },
+        /** Dừng hiệu ứng đang phát, giảm dần âm lượng cho êm. */
+        stopSfx: function (name) {
+            var a = this.last[name];
+            delete this.last[name];
+            if (!a || a.paused) return;
+            var t = setInterval(function () {
+                if (a.volume <= 0.06) { clearInterval(t); a.pause(); return; }
+                a.volume = Math.max(0, a.volume - 0.06);
+            }, 30);
         },
         loop: function (name, on) {
             var a = this.loops[name];
@@ -1001,7 +1025,13 @@
         toggle: function () {
             this.muted = !this.muted;
             store.set('ld-muted', this.muted ? '1' : '0');
-            if (this.muted) { this.bg.pause(); for (var k in this.loops) this.loops[k].pause(); this.loops = {}; }
+            if (this.muted) {
+                this.bg.pause();
+                for (var k in this.loops) this.loops[k].pause();
+                for (var n in this.last) this.last[n].pause();
+                this.loops = {};
+                this.last = {};
+            }
             else { this.unlock(); if (this.current) this.play(); }
             this.applyVolume();
             this.renderButton();

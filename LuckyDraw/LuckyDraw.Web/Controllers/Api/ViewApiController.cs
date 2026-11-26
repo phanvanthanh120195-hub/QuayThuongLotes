@@ -145,10 +145,17 @@ public class ViewApiController : ControllerBase
     {
         var paths = s.Tracks.ToDictionary(t => t.Id, t => t.Path);
         string? P(string? id) => id != null && paths.TryGetValue(id, out var p) ? p : null;
+        // Hiệu ứng có thể trỏ tới âm thanh có sẵn (wwwroot/mp3)
+        var fxPaths = BuiltInSounds.WithLibrary(s.Tracks).GroupBy(t => t.Id).ToDictionary(g => g.Key, g => g.First().Path);
+        var fx = s.Effects;
         var effects = new Dictionary<string, string>();
-        foreach (var (key, id) in new[] { ("spin", s.Effects.Spin), ("reveal", s.Effects.Reveal), ("congrats", s.Effects.Congrats), ("click", s.Effects.Click) })
+        foreach (var (key, id) in new[]
+                 {
+                     ("spin", fx.Spin), ("stopping", fx.Stopping), ("land", fx.Land),
+                     ("reveal", fx.Reveal), ("congrats", fx.Congrats), ("click", fx.Click)
+                 })
         {
-            if (P(id) is string path) effects[key] = path;
+            if (id != null && fxPaths.TryGetValue(id, out var path)) effects[key] = path;
         }
         return new SoundViewDto(
             s.Mode, s.Volume, s.DuckOnSpin, s.PlaylistEnd,

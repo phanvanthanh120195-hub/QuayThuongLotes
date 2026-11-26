@@ -62,12 +62,17 @@ public class SoundController : AdminControllerBase
         s.PrizeTracks = model.PrizeTracks
             .Where(kv => prizeIds.Contains(kv.Key) && Track(kv.Value) != null)
             .ToDictionary(kv => kv.Key, kv => kv.Value!);
+        // Hiệu ứng được chọn cả âm thanh có sẵn; "" = admin chọn "Không" (khác với thiếu → mặc định)
+        var effectIds = BuiltInSounds.WithLibrary(s.Tracks).Select(t => t.Id).ToHashSet();
+        string Effect(string? id) => id != null && effectIds.Contains(id) ? id : "";
         s.Effects = new SoundEffects
         {
-            Spin = Track(model.Effects.Spin),
-            Reveal = Track(model.Effects.Reveal),
-            Congrats = Track(model.Effects.Congrats),
-            Click = Track(model.Effects.Click)
+            Spin = Effect(model.Effects.Spin),
+            Stopping = Effect(model.Effects.Stopping),
+            Land = Effect(model.Effects.Land),
+            Reveal = Effect(model.Effects.Reveal),
+            Congrats = Effect(model.Effects.Congrats),
+            Click = Effect(model.Effects.Click)
         };
 
         await Save(ev.EventId, s);
@@ -115,10 +120,13 @@ public class SoundController : AdminControllerBase
         s.Tracks.Remove(track);
         s.Playlist.Remove(id);
         foreach (var key in s.PrizeTracks.Where(kv => kv.Value == id).Select(kv => kv.Key).ToList()) s.PrizeTracks.Remove(key);
-        if (s.Effects.Spin == id) s.Effects.Spin = null;
-        if (s.Effects.Reveal == id) s.Effects.Reveal = null;
-        if (s.Effects.Congrats == id) s.Effects.Congrats = null;
-        if (s.Effects.Click == id) s.Effects.Click = null;
+        var fx = s.Effects;
+        if (fx.Spin == id) fx.Spin = "";
+        if (fx.Stopping == id) fx.Stopping = "";
+        if (fx.Land == id) fx.Land = "";
+        if (fx.Reveal == id) fx.Reveal = "";
+        if (fx.Congrats == id) fx.Congrats = "";
+        if (fx.Click == id) fx.Click = "";
         await Save(ev.EventId, s);
         _files.Delete(track.Path);
         Success(L["Đã xoá bài “{0}”.", track.Name]);

@@ -82,12 +82,53 @@ public class SoundTrack
     public string Path { get; set; } = "";
 }
 
+/// <summary>
+/// Mỗi thời điểm trỏ tới id một bài (thư viện sự kiện hoặc âm thanh có sẵn).
+/// Chuỗi rỗng = admin chọn "Không"; thiếu trong JSON = dùng âm thanh có sẵn mặc định.
+/// </summary>
 public class SoundEffects
 {
-    public string? Spin { get; set; }
-    public string? Reveal { get; set; }
-    public string? Congrats { get; set; }
-    public string? Click { get; set; }
+    /// <summary>Lặp trong lúc các ô đang quay.</summary>
+    public string? Spin { get; set; } = BuiltInSounds.RollerLoop;
+    /// <summary>Khi bấm Dừng (hoặc hết giờ quay tự động) – trước khi các cột chốt.</summary>
+    public string? Stopping { get; set; } = BuiltInSounds.JackpotComing;
+    /// <summary>Mỗi cột ô chốt số.</summary>
+    public string? Land { get; set; } = BuiltInSounds.SpinTick;
+    public string? Reveal { get; set; } = BuiltInSounds.JackpotWin;
+    public string? Congrats { get; set; } = BuiltInSounds.CrowdCheer;
+    public string? Click { get; set; } = BuiltInSounds.Bet;
+}
+
+/// <summary>Âm thanh đi kèm ứng dụng (wwwroot/mp3) – luôn có trong thư viện, không xoá được.</summary>
+public static class BuiltInSounds
+{
+    public const string Prefix = "sys-";
+    public const string Bet = "sys-bet";
+    public const string RollerLoop = "sys-roller-loop";
+    public const string SpinTick = "sys-spin";
+    public const string JackpotComing = "sys-jackpot-coming";
+    public const string JackpotWin = "sys-jackpot-win";
+    public const string CrowdCheer = "sys-crowd-cheer";
+
+    /// <summary>Tên hiển thị là khoá tiếng Việt – view dịch qua L[].</summary>
+    public static readonly IReadOnlyList<SoundTrack> All = new SoundTrack[]
+    {
+        new() { Id = Bet, Name = "Bấm nút quay", Path = "/mp3/sm-bet.mp3" },
+        new() { Id = "sys-quay-so", Name = "Quay số", Path = "/mp3/QuaySoP2.mp3" },
+        new() { Id = RollerLoop, Name = "Vòng quay (lặp)", Path = "/mp3/sm-roller-loop.mp3" },
+        new() { Id = SpinTick, Name = "Tiếng chốt số", Path = "/mp3/sm-spin.mp3" },
+        new() { Id = JackpotComing, Name = "Hồi hộp chờ kết quả", Path = "/mp3/game-sm-jackpot-coming.mp3" },
+        new() { Id = JackpotWin, Name = "Trúng giải", Path = "/mp3/game-sm-jackpot-win.mp3" },
+        new() { Id = "sys-tada", Name = "Ta-da", Path = "/mp3/game-tada.mp3" },
+        new() { Id = "sys-bonus", Name = "Thưởng thêm", Path = "/mp3/game-bonus.mp3" },
+        new() { Id = "sys-levelup", Name = "Lên cấp", Path = "/mp3/game-levelup-s3.mp3" },
+        new() { Id = CrowdCheer, Name = "Khán giả reo hò", Path = "/mp3/crowd-cheer-in-school.mp3" }
+    };
+
+    public static bool IsBuiltIn(string? id) => id != null && id.StartsWith(Prefix, StringComparison.Ordinal);
+
+    /// <summary>Thư viện sự kiện + âm thanh có sẵn (dùng cho hiệu ứng).</summary>
+    public static IEnumerable<SoundTrack> WithLibrary(IEnumerable<SoundTrack> tracks) => tracks.Concat(All);
 }
 
 public static class SettingsJson

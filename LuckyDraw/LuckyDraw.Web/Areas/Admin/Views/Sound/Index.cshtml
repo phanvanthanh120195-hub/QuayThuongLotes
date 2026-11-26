@@ -10,11 +10,14 @@
     };
     var effects = new (string Key, string Label, string? Value)[]
     {
+        ("Click", L["Bấm nút"], s.Effects.Click),
         ("Spin", L["Khi đang quay"], s.Effects.Spin),
+        ("Stopping", L["Khi bấm dừng"], s.Effects.Stopping),
+        ("Land", L["Mỗi cột chốt số"], s.Effects.Land),
         ("Reveal", L["Khi hiện kết quả"], s.Effects.Reveal),
-        ("Congrats", L["Màn chúc mừng"], s.Effects.Congrats),
-        ("Click", L["Bấm nút"], s.Effects.Click)
+        ("Congrats", L["Màn chúc mừng"], s.Effects.Congrats)
     };
+    var builtIn = BuiltInSounds.All;
 }
 <div class="page-head">
     <div>
@@ -54,6 +57,26 @@
                         <form method="post" asp-action="DeleteTrack" asp-route-id="@t.Id" data-confirm="@L["Xoá bài {0}?", t.Name]">
                             <button class="btn btn-ghost btn-icon danger" type="submit" title="@L["Xoá"]">@Html.Icon("trash")</button>
                         </form>
+                    </div>
+                }
+            </div>
+        </div>
+
+        <div class="card-ld mt-3">
+            <div class="card-head">
+                <h2>@L["Âm thanh có sẵn"]</h2>
+                <span class="tag">@builtIn.Count</span>
+            </div>
+            <div class="card-body">
+                <p class="small-note">@L["Đi kèm ứng dụng, dùng được cho hiệu ứng âm thanh. Không xoá được."]</p>
+                @foreach (var t in builtIn)
+                {
+                    <div class="track-row">
+                        <span class="stat-icon" style="width:34px;height:34px;border-radius:9px">@Html.Icon("sparkle")</span>
+                        <div class="flex-grow-1 min-w-0">
+                            <div class="fw-semibold text-truncate">@L[t.Name]</div>
+                            <audio controls preload="none" src="@t.Path"></audio>
+                        </div>
                     </div>
                 }
             </div>
@@ -124,16 +147,25 @@
 
             <div class="form-section">
                 <h3>@L["Hiệu ứng âm thanh"]</h3>
-                <p class="hint">@L["Chọn file trong thư viện cho từng thời điểm."]</p>
+                <p class="hint">@L["Chọn file trong thư viện hoặc âm thanh có sẵn cho từng thời điểm."]</p>
                 @foreach (var e in effects)
                 {
                     <div class="row g-2 align-items-center mb-2">
                         <div class="col-sm-5">@e.Label</div>
-                        <div class="col-sm-7">
-                            <select class="form-select form-select-sm" name="Effects.@e.Key">
+                        <div class="col-sm-7 d-flex gap-2">
+                            <select class="form-select form-select-sm" name="Effects.@e.Key" data-fx-select>
                                 <option value="">@L["— Không —"]</option>
-                                @foreach (var t in s.Tracks) { <option value="@t.Id" selected="@(e.Value == t.Id)">@t.Name</option> }
+                                <optgroup label="@L["Âm thanh có sẵn"]">
+                                    @foreach (var t in builtIn) { <option value="@t.Id" data-src="@t.Path" selected="@(e.Value == t.Id)">@L[t.Name]</option> }
+                                </optgroup>
+                                @if (s.Tracks.Count > 0)
+                                {
+                                    <optgroup label="@L["Thư viện âm thanh"]">
+                                        @foreach (var t in s.Tracks) { <option value="@t.Id" data-src="@t.Path" selected="@(e.Value == t.Id)">@t.Name</option> }
+                                    </optgroup>
+                                }
                             </select>
+                            <button class="btn btn-ghost btn-icon btn-sm" type="button" data-fx-preview title="@L["Nghe thử"]">@Html.Icon("play")</button>
                         </div>
                     </div>
                 }
@@ -161,3 +193,31 @@
         </form>
     </div>
 </div>
+@section Scripts {
+    <script>
+        (function () {
+            // Nút ▶ cạnh mỗi hiệu ứng: nghe thử file đang chọn (bấm lại để dừng)
+            var player = null, playingBtn = null;
+            function stop() {
+                if (player) { player.pause(); player = null; }
+                if (playingBtn) { playingBtn.classList.remove('active'); playingBtn = null; }
+            }
+            document.querySelectorAll('[data-fx-preview]').forEach(function (btn) {
+                btn.addEventListener('click', function () {
+                    var was = playingBtn === btn;
+                    stop();
+                    if (was) return;
+                    var sel = btn.parentNode.querySelector('[data-fx-select]');
+                    var opt = sel.options[sel.selectedIndex];
+                    var src = opt && opt.getAttribute('data-src');
+                    if (!src) return;
+                    player = new Audio(src);
+                    playingBtn = btn;
+                    btn.classList.add('active');
+                    player.addEventListener('ended', stop);
+                    player.play().catch(stop);
+                });
+            });
+        })();
+    </script>
+}
