@@ -310,6 +310,8 @@ public class SoundFormModel
     public int Volume { get; set; } = 70;
 
     public bool DuckOnSpin { get; set; }
+    /// <summary>Bật nhạc nền chung (bỏ chọn → false).</summary>
+    public bool MainEnabled { get; set; }
     public string PlaylistEnd { get; set; } = "repeat";
     public List<string> Playlist { get; set; } = new();
     public Dictionary<string, string?> PrizeTracks { get; set; } = new();

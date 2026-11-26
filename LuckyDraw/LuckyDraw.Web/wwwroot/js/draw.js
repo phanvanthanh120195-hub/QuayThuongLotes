@@ -464,7 +464,10 @@
                             var b = slot.children[i];
                             if (b) land(b, codes[si] ? codes[si].charAt(i) : ' ');
                         });
-                        setTimeout(function () { Sound.sfx('land', 0.6); }, LAND_MS * 0.55);
+                        setTimeout(function () {
+                            if (i === 0) Sound.loop('spin', false);   // cột đầu (chữ V) chốt số → tắt nhạc "Khi đang quay"
+                            Sound.sfx('land', 0.6);
+                        }, LAND_MS * 0.55);
                     }, per * (i + 1) - LAND_MS * 0.5);
                 })(i);
             }
@@ -501,6 +504,7 @@
         state.freshBatch = null;
         Sound.sfx('click');
         Sound.duck(true);
+        Sound.holdBg();                                   // quay → tạm dừng nhạc nền
         Sound.loop('spin', true);
         buildSlots(p.nextTake);
         startSpin();
@@ -523,6 +527,7 @@
         Sound.loop('spin', false);
         Sound.stopSfx('stopping');
         Sound.duck(false);
+        Sound.resumeBgLater(10000);
         state.phase = 'idle';
         buildSlots(wantedSlots());
         renderAll();
@@ -587,6 +592,7 @@
         state.phase = 'idle';
         Sound.stopSfx('congrats');
         Sound.duck(false);
+        if (Sound.hold) Sound.resumeBgLater(10000);       // bấm Xác nhận (đóng màn chúc mừng) + 10 giây không quay tiếp → phát tiếp nhạc nền
         if (state.needReload) { state.needReload = false; loadAll(); }
         else { state.needRefresh = false; refreshData(false); }
         renderAll();
@@ -1074,12 +1080,38 @@
             var src = this.pickSrc();
             if (src !== this.current) {
                 this.current = src;
-                if (src) { this.bg.src = src; if (this.unlocked && !this.muted) this.play(); }
+                if (src) { this.bg.src = src; if (!this.muted) this.tryPlay(); }
                 else { this.bg.pause(); this.bg.removeAttribute('src'); }
             }
             $('#soundHint').hidden = !(src && !this.unlocked && !this.muted);
         },
+        // Vừa mở trang đã thử phát nhạc nền; trình duyệt chặn tự phát thì chờ lần bấm/phím đầu tiên (unlock)
+        // Tạm dừng nhạc nền khi quay; quay xong hẹn giờ phát tiếp (đúng chỗ đang dừng). Quay tiếp trước khi hết giờ → huỷ hẹn.
+        hold: false,
+        resumeTimer: 0,
+        holdBg: function () {
+            clearTimeout(this.resumeTimer);
+            this.hold = true;
+            if (!this.bg.paused) this.bg.pause();
+        },
+        resumeBgLater: function (ms) {
+            var self = this;
+            clearTimeout(this.resumeTimer);
+            this.resumeTimer = setTimeout(function () {
+                self.hold = false;
+                if (self.current && !self.muted && self.unlocked) self.play();
+            }, ms);
+        },
+        tryPlay: function () {
+            if (this.hold) return;
+            if (this.unlocked) { this.play(); return; }
+            var self = this;
+            this.applyVolume();
+            var pr = this.bg.play();
+            if (pr && pr.then) pr.then(function () { self.unlocked = true; $('#soundHint').hidden = true; }, function () { });
+        },
         play: function () {
+            if (this.hold) return;                        // đang quay: giữ im nhạc nền
             this.applyVolume();
             var pr = this.bg.play();
             if (pr && pr.catch) pr.catch(function () { /* trình duyệt chặn tự phát */ });

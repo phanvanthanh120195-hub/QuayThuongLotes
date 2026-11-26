@@ -1330,6 +1330,18 @@ body.idle .corner {
    Ô nhập chữ (tìm kiếm) giữ con trỏ chữ I mặc định. */
 body.stage {
     cursor: var(--cur-default);
+    /* Màn chiếu không cần bôi chọn chữ: bấm đúp / kéo chuột không còn quét xanh tiêu đề, ô số…
+       Ô nhập (tìm kiếm) vẫn chọn được chữ bình thường (rule bên dưới). */
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body.stage input,
+body.stage textarea,
+body.stage select {
+    -webkit-user-select: text;
+    user-select: text;
 }
 
 body.stage :is(button, a[href], select, summary, label[for], [role="button"], [role="option"], [role="tab"]):not(:disabled) {

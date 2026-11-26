@@ -637,4 +637,13 @@
   <data name="Chúc mừng tất cả các bạn!" xml:space="preserve"><value>Congratulations to all winners!</value></data>
   <data name="Chưa có người trúng thưởng." xml:space="preserve"><value>No winners yet.</value></data>
   <data name="Mở được khi đã quay xong tất cả các giải" xml:space="preserve"><value>Available once all prizes have been drawn</value></data>
+  <data name="Nhạc Đột Kích" xml:space="preserve"><value>CrossFire theme</value></data>
+  <data name="Vòng quay 2 (lặp)" xml:space="preserve"><value>Spinning reel 2 (loop)</value></data>
+  <data name="Tiếng chốt số 2" xml:space="preserve"><value>Number lock tick 2</value></data>
+  <data name="Đang dùng nhạc nền có sẵn" xml:space="preserve"><value>Using the built-in background music</value></data>
+  <data name="Phát nhạc nền" xml:space="preserve"><value>Play background music</value></data>
+  <data name="Đang tắt “Phát nhạc nền” (mục Âm lượng) nên nhạc nền sẽ không phát." xml:space="preserve"><value>“Play background music” is off (Volume section), so background music will not play.</value></data>
+  <data name="Bật nhạc nền chung" xml:space="preserve"><value>Enable event background music</value></data>
+  <data name="Nhạc nền có sẵn" xml:space="preserve"><value>Built-in background music</value></data>
+  <data name="Tải lên bài khác bên dưới để thay nhạc nền có sẵn." xml:space="preserve"><value>Upload another track below to replace the built-in music.</value></data>
 </root>

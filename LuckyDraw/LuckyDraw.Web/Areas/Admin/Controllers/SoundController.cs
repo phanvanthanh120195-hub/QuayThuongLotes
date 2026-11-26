@@ -54,6 +54,7 @@ public class SoundController : AdminControllerBase
         s.Mode = Modes.Contains(model.Mode) ? model.Mode : "single";
         s.Volume = Math.Clamp(model.Volume, 0, 100);
         s.DuckOnSpin = model.DuckOnSpin;
+        s.MainEnabled = model.MainEnabled;
         s.PlaylistEnd = model.PlaylistEnd == "shuffle" ? "shuffle" : "repeat";
         // Danh sách phát giữ đúng thứ tự thư viện, chỉ lấy id có thật
         s.Playlist = s.Tracks.Where(t => model.Playlist.Contains(t.Id)).Select(t => t.Id).ToList();

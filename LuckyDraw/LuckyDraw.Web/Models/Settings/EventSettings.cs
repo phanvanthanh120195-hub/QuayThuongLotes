@@ -72,6 +72,8 @@ public class SoundSettings
     /// Danh sách phát (single) hoặc nhạc riêng của giải (perPrize) được ưu tiên hơn nếu có.
     /// </summary>
     public SoundTrack? MainTrack { get; set; }
+    /// <summary>Bật/tắt nhạc nền chung. Chưa tải bài nào thì dùng nhạc nền có sẵn (BuiltInSounds.DefaultMainPath).</summary>
+    public bool MainEnabled { get; set; } = true;
     public List<SoundTrack> Tracks { get; set; } = new();
     /// <summary>Id các bài trong danh sách phát (theo thứ tự).</summary>
     public List<string> Playlist { get; set; } = new();
@@ -93,8 +95,8 @@ public class SoundTrack
 /// </summary>
 public class SoundEffects
 {
-    /// <summary>Lặp trong lúc các ô đang quay.</summary>
-    public string? Spin { get; set; } = BuiltInSounds.RollerLoop;
+    /// <summary>Lặp trong lúc các ô đang quay (mặc định: nhạc Đột Kích).</summary>
+    public string? Spin { get; set; } = BuiltInSounds.DotKich;
     /// <summary>Khi bấm Dừng (hoặc hết giờ quay tự động) – trước khi các cột chốt.</summary>
     public string? Stopping { get; set; } = BuiltInSounds.JackpotComing;
     /// <summary>Mỗi cột ô chốt số.</summary>
@@ -108,9 +110,14 @@ public class SoundEffects
 public static class BuiltInSounds
 {
     public const string Prefix = "sys-";
+    /// <summary>Nhạc nền chung có sẵn – phát khi bật nhạc nền mà chưa tải bài riêng.</summary>
+    public const string DefaultMainPath = "/mp3/nhacnen.mp3";
     public const string Bet = "sys-bet";
     public const string RollerLoop = "sys-roller-loop";
+    public const string DotKich = "sys-dot-kich";
+    public const string RollerLoop2 = "sys-roller-loop-1";
     public const string SpinTick = "sys-spin";
+    public const string SpinTick2 = "sys-spin-1";
     public const string JackpotComing = "sys-jackpot-coming";
     public const string JackpotWin = "sys-jackpot-win";
     public const string CrowdCheer = "sys-crowd-cheer";
@@ -121,7 +128,10 @@ public static class BuiltInSounds
         new() { Id = Bet, Name = "Bấm nút quay", Path = "/mp3/sm-bet.mp3" },
         new() { Id = "sys-quay-so", Name = "Quay số", Path = "/mp3/QuaySoP2.mp3" },
         new() { Id = RollerLoop, Name = "Vòng quay (lặp)", Path = "/mp3/sm-roller-loop.mp3" },
+        new() { Id = DotKich, Name = "Nhạc Đột Kích", Path = "/mp3/nhac-dot-kich.mp3" },
+        new() { Id = RollerLoop2, Name = "Vòng quay 2 (lặp)", Path = "/mp3/sm-roller-loop-1.mp3" },
         new() { Id = SpinTick, Name = "Tiếng chốt số", Path = "/mp3/sm-spin.mp3" },
+        new() { Id = SpinTick2, Name = "Tiếng chốt số 2", Path = "/mp3/sm-spin-1.mp3" },
         new() { Id = JackpotComing, Name = "Hồi hộp chờ kết quả", Path = "/mp3/game-sm-jackpot-coming.mp3" },
         new() { Id = JackpotWin, Name = "Trúng giải", Path = "/mp3/game-sm-jackpot-win.mp3" },
         new() { Id = "sys-tada", Name = "Ta-da", Path = "/mp3/game-tada.mp3" },

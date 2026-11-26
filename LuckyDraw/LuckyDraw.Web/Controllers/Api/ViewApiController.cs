@@ -162,6 +162,6 @@ public class ViewApiController : ControllerBase
             s.Playlist.Select(P).OfType<string>().ToList(),
             s.PrizeTracks.Where(kv => P(kv.Value) != null).ToDictionary(kv => kv.Key, kv => P(kv.Value)!),
             effects,
-            s.MainTrack?.Path);
+            s.MainEnabled ? s.MainTrack?.Path ?? BuiltInSounds.DefaultMainPath : null);   // tắt → không có nhạc nền chung
     }
 }

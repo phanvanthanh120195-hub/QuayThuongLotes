@@ -90,6 +90,17 @@
             </div>
             <div class="card-body">
                 <p class="small-note">@L["Phát lặp lại suốt chương trình (vd. nhạc xuân). Nếu có danh sách phát hoặc nhạc riêng cho giải thì các bài đó được ưu tiên."]</p>
+                @if (s.MainTrack is null)
+                {
+                    <div class="track-row">
+                        <span class="stat-icon gold" style="width:34px;height:34px;border-radius:9px">@Html.Icon("music")</span>
+                        <div class="flex-grow-1 min-w-0">
+                            <div class="fw-semibold text-truncate">@L["Nhạc nền có sẵn"] <span class="small-note">(nhacnen.mp3)</span></div>
+                            <audio controls preload="none" src="@BuiltInSounds.DefaultMainPath"></audio>
+                        </div>
+                    </div>
+                    <p class="small-note mb-0">@L["Tải lên bài khác bên dưới để thay nhạc nền có sẵn."]</p>
+                }
                 @if (s.MainTrack is { } main)
                 {
                     <div class="track-row">
@@ -208,7 +219,11 @@
                         <input type="range" class="form-range" min="0" max="100" name="Volume" value="@s.Volume" oninput="this.nextElementSibling.textContent=this.value+'%'" />
                         <span class="small-note">@(s.Volume)%</span>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5 d-flex flex-column gap-2">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" role="switch" name="MainEnabled" value="true" id="mainEnabled" checked="@s.MainEnabled" />
+                            <label class="form-check-label" for="mainEnabled">@L["Bật nhạc nền chung"]</label>
+                        </div>
                         <div class="form-check form-switch">
                             <input class="form-check-input" type="checkbox" name="DuckOnSpin" value="true" id="duck" checked="@s.DuckOnSpin" />
                             <label class="form-check-label" for="duck">@L["Giảm nhạc nền khi quay & chúc mừng"]</label>

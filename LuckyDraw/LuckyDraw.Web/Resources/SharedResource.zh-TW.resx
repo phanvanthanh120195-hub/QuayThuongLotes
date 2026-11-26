@@ -637,4 +637,13 @@
   <data name="Chúc mừng tất cả các bạn!" xml:space="preserve"><value>恭喜所有得獎者！</value></data>
   <data name="Chưa có người trúng thưởng." xml:space="preserve"><value>尚無得獎者。</value></data>
   <data name="Mở được khi đã quay xong tất cả các giải" xml:space="preserve"><value>所有獎項抽完後才能開啟</value></data>
+  <data name="Nhạc Đột Kích" xml:space="preserve"><value>穿越火線音樂</value></data>
+  <data name="Vòng quay 2 (lặp)" xml:space="preserve"><value>轉輪 2（循環）</value></data>
+  <data name="Tiếng chốt số 2" xml:space="preserve"><value>定格音效 2</value></data>
+  <data name="Đang dùng nhạc nền có sẵn" xml:space="preserve"><value>正在使用內建背景音樂</value></data>
+  <data name="Phát nhạc nền" xml:space="preserve"><value>播放背景音樂</value></data>
+  <data name="Đang tắt “Phát nhạc nền” (mục Âm lượng) nên nhạc nền sẽ không phát." xml:space="preserve"><value>已關閉「播放背景音樂」（音量區），背景音樂不會播放。</value></data>
+  <data name="Bật nhạc nền chung" xml:space="preserve"><value>啟用活動背景音樂</value></data>
+  <data name="Nhạc nền có sẵn" xml:space="preserve"><value>內建背景音樂</value></data>
+  <data name="Tải lên bài khác bên dưới để thay nhạc nền có sẵn." xml:space="preserve"><value>在下方上傳其他曲目以取代內建音樂。</value></data>
 </root>
