@@ -54,11 +54,6 @@
                         <input asp-for="DepartmentZh" class="form-control" lang="zh" list="deptZhList" />
                         <span asp-validation-for="DepartmentZh"></span>
                     </div>
-                    <div class="col-12">
-                        <label asp-for="Position" class="form-label"></label>
-                        <input asp-for="Position" class="form-control" />
-                        <span asp-validation-for="Position"></span>
-                    </div>
                     <input type="hidden" asp-for="DepartmentId" />
                     <datalist id="deptViList">@foreach (var d in deptVi) { <option value="@d"></option> }</datalist>
                     <datalist id="deptZhList">@foreach (var d in deptZh) { <option value="@d"></option> }</datalist>

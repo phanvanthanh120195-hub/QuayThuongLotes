@@ -191,6 +191,8 @@
         root.setProperty('--bg-blur', (t.backgroundBlur || 0) + 'px');
         root.setProperty('--bg-dim', t.backgroundPath ? String((t.backgroundDim || 0) / 100) : '0');
         $('.bg-img').style.backgroundImage = t.backgroundPath ? 'url("' + encodeURI(t.backgroundPath) + '")' : 'none';
+        // Mây đung đưa / dê chớp mắt – chỉ với ảnh nền có sẵn của chủ đề (ảnh tải lên thì tắt)
+        if (window.BgScene) BgScene.apply(t.backgroundPath ? null : p.bg);
         var logo = $('#logo');
         if (t.logoPath) { logo.src = t.logoPath; logo.hidden = false; } else { logo.hidden = true; }
         body.classList.remove('pos-bottom', 'pos-left', 'pos-right');
@@ -639,7 +641,7 @@
         var txt = el('div', 'cfm-who');
         txt.appendChild(el('div', 'cfm-code', person.code));
         txt.appendChild(el('div', 'cfm-name', person.name));
-        if (person.position || person.department) txt.appendChild(el('div', 'cfm-sub', person.position || person.department));
+        if (person.department) txt.appendChild(el('div', 'cfm-sub', person.department));
         info.appendChild(txt);
         if (cfm.resolve) cfm.resolve(false);
         cfm.last = document.activeElement;
@@ -936,7 +938,7 @@
         body.innerHTML = '';
         state.results.forEach(function (r, i) {               // mới nhất trước, STT giảm dần như thứ tự quay
             if (pid && String(r.prizeId) !== pid) return;
-            if (q && fold([r.code, r.name, r.position, r.department, r.prizeName].join(' ')).indexOf(q) < 0) return;
+            if (q && fold([r.code, r.name, r.department, r.prizeName].join(' ')).indexOf(q) < 0) return;
             shown++;
             var tr = el('tr');
             var n = el('td', 'c');
@@ -948,7 +950,6 @@
             who.appendChild(w);
             tr.appendChild(who);
             tr.appendChild(el('td')).appendChild(el('span', 'dm-code', r.code));
-            tr.appendChild(el('td', 'dm-muted', r.position || ''));
             tr.appendChild(el('td', 'dm-muted', r.department || ''));
             tr.appendChild(el('td')).appendChild(el('span', 'dm-tag prize', r.prizeName));
             body.appendChild(tr);
@@ -985,7 +986,7 @@
             if (w.photo) fr.appendChild(photoEl(w, 'cgf-photo'));
             fr.appendChild(el('div', 'cgf-code', w.code));
             fr.appendChild(el('div', 'cgf-name', w.name));
-            if (w.position || w.department) fr.appendChild(el('div', 'cgf-pos', w.position || w.department));
+            if (w.department) fr.appendChild(el('div', 'cgf-pos', w.department));
             fr.appendChild(el('div', 'cgf-won', T('wonLabel')));
             fr.appendChild(el('div', 'cgf-prize', w.prizeName));
             wrap.appendChild(fr);
@@ -1001,7 +1002,7 @@
                 if (anyPhoto) c.appendChild(photoEl(x, 'cgf-mini-photo'));
                 c.appendChild(el('div', 'cgf-code', x.code));
                 c.appendChild(el('div', 'cgf-name', x.name));
-                if (x.position || x.department) c.appendChild(el('div', 'cgf-pos', x.position || x.department));
+                if (x.department) c.appendChild(el('div', 'cgf-pos', x.department));
                 grid.appendChild(c);
             });
             wrap.appendChild(grid);
@@ -1283,7 +1284,7 @@
                     card.appendChild(ph);
                     var info = el('div', 'hp-info');
                     info.appendChild(el('div', 'hp-person', w.name));
-                    var meta = [w.department, w.position].filter(Boolean).join(' · ');
+                    var meta = w.department || '';
                     if (meta) info.appendChild(el('div', 'hp-meta', meta));
                     info.appendChild(el('div', 'hp-code', w.code));
                     card.appendChild(info);
@@ -1393,7 +1394,6 @@
                 who.appendChild(w);
                 tr.appendChild(who);
                 tr.appendChild(el('td')).appendChild(el('span', 'dm-code', p.code));
-                tr.appendChild(el('td', 'dm-muted', p.position || ''));
                 tr.appendChild(el('td', 'dm-muted', p.department || ''));
                 var label = p.status === 'won' ? (p.prize || T('statusWon')) : p.status === 'absent' ? T('statusAbsent') : T('statusWaiting');
                 tr.appendChild(el('td')).appendChild(el('span', 'dm-tag ' + p.status, label));

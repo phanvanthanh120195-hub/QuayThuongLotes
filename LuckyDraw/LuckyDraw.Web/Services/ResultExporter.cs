@@ -22,7 +22,7 @@ public static class ResultExporter
 
         string[] headers =
         {
-            L["STT"], L["Giải thưởng"], L["Mã nhân viên"], L["Họ tên"], L["Tên tiếng Trung"], L["Bộ phận"], L["Chức vụ"],
+            L["STT"], L["Giải thưởng"], L["Mã nhân viên"], L["Họ tên"], L["Tên tiếng Trung"], L["Bộ phận"],
             L["Thời gian quay"], L["Người quay"]
         };
         for (var i = 0; i < headers.Length; i++) ws.Cell(4, i + 1).Value = headers[i];
@@ -35,9 +35,8 @@ public static class ResultExporter
             ws.Cell(r, 4).Value = x.FullName;
             ws.Cell(r, 5).Value = x.FullNameZh ?? "";
             ws.Cell(r, 6).Value = LocalizedName.Department(x) ?? "";
-            ws.Cell(r, 7).Value = x.Position ?? "";
-            ws.Cell(r, 8).Value = VnTime.Format(x.DrawnAt, "dd/MM/yyyy HH:mm:ss");
-            ws.Cell(r, 9).Value = x.DrawnBy;
+            ws.Cell(r, 7).Value = VnTime.Format(x.DrawnAt, "dd/MM/yyyy HH:mm:ss");
+            ws.Cell(r, 8).Value = x.DrawnBy;
             r++;
         }
         var header = ws.Range(4, 1, 4, headers.Length);

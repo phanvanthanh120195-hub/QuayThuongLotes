@@ -105,6 +105,41 @@ body.pos-right {
     opacity: var(--bg-dim);
 }
 
+/* ---------- Ảnh nền sống động (bg-scene.js): 2 con dê thỉnh thoảng chớp mắt ----------
+   "Mí mắt" đặt khớp toạ độ mắt trên ảnh nền. */
+.bg-scene {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+}
+
+/* Mí mắt: hình bầu dục cùng màu da, khép từ trên xuống; khi khép hẳn hiện 1 đường mi */
+.bg-eye {
+    position: absolute;
+    transform-origin: 50% 50%;
+}
+
+.bg-lid {
+    --lid: #f2cf78;
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: radial-gradient(ellipse at 50% 35%, color-mix(in srgb, var(--lid) 85%, #fff) 0%, var(--lid) 70%);
+    border-bottom: 2px solid #5a1d08;
+    transform-origin: 50% 0;
+    scale: 1 0;
+}
+
+.bg-lid.blink {
+    animation: bgBlink .22s ease-in-out;
+}
+
+@keyframes bgBlink {
+    0% { scale: 1 0; }
+    45%, 60% { scale: 1 1; }
+    100% { scale: 1 0; }
+}
+
 #fxAmbient,
 #fxBurst {
     position: fixed;

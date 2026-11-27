@@ -100,6 +100,8 @@ public class ParticipantsController : AdminControllerBase
         if (!ModelState.IsValid) return await FormView(model);
 
         var p = ToEntity(model, ev.EventId);
+        // Form không còn ô Chức vụ → giữ nguyên giá trị đang có (vd. từ file import), không xoá mất
+        p.Position = current.Position;
         try
         {
             if (!await _participants.UpdateAsync(p)) return NotFound();

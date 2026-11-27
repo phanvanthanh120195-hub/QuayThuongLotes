@@ -47,7 +47,7 @@ public class ImportService
     public const long MaxFileBytes = 5 * 1024 * 1024;
 
     private static readonly string[] ParticipantCols =
-        { "employee_code*", "join_date*", "full_name*", "full_name_zh", "department_vi", "department_zh", "position" };
+        { "employee_code*", "join_date*", "full_name*", "full_name_zh", "department_vi", "department_zh" };
 
     /// <summary>
     /// Tên tiêu đề được chấp nhận cho từng cột người tham dự – để dùng thẳng file nhân sự song ngữ
@@ -61,13 +61,12 @@ public class ImportService
         ["full_name"] = new[] { "full_name", "họ và tên", "họ tên" },
         ["full_name_zh"] = new[] { "full_name_zh", "姓名" },
         ["department_vi"] = new[] { "department_vi", "bộ phận" },
-        ["department_zh"] = new[] { "department_zh", "現任單位", "现任单位" },
-        ["position"] = new[] { "position", "chức vụ", "職務", "职务" }
+        ["department_zh"] = new[] { "department_zh", "現任單位", "现任单位" }
     };
 
     /// <summary>Tiêu đề trong file mẫu người tham dự (song ngữ như file nhân sự).</summary>
     private static readonly string[] ParticipantTemplateHeaders =
-        { "工號\nMã số thẻ *", "進廠日期\nNgày vào làm *", "Họ và tên *", "姓名", "Bộ phận", "現任單位", "Chức vụ" };
+        { "工號\nMã số thẻ *", "進廠日期\nNgày vào làm *", "Họ và tên *", "姓名", "Bộ phận", "現任單位" };
     private static readonly string[] PrizeCols =
     {
         "sort_order*", "name_vi*", "name_zh_tw", "name_zh_cn", "name_en", "quantity*", "draw_per_turn",
@@ -119,8 +118,8 @@ public class ImportService
         {
             ImportType.Participants => new object[][]
             {
-                new object[] { "VN000032", new DateTime(2021, 4, 12), "Tô Văn Thọ", "蘇文壽", "Phòng Tổng Vụ", "总务课", "Nhân viên cơ điện" },
-                new object[] { "VN000034", new DateTime(2021, 5, 3), "Bùi Văn Hiệp", "裴文協", "Bộ phận R&D", "研发部", "Tổ trưởng theo dõi sản phẩm" }
+                new object[] { "VN000032", new DateTime(2021, 4, 12), "Tô Văn Thọ", "蘇文壽", "Phòng Tổng Vụ", "总务课" },
+                new object[] { "VN000034", new DateTime(2021, 5, 3), "Bùi Văn Hiệp", "裴文協", "Bộ phận R&D", "研发部" }
             },
             ImportType.Prizes => new object[][]
             {
@@ -159,7 +158,7 @@ public class ImportService
             {
                 L["Mã số thẻ: mã nhân viên, không trùng trong file"].Value,
                 L["Ngày vào làm: ô ngày của Excel, hoặc chữ dạng yyyy-MM-dd / dd/MM/yyyy"].Value,
-                L["姓名, Bộ phận, 現任單位, Chức vụ: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)."].Value
+                L["姓名, Bộ phận, 現任單位: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)."].Value
             },
             ImportType.Prizes => new[]
             {
@@ -344,7 +343,6 @@ public class ImportService
             FullNameZh = Blank(v[3]),
             DepartmentVi = Blank(v[4]),
             DepartmentZh = Blank(v[5]),
-            Position = Blank(v[6]),
             JoinDate = joinDate.Date
         };
     }

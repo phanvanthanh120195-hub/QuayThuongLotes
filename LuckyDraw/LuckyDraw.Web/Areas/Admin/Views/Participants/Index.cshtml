@@ -83,7 +83,6 @@
                         <th>@L["Mã NV"]</th>
                         <th>@L["Họ tên"]</th>
                         <th>@L["Bộ phận"]</th>
-                        <th>@L["Chức vụ"]</th>
                         <th>@L["Ngày vào làm"]</th>
                         <th class="text-center">@L["Thâm niên"]</th>
                         <th>@L["Trạng thái"]</th>
@@ -104,7 +103,6 @@
                             </div>
                         </td>
                         <td><div>@(p.DepartmentNameVi)</div>@if (p.DepartmentNameZhTw != null && p.DepartmentNameZhTw != p.DepartmentNameVi) { <div class="small-note">@p.DepartmentNameZhTw</div> }</td>
-                        <td>@p.Position</td>
                         <td class="text-nowrap">@p.JoinDate.ToString("dd/MM/yyyy")</td>
                         <td class="text-center">@Seniority.Format(L, months)</td>
                         <td>

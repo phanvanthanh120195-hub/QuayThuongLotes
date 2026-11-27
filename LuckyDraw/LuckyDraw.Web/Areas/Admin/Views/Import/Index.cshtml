@@ -3,7 +3,7 @@
     ViewData["Title"] = L["Import Excel"];
     var cards = new (ImportType Type, string Icon, string Title, string Desc, string OverwriteLabel, string AppendLabel)[]
     {
-        (ImportType.Participants, "users", L["Người tham dự"], L["Dùng thẳng file nhân sự: Mã số thẻ, Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ."],
+        (ImportType.Participants, "users", L["Người tham dự"], L["Dùng thẳng file nhân sự: Mã số thẻ, Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位."],
             L["Ghi đè người trùng mã"], L["Bỏ qua người trùng mã"]),
         (ImportType.Prizes, "gift", L["Giải thưởng"], L["Tên 4 ngôn ngữ, số lượng, số người mỗi lượt, kiểu quay, thâm niên."],
             L["Thay toàn bộ giải cũ"], L["Thêm vào cuối danh sách"])
@@ -61,7 +61,7 @@
     <div class="card-body">
         <ul class="mb-0 small">
             <li>@L["Chỉ đọc sheet đầu tiên. Dòng 1 là tiêu đề, giữ đúng tên cột như file mẫu (cột có * là bắt buộc)."]</li>
-            <li>@L["Người tham dự: nhận luôn file nhân sự có tiêu đề song ngữ (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ). Cột STT và 工齡 được bỏ qua, thâm niên tự tính theo ngày sự kiện."]</li>
+            <li>@L["Người tham dự: nhận luôn file nhân sự có tiêu đề song ngữ (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位). Cột STT và 工齡 được bỏ qua, thâm niên tự tính theo ngày sự kiện."]</li>
             <li>@L["Không gộp ô. Ngày vào làm dạng yyyy-MM-dd (ví dụ 2024-03-15) hoặc dd/MM/yyyy."]</li>
             <li>@L["Tối đa 5.000 dòng và 5 MB mỗi lần. Toàn bộ file được ghi trong một giao dịch: lỗi một dòng thì không ghi dòng nào."]</li>
         </ul>

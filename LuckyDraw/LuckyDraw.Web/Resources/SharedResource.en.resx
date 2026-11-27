@@ -104,7 +104,7 @@
   <data name="Dòng dữ liệu" xml:space="preserve"><value>Data rows</value></data>
   <data name="Dòng hợp lệ" xml:space="preserve"><value>Valid rows</value></data>
   <data name="Dòng lỗi" xml:space="preserve"><value>Rows with errors</value></data>
-  <data name="Dùng thẳng file nhân sự: Mã số thẻ, Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ." xml:space="preserve"><value>Use the HR file as is: card no., join date, full name, 姓名, department, 現任單位, position.</value></data>
+  <data name="Dùng thẳng file nhân sự: Mã số thẻ, Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位." xml:space="preserve"><value>Use the HR file as is: card no., join date, full name, 姓名, department, 現任單位.</value></data>
   <data name="Dùng để tính thâm niên theo điều kiện của từng giải." xml:space="preserve"><value>Used to compute seniority for each prize's conditions.</value></data>
   <data name="Dưới {0} tháng" xml:space="preserve"><value>Under {0} months</value></data>
   <data name="Dưới ô quay số" xml:space="preserve"><value>Below the digit boxes</value></data>
@@ -282,7 +282,7 @@
   <data name="Người quay" xml:space="preserve"><value>Drawn by</value></data>
   <data name="Người tham dự" xml:space="preserve"><value>Participants</value></data>
   <data name="Người tham dự và giải thưởng sẽ được import vào sự kiện:" xml:space="preserve"><value>Participants and prizes will be imported into the event:</value></data>
-  <data name="Người tham dự: nhận luôn file nhân sự có tiêu đề song ngữ (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ). Cột STT và 工齡 được bỏ qua, thâm niên tự tính theo ngày sự kiện." xml:space="preserve"><value>Participants: the bilingual HR file is accepted directly (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ). STT and 工齡 columns are ignored; seniority is calculated from the event date.</value></data>
+  <data name="Người tham dự: nhận luôn file nhân sự có tiêu đề song ngữ (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位). Cột STT và 工齡 được bỏ qua, thâm niên tự tính theo ngày sự kiện." xml:space="preserve"><value>Participants: the bilingual HR file is accepted directly (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ). STT and 工齡 columns are ignored; seniority is calculated from the event date.</value></data>
   <data name="Người thao tác" xml:space="preserve"><value>User</value></data>
   <data name="Người trúng giải" xml:space="preserve"><value>Winners</value></data>
   <data name="Người vắng mặt sẽ không được quay ở các lượt sau." xml:space="preserve"><value>Absent people are excluded from later draws.</value></data>
@@ -599,7 +599,7 @@
   <data name="— Không chọn —" xml:space="preserve"><value>— None —</value></data>
   <data name="— Không phát —" xml:space="preserve"><value>— No music —</value></data>
   <data name="— Không —" xml:space="preserve"><value>— None —</value></data>
-  <data name="姓名, Bộ phận, 現任單位, Chức vụ: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名, department, 現任單位, position: optional. You can paste the HR file directly (STT, 工齡 columns are ignored).</value></data>
+  <data name="姓名, Bộ phận, 現任單位: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名, department, 現任單位: optional. You can paste the HR file directly (STT, 工齡 columns are ignored).</value></data>
   <data name="Đồng ý" xml:space="preserve"><value>OK</value></data>
   <data name="Khi bấm dừng" xml:space="preserve"><value>When stopping</value></data>
   <data name="Mỗi cột chốt số" xml:space="preserve"><value>Each column locks</value></data>

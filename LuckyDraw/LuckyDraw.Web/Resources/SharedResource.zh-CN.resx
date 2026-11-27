@@ -104,7 +104,7 @@
   <data name="Dòng dữ liệu" xml:space="preserve"><value>数据行</value></data>
   <data name="Dòng hợp lệ" xml:space="preserve"><value>有效行</value></data>
   <data name="Dòng lỗi" xml:space="preserve"><value>错误行</value></data>
-  <data name="Dùng thẳng file nhân sự: Mã số thẻ, Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ." xml:space="preserve"><value>直接使用人事档：工号、进厂日期、越文姓名、姓名、部门、现任单位、职务。</value></data>
+  <data name="Dùng thẳng file nhân sự: Mã số thẻ, Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位." xml:space="preserve"><value>直接使用人事档：工号、进厂日期、越文姓名、姓名、部门、现任单位。</value></data>
   <data name="Dùng để tính thâm niên theo điều kiện của từng giải." xml:space="preserve"><value>用于按各奖项条件计算年资。</value></data>
   <data name="Dưới {0} tháng" xml:space="preserve"><value>未满 {0} 个月</value></data>
   <data name="Dưới ô quay số" xml:space="preserve"><value>号码框下方</value></data>
@@ -282,7 +282,7 @@
   <data name="Người quay" xml:space="preserve"><value>抽奖人</value></data>
   <data name="Người tham dự" xml:space="preserve"><value>参加者</value></data>
   <data name="Người tham dự và giải thưởng sẽ được import vào sự kiện:" xml:space="preserve"><value>参加者与奖项将导入活动：</value></data>
-  <data name="Người tham dự: nhận luôn file nhân sự có tiêu đề song ngữ (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位, Chức vụ). Cột STT và 工齡 được bỏ qua, thâm niên tự tính theo ngày sự kiện." xml:space="preserve"><value>参加者：可直接导入双语人事档（工号、进厂日期、Họ và tên、姓名、Bộ phận、现任单位、职务）。STT 与工龄列会被忽略，工龄按活动日期自动计算。</value></data>
+  <data name="Người tham dự: nhận luôn file nhân sự có tiêu đề song ngữ (工號 / Mã số thẻ, 進廠日期 / Ngày vào làm, Họ và tên, 姓名, Bộ phận, 現任單位). Cột STT và 工齡 được bỏ qua, thâm niên tự tính theo ngày sự kiện." xml:space="preserve"><value>参加者：可直接导入双语人事档（工号、进厂日期、Họ và tên、姓名、Bộ phận、现任单位）。STT 与工龄列会被忽略，工龄按活动日期自动计算。</value></data>
   <data name="Người thao tác" xml:space="preserve"><value>操作者</value></data>
   <data name="Người trúng giải" xml:space="preserve"><value>得奖者</value></data>
   <data name="Người vắng mặt sẽ không được quay ở các lượt sau." xml:space="preserve"><value>缺席者不会在之后的抽奖中被抽中。</value></data>
@@ -599,7 +599,7 @@
   <data name="— Không chọn —" xml:space="preserve"><value>— 不选择 —</value></data>
   <data name="— Không phát —" xml:space="preserve"><value>— 不播放 —</value></data>
   <data name="— Không —" xml:space="preserve"><value>— 无 —</value></data>
-  <data name="姓名, Bộ phận, 現任單位, Chức vụ: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名、部门、现任单位、职务：可留空。可直接粘贴人事档（STT、工龄列会被忽略）。</value></data>
+  <data name="姓名, Bộ phận, 現任單位: có thể để trống. Có thể dán thẳng file nhân sự (cột STT, 工齡 sẽ bỏ qua)." xml:space="preserve"><value>姓名、部门、现任单位：可留空。可直接粘贴人事档（STT、工龄列会被忽略）。</value></data>
   <data name="Đồng ý" xml:space="preserve"><value>确定</value></data>
   <data name="Khi bấm dừng" xml:space="preserve"><value>按下停止时</value></data>
   <data name="Mỗi cột chốt số" xml:space="preserve"><value>每栏数字停定</value></data>
