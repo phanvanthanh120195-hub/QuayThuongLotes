@@ -38,6 +38,8 @@ public static class AuditActions
 {
     public const string Login = "LOGIN";
     public const string LoginFailed = "LOGIN_FAILED";
+    /// <summary>Bị khoá tạm vì đăng nhập sai quá nhiều lần (LoginThrottle).</summary>
+    public const string LoginLocked = "LOGIN_LOCKED";
     public const string EventCreate = "EVENT_CREATE";
     public const string EventUpdate = "EVENT_UPDATE";
     public const string EventDelete = "EVENT_DELETE";

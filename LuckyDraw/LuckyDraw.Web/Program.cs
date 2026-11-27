@@ -53,6 +53,8 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         o.Cookie.Name = "luckydraw.auth";
         o.Cookie.HttpOnly = true;
         o.Cookie.SameSite = SameSiteMode.Lax;
+        // Chạy HTTPS → cookie có cờ Secure (không gửi qua HTTP); chạy HTTP trong LAN vẫn dùng được
+        o.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
         // Gọi API bằng fetch: trả 401/403 thay vì chuyển hướng sang trang đăng nhập
         o.Events.OnRedirectToLogin = ctx => ApiAwareRedirect(ctx, StatusCodes.Status401Unauthorized);
         o.Events.OnRedirectToAccessDenied = ctx => ApiAwareRedirect(ctx, StatusCodes.Status403Forbidden);
@@ -69,12 +71,36 @@ static Task ApiAwareRedirect(Microsoft.AspNetCore.Authentication.RedirectContext
     return Task.CompletedTask;
 }
 builder.Services.AddAuthorization();
+// Cookie chống CSRF: mặc định không có cờ Secure kể cả khi chạy HTTPS → đặt giống cookie đăng nhập
+builder.Services.AddAntiforgery(o => o.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest);
 
 // Không mã hoá chữ Việt / chữ Hán thành &#x...; trong HTML (vẫn chống XSS cho < > & " ')
 builder.Services.AddWebEncoders(o => o.TextEncoderSettings = new TextEncoderSettings(UnicodeRanges.All));
 
 builder.Services.AddSignalR();
 builder.Services.AddHttpContextAccessor();
+
+// ---------- HTTPS trong mạng LAN (tuỳ chọn) ----------
+// Bật bằng LuckyDraw:Https:Enabled=true (các file .bat tự bật khi đã có certs\luckydraw.pfx – tạo bằng
+// tao-chung-chi-https.bat). Mật khẩu chứng chỉ: biến môi trường LuckyDraw__Https__CertPassword.
+// Chạy bằng Visual Studio thì không bật → vẫn dùng cổng / chứng chỉ dev như cũ.
+var httpsCfg = builder.Configuration.GetSection("LuckyDraw:Https");
+var httpsOn = httpsCfg.GetValue("Enabled", false);
+var httpPort = httpsCfg.GetValue("HttpPort", 5280);
+var httpsPort = httpsCfg.GetValue("Port", httpPort + 1);
+if (httpsOn)
+{
+    var certPath = Path.Combine(builder.Environment.ContentRootPath, httpsCfg["CertPath"] ?? Path.Combine("certs", "luckydraw.pfx"));
+    if (!File.Exists(certPath))
+        throw new InvalidOperationException($"Bật HTTPS nhưng không thấy chứng chỉ: {certPath}. Chạy tao-chung-chi-https.bat để tạo.");
+    var certPassword = httpsCfg["CertPassword"];
+    builder.WebHost.ConfigureKestrel(k =>
+    {
+        k.ListenAnyIP(httpPort);                                            // HTTP: chỉ để chuyển hướng sang HTTPS
+        k.ListenAnyIP(httpsPort, l => l.UseHttps(certPath, certPassword));
+    });
+    builder.Services.AddHttpsRedirection(o => o.HttpsPort = httpsPort);
+}
 
 // ---------- Data (nơi duy nhất chứa SQL) ----------
 builder.Services.AddSingleton<DbConnectionFactory>();
@@ -94,6 +120,7 @@ builder.Services.AddScoped<AdminEventContext>();
 builder.Services.AddScoped<ImportService>();
 builder.Services.AddScoped<DrawService>();
 builder.Services.AddSingleton<IFileStorage, LocalFileStorage>();
+builder.Services.AddSingleton<LoginThrottle>();   // khoá tạm khi đăng nhập sai nhiều lần
 builder.Services.AddHostedService<AdminSeeder>();
 
 var app = builder.Build();
@@ -104,8 +131,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// Không dùng UseHttpsRedirection: app chạy HTTP trong mạng LAN (http://<IP>:5280), không có cổng HTTPS
-// → middleware chỉ in cảnh báo "Failed to determine the https port for redirect" mỗi lần chạy.
+// Chỉ chuyển hướng HTTP → HTTPS khi đã bật HTTPS (có chứng chỉ). Không bật thì app chạy HTTP trong LAN như cũ
+// (gọi UseHttpsRedirection khi không có cổng HTTPS chỉ in cảnh báo "Failed to determine the https port").
+// Cookie đăng nhập mặc định SameAsRequest → khi chạy HTTPS tự có cờ Secure.
+if (httpsOn) app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 var cultures = SupportedCultures.All.Select(c => new CultureInfo(c)).ToList();

@@ -14,3 +14,8 @@ database/*.local.sql
 
 ## Log khi chạy ngầm (chay-ngam.bat)
 LuckyDraw.Web/logs/
+
+## Chứng chỉ HTTPS (tao-chung-chi-https.bat) – file .pfx chứa KHOÁ BÍ MẬT, không đưa lên git
+LuckyDraw.Web/certs/
+*.pfx
+luckydraw.cer

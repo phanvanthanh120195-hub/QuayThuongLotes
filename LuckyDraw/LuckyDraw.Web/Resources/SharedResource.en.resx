@@ -654,4 +654,5 @@
   <data name="Phần thưởng (繁體中文)" xml:space="preserve"><value>Reward (Traditional Chinese)</value></data>
   <data name="Phần thưởng (简体中文)" xml:space="preserve"><value>Reward (Simplified Chinese)</value></data>
   <data name="Phần thưởng (English)" xml:space="preserve"><value>Reward (English)</value></data>
+  <data name="Đăng nhập sai quá nhiều lần. Vui lòng thử lại sau {0} phút." xml:space="preserve"><value>Too many failed sign-in attempts. Please try again in {0} minute(s).</value></data>
 </root>
