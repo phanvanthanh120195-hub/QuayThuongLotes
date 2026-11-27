@@ -73,6 +73,10 @@
                                 <div>
                                     <div class="fw-semibold">@LocalizedName.Get(p)</div>
                                     <div class="small-note">@string.Join(" · ", new[] { p.NameEn, p.NameZhTw }.Where(x => !string.IsNullOrEmpty(x)))</div>
+                                    @if (LocalizedName.Reward(p) is string reward)
+                                    {
+                                        <div class="small fw-semibold text-danger">@Html.Icon("gift") @reward</div>
+                                    }
                                 </div>
                             </div>
                         </td>

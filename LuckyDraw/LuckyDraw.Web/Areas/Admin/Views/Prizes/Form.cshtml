@@ -31,6 +31,34 @@
             </div>
 
             <div class="form-section">
+                <h3>@L["Phần thưởng"]</h3>
+                <p class="hint">@L["Mô tả phần thưởng của giải, ví dụ: 20 triệu đồng tiền mặt. Hiện trong bảng giải thưởng trên màn chiếu. Để trống nếu không cần."]</p>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="RewardVi" class="form-label"><span class="lang-flag">VI</span>@Html.DisplayNameFor(m => m.RewardVi)</label>
+                        <input asp-for="RewardVi" class="form-control" maxlength="300" placeholder="@L["Ví dụ: 20 triệu đồng tiền mặt"]" />
+                        <span asp-validation-for="RewardVi"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="RewardEn" class="form-label"><span class="lang-flag">EN</span>@Html.DisplayNameFor(m => m.RewardEn)</label>
+                        <input asp-for="RewardEn" class="form-control" maxlength="300" placeholder="20,000,000 VND cash" />
+                        <span asp-validation-for="RewardEn"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="RewardZhTw" class="form-label"><span class="lang-flag">繁</span>@Html.DisplayNameFor(m => m.RewardZhTw)</label>
+                        <input asp-for="RewardZhTw" class="form-control" maxlength="300" lang="zh-TW" placeholder="現金 2,000 萬越盾" />
+                        <span asp-validation-for="RewardZhTw"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="RewardZhCn" class="form-label"><span class="lang-flag">简</span>@Html.DisplayNameFor(m => m.RewardZhCn)</label>
+                        <input asp-for="RewardZhCn" class="form-control" maxlength="300" lang="zh-CN" placeholder="现金 2,000 万越盾" />
+                        <span asp-validation-for="RewardZhCn"></span>
+                        <div class="form-text">@L["Ô ngôn ngữ nào để trống thì màn chiếu dùng bản tiếng Việt."]</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
                 <h3>@L["Số lượng"]</h3>
                 <p class="hint">@L["Ví dụ 100 người trúng, mỗi lượt quay 20 người → MC bấm quay 5 lần."]</p>
                 <div class="row g-3">
@@ -146,6 +174,7 @@
                         <div class="rows" id="pvRows"></div>
                     </div>
                     <dl class="kv mt-3">
+                        <dt>@L["Phần thưởng"]</dt><dd id="pvReward"></dd>
                         <dt>@L["Số lượt quay cần"]</dt><dd id="pvTurns"></dd>
                         <dt>@L["Kiểu quay"]</dt><dd id="pvType"></dd>
                         <dt>@L["Điều kiện thâm niên"]</dt><dd id="pvSeniority"></dd>
@@ -179,6 +208,7 @@
                 var type = (document.querySelector('[name="DrawType"]:checked') || {}).value === '2';
                 var min = num('MinSeniorityMonths'), max = num('MaxSeniorityMonths');
                 document.getElementById('pvName').textContent = val('NameVi') || '—';
+                document.getElementById('pvReward').textContent = val('RewardVi') || val('RewardEn') || val('RewardZhTw') || val('RewardZhCn') || '—';
                 document.getElementById('pvQty').textContent = qty;
                 document.getElementById('pvTurns').textContent = f(t.turns, Math.ceil(qty / per));
                 document.getElementById('pvType').textContent = (type ? t.auto + ' · ' + (num('SpinSeconds') || 5) + 's' : t.manual)

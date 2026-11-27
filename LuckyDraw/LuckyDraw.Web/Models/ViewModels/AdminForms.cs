@@ -158,6 +158,18 @@ public class PrizeFormModel : MultiLangForm, IValidatableObject
     [StringLength(ImagePathInput.MaxLength, ErrorMessage = Msg.MaxLen), ImagePath, Display(Name = "Đường dẫn ảnh")]
     public string? ImagePath { get; set; }
 
+    [StringLength(300, ErrorMessage = Msg.MaxLen), Display(Name = "Phần thưởng (Tiếng Việt)")]
+    public string? RewardVi { get; set; }
+
+    [StringLength(300, ErrorMessage = Msg.MaxLen), Display(Name = "Phần thưởng (繁體中文)")]
+    public string? RewardZhTw { get; set; }
+
+    [StringLength(300, ErrorMessage = Msg.MaxLen), Display(Name = "Phần thưởng (简体中文)")]
+    public string? RewardZhCn { get; set; }
+
+    [StringLength(300, ErrorMessage = Msg.MaxLen), Display(Name = "Phần thưởng (English)")]
+    public string? RewardEn { get; set; }
+
     public int WonCount { get; set; }
 
     public IEnumerable<ValidationResult> Validate(ValidationContext validationContext)
@@ -189,6 +201,10 @@ public class PrizeFormModel : MultiLangForm, IValidatableObject
         MaxSeniorityMonths = p.MaxSeniorityMonths,
         IsActive = p.IsActive,
         ImagePath = p.ImagePath,
+        RewardVi = p.RewardVi,
+        RewardZhTw = p.RewardZhTw,
+        RewardZhCn = p.RewardZhCn,
+        RewardEn = p.RewardEn,
         WonCount = p.WonCount
     };
 }

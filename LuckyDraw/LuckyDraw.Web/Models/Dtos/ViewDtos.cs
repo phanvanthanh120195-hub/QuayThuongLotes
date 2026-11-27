@@ -46,7 +46,9 @@ public record PrizeViewDto(
     int Eligible,
     int NextTake,
     int? MinSeniorityMonths,
-    int? MaxSeniorityMonths);
+    int? MaxSeniorityMonths,
+    // Phần thưởng theo ngôn ngữ người xem (vd. "20 triệu tiền mặt"); null = chưa nhập
+    string? Reward);
 
 public record ResultViewDto(
     long ResultId,

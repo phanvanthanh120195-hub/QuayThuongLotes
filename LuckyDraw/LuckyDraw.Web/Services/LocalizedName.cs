@@ -26,6 +26,15 @@ public static class LocalizedName
 
     public static string Get(IMultiLangName x) => Get(x.NameVi, x.NameZhTw, x.NameZhCn, x.NameEn);
 
+    /// <summary>Phần thưởng của giải theo ngôn ngữ người xem (cùng quy tắc dự phòng như tên); chưa nhập → null.</summary>
+    public static string? Reward(Prize p)
+    {
+        var any = new[] { p.RewardVi, p.RewardZhTw, p.RewardZhCn, p.RewardEn }.FirstOrDefault(s => !string.IsNullOrWhiteSpace(s));
+        if (any is null) return null;
+        // Tiếng Việt trống thì lấy ngôn ngữ đầu tiên có nhập làm dự phòng
+        return Get(string.IsNullOrWhiteSpace(p.RewardVi) ? any : p.RewardVi, p.RewardZhTw, p.RewardZhCn, p.RewardEn);
+    }
+
     public static string Get(LocalizedText? t) => t is null ? "" : Get(t.Vi ?? "", t.ZhTW, t.ZhCN, t.En);
 
     /// <summary>Tên người: zh-TW / zh-CN → 姓名 nếu có, còn lại → họ tên tiếng Việt.</summary>

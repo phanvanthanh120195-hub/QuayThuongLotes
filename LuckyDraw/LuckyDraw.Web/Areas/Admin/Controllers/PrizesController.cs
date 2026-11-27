@@ -150,5 +150,10 @@ public class PrizesController : AdminControllerBase
         p.IsActive = m.IsActive;
         // Đường dẫn ảnh nhập tay (nhiều giải có thể dùng chung) nên không tự xoá file khi đổi / xoá giải
         p.ImagePath = ImagePathInput.Normalize(m.ImagePath);
+        static string? Clean(string? s) => string.IsNullOrWhiteSpace(s) ? null : s.Trim();
+        p.RewardVi = Clean(m.RewardVi);
+        p.RewardZhTw = Clean(m.RewardZhTw);
+        p.RewardZhCn = Clean(m.RewardZhCn);
+        p.RewardEn = Clean(m.RewardEn);
     }
 }

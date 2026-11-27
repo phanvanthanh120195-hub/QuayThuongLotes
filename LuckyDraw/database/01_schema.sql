@@ -58,6 +58,11 @@ CREATE TABLE luckydraw.prize (
     name_zh_tw            VARCHAR(200),
     name_zh_cn            VARCHAR(200),
     name_en               VARCHAR(200),
+    -- Phần thưởng của giải (vd. "20 triệu tiền mặt"), 4 ngôn ngữ như tên giải – xem 05_prize_reward.sql
+    reward_vi             VARCHAR(300),
+    reward_zh_tw          VARCHAR(300),
+    reward_zh_cn          VARCHAR(300),
+    reward_en             VARCHAR(300),
     quantity              INT          NOT NULL,
     draw_per_turn         INT          NOT NULL DEFAULT 1,
     draw_type             SMALLINT     NOT NULL DEFAULT 1,

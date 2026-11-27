@@ -646,4 +646,12 @@
   <data name="Bật nhạc nền chung" xml:space="preserve"><value>Enable event background music</value></data>
   <data name="Nhạc nền có sẵn" xml:space="preserve"><value>Built-in background music</value></data>
   <data name="Tải lên bài khác bên dưới để thay nhạc nền có sẵn." xml:space="preserve"><value>Upload another track below to replace the built-in music.</value></data>
+  <data name="Phần thưởng" xml:space="preserve"><value>Reward</value></data>
+  <data name="Mô tả phần thưởng của giải, ví dụ: 20 triệu đồng tiền mặt. Hiện trong bảng giải thưởng trên màn chiếu. Để trống nếu không cần." xml:space="preserve"><value>Describe the prize reward, e.g. 20,000,000 VND cash. Shown in the prize table on the stage screen. Leave blank if not needed.</value></data>
+  <data name="Ví dụ: 20 triệu đồng tiền mặt" xml:space="preserve"><value>E.g. 20,000,000 VND cash</value></data>
+  <data name="Ô ngôn ngữ nào để trống thì màn chiếu dùng bản tiếng Việt." xml:space="preserve"><value>Any language left blank falls back to Vietnamese on the stage screen.</value></data>
+  <data name="Phần thưởng (Tiếng Việt)" xml:space="preserve"><value>Reward (Vietnamese)</value></data>
+  <data name="Phần thưởng (繁體中文)" xml:space="preserve"><value>Reward (Traditional Chinese)</value></data>
+  <data name="Phần thưởng (简体中文)" xml:space="preserve"><value>Reward (Simplified Chinese)</value></data>
+  <data name="Phần thưởng (English)" xml:space="preserve"><value>Reward (English)</value></data>
 </root>

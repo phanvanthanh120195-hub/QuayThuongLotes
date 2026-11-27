@@ -859,7 +859,10 @@
             } else {
                 wrap.appendChild(el('span', 'dm-medal', String(p.quantity)));
             }
-            wrap.appendChild(el('b', null, p.name));
+            var txt = el('div', 'dm-prize-text');
+            txt.appendChild(el('b', null, p.name));
+            if (p.reward) txt.appendChild(el('span', 'dm-reward', p.reward));   // vd. "20 triệu tiền mặt"
+            wrap.appendChild(txt);
             name.appendChild(wrap);
             tr.appendChild(name);
 

@@ -646,4 +646,12 @@
   <data name="Bật nhạc nền chung" xml:space="preserve"><value>啟用活動背景音樂</value></data>
   <data name="Nhạc nền có sẵn" xml:space="preserve"><value>內建背景音樂</value></data>
   <data name="Tải lên bài khác bên dưới để thay nhạc nền có sẵn." xml:space="preserve"><value>在下方上傳其他曲目以取代內建音樂。</value></data>
+  <data name="Phần thưởng" xml:space="preserve"><value>獎品</value></data>
+  <data name="Mô tả phần thưởng của giải, ví dụ: 20 triệu đồng tiền mặt. Hiện trong bảng giải thưởng trên màn chiếu. Để trống nếu không cần." xml:space="preserve"><value>描述此獎項的獎品，例如：現金 2,000 萬越盾。顯示在投影畫面的獎項表中。不需要可留空。</value></data>
+  <data name="Ví dụ: 20 triệu đồng tiền mặt" xml:space="preserve"><value>例如：現金 2,000 萬越盾</value></data>
+  <data name="Ô ngôn ngữ nào để trống thì màn chiếu dùng bản tiếng Việt." xml:space="preserve"><value>留空的語言在投影畫面上會改用越南文。</value></data>
+  <data name="Phần thưởng (Tiếng Việt)" xml:space="preserve"><value>獎品（越南文）</value></data>
+  <data name="Phần thưởng (繁體中文)" xml:space="preserve"><value>獎品（繁體中文）</value></data>
+  <data name="Phần thưởng (简体中文)" xml:space="preserve"><value>獎品（簡體中文）</value></data>
+  <data name="Phần thưởng (English)" xml:space="preserve"><value>獎品（英文）</value></data>
 </root>

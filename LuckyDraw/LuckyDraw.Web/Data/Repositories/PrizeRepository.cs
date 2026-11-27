@@ -11,7 +11,8 @@ public class PrizeRepository
 
     private const string Columns = @"p.prize_id, p.event_id, p.sort_order, p.name_vi, p.name_zh_tw, p.name_zh_cn, p.name_en,
         p.quantity, p.draw_per_turn, p.draw_type, p.spin_seconds, p.stop_seconds,
-        p.min_seniority_months, p.max_seniority_months, p.image_path, p.is_active";
+        p.min_seniority_months, p.max_seniority_months, p.image_path, p.is_active,
+        p.reward_vi, p.reward_zh_tw, p.reward_zh_cn, p.reward_en";
 
     /// <summary>Danh sách giải của sự kiện + đã trúng bao nhiêu + còn bao nhiêu người đủ điều kiện.</summary>
     public async Task<IReadOnlyList<Prize>> ListByEventAsync(int eventId)
@@ -55,12 +56,12 @@ public class PrizeRepository
         const string sql = @"
             INSERT INTO luckydraw.prize (event_id, sort_order, name_vi, name_zh_tw, name_zh_cn, name_en, quantity, draw_per_turn,
                                          draw_type, spin_seconds, stop_seconds, min_seniority_months, max_seniority_months,
-                                         image_path, is_active)
+                                         image_path, is_active, reward_vi, reward_zh_tw, reward_zh_cn, reward_en)
             VALUES (@EventId,
                     CASE WHEN @SortOrder > 0 THEN @SortOrder
                          ELSE (SELECT coalesce(max(sort_order), 0) + 1 FROM luckydraw.prize WHERE event_id = @EventId) END,
                     @NameVi, @NameZhTw, @NameZhCn, @NameEn, @Quantity, @DrawPerTurn, @DrawType, @SpinSeconds, @StopSeconds,
-                    @MinSeniorityMonths, @MaxSeniorityMonths, @ImagePath, @IsActive)
+                    @MinSeniorityMonths, @MaxSeniorityMonths, @ImagePath, @IsActive, @RewardVi, @RewardZhTw, @RewardZhCn, @RewardEn)
             RETURNING prize_id";
         await using var conn = await _db.OpenAsync();
         return await conn.ExecuteScalarAsync<int>(sql, p);
@@ -74,7 +75,9 @@ public class PrizeRepository
                    quantity = @Quantity, draw_per_turn = @DrawPerTurn, draw_type = @DrawType,
                    spin_seconds = @SpinSeconds, stop_seconds = @StopSeconds,
                    min_seniority_months = @MinSeniorityMonths, max_seniority_months = @MaxSeniorityMonths,
-                   image_path = @ImagePath, is_active = @IsActive, updated_at = now()
+                   image_path = @ImagePath, is_active = @IsActive,
+                   reward_vi = @RewardVi, reward_zh_tw = @RewardZhTw, reward_zh_cn = @RewardZhCn, reward_en = @RewardEn,
+                   updated_at = now()
              WHERE prize_id = @PrizeId AND event_id = @EventId";
         await using var conn = await _db.OpenAsync();
         return await conn.ExecuteAsync(sql, p) == 1;

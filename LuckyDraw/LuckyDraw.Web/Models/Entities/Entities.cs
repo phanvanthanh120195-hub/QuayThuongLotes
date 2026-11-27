@@ -65,6 +65,11 @@ public class Prize : IMultiLangName
     public int? MaxSeniorityMonths { get; set; }
     public string? ImagePath { get; set; }
     public bool IsActive { get; set; } = true;
+    /// <summary>Phần thưởng của giải (vd. "20 triệu tiền mặt"), 4 ngôn ngữ; để trống = không hiện.</summary>
+    public string? RewardVi { get; set; }
+    public string? RewardZhTw { get; set; }
+    public string? RewardZhCn { get; set; }
+    public string? RewardEn { get; set; }
 
     /// <summary>Số kết quả còn hiệu lực (không lưu trong bảng, lấy bằng COUNT).</summary>
     public int WonCount { get; set; }
