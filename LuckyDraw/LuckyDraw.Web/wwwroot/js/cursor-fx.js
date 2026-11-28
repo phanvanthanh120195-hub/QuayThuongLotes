@@ -5,7 +5,7 @@
               ~1,4 giây nổ 1 chùm pháo nhỏ; bấm chuột nổ thêm 1 chùm.
    - 'halo'  (Quyền trượng hào quang): quanh đầu quyền trượng là hào quang như tượng Phật – quầng sáng vàng thở nhẹ,
               tia sáng toả tròn quay chậm, các vòng sáng ngũ sắc, đốm sáng lấp lánh xoay quanh; bấm chuột toả 1 vòng sáng.
-   Dừng khi chuột ra khỏi cửa sổ, để yên 10 giây (body.btn-idle) hoặc con trỏ bị ẩn (body.idle). Không còn gì để vẽ thì
+   Dừng khi chuột ra khỏi cửa sổ hoặc con trỏ bị ẩn (body.idle – toàn màn hình, để yên chuột). Không còn gì để vẽ thì
    tự tắt vòng vẽ.  draw.js gọi CursorFx.setMode('wand' | 'halo' | 'dragon' | null) theo theme.
    Ngoài ra: CursorFx.setButtonSparkler(true/false) – 2 đốm pháo bông chạy quanh viền nút Bắt đầu.
    - 'dragon' (Rồng vờn ngọc): ngọc lửa là con trỏ; con rồng (ảnh /images/mouse/*.webp) uốn lượn đuổi theo ngọc.

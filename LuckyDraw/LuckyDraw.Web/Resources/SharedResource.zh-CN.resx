@@ -655,4 +655,8 @@
   <data name="Phần thưởng (简体中文)" xml:space="preserve"><value>奖品（简体中文）</value></data>
   <data name="Phần thưởng (English)" xml:space="preserve"><value>奖品（英文）</value></data>
   <data name="Đăng nhập sai quá nhiều lần. Vui lòng thử lại sau {0} phút." xml:space="preserve"><value>登录失败次数过多，请于 {0} 分钟后再试。</value></data>
+  <data name="Giải đang quay" xml:space="preserve"><value>抽奖中</value></data>
+  <data name="Quay {0}" xml:space="preserve"><value>抽出{0}</value></data>
+  <data name="Đã trao" xml:space="preserve"><value>已颁发</value></data>
+  <data name="{0} / {1} suất" xml:space="preserve"><value>{0} / {1} 名额</value></data>
 </root>

@@ -50,7 +50,10 @@ public record PrizeViewDto(
     int? MinSeniorityMonths,
     int? MaxSeniorityMonths,
     // Phần thưởng theo ngôn ngữ người xem (vd. "20 triệu tiền mặt"); null = chưa nhập
-    string? Reward);
+    string? Reward,
+    // Dòng phụ chữ nhỏ (tiếng Trung; đang xem tiếng Trung thì tiếng Việt) dưới tên giải / phần thưởng; null = không hiện
+    string? NameSub = null,
+    string? RewardSub = null);
 
 public record ResultViewDto(
     long ResultId,

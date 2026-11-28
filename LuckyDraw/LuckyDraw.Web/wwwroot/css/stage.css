@@ -157,122 +157,6 @@ body.stage {
     filter: drop-shadow(0 4px 10px rgba(0, 0, 0, .3));
 }
 
-/* ---------- Khu chính ---------- */
-/* Header (tên sự kiện) ở trên, bên dưới chia 2 cột: trái = giải đang quay (~35%), phải = khu quay số (~65%) */
-.stage-main {
-    grid-area: main;
-    min-height: 0;
-    display: grid;
-    grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
-    grid-template-rows: auto minmax(0, 1fr) auto;
-    align-items: center;
-    justify-items: center;
-    gap: 1.6vh 2.4vw;
-    padding: 2.4vh 3vw 2.4vh;
-    text-align: center;
-    overflow: hidden;
-}
-
-.stage-head {
-    grid-column: 1 / -1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    max-width: 100%;
-}
-
-.stage-head .title-banner {
-    margin: 0;
-}
-
-/* Tên tiếng Trung: chữ nhỏ (~45% cỡ tên sự kiện) dưới bảng hiệu */
-.event-sub {
-    font-family: var(--title-font), var(--cjk);
-    font-weight: 900;
-    font-size: calc(max(26px, calc(var(--title-size) * 100vw / 1920)) * .45);
-    letter-spacing: .25em;
-    line-height: 1.2;
-    margin-top: .4vh;
-    padding: .1em .2em .2em;
-}
-
-.prize-col,
-.draw-col {
-    align-self: stretch;
-    width: 100%;
-    min-width: 0;
-    min-height: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: safe center;
-}
-
-/* Không có khung nền: ảnh nền sự kiện hiện trọn, không bị che mờ */
-.prize-col {
-    gap: 2.2vh;
-    padding: 3vh 1.5vw;
-}
-
-
-.draw-col {
-    gap: 3.2vh;
-}
-
-.stage-main > .pill {
-    grid-column: 1 / -1;
-    margin-top: 0;
-}
-
-/* Tên phần thưởng + số suất dưới ảnh giải */
-.prize-reward {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1.2vh;
-    max-width: 100%;
-    font-size: clamp(17px, 1.4vw, 28px);
-    text-align: center;
-}
-
-/* Tên phần thưởng: dải nhãn đỏ viền vàng – đọc rõ trên mọi ảnh nền */
-#prizeRewardName {
-    max-width: 100%;
-    padding: .38em 1.3em .42em;
-    border-radius: 999px;
-    border: 2px solid transparent;
-    background:
-        linear-gradient(180deg, #d01a33, #8e0a1d) padding-box,
-        linear-gradient(90deg, #8a5512, #ffe39a 25%, #c8902c 50%, #ffe39a 75%, #8a5512) border-box;
-    color: #fff3cf;
-    font-weight: 800;
-    line-height: 1.25;
-    overflow-wrap: anywhere;
-    text-shadow: 0 1px 2px rgba(60, 0, 6, .6);
-    box-shadow: 0 10px 24px rgba(30, 0, 4, .45), inset 0 1px 0 rgba(255, 255, 255, .25);
-}
-
-/* Số suất: chip nhỏ, nền tối mờ */
-.prize-reward small {
-    padding: .3em 1em;
-    border-radius: 999px;
-    background: rgba(40, 0, 6, .55);
-    border: 1px solid rgba(255, 216, 107, .35);
-    color: #ffe9b8;
-    font-size: .68em;
-    font-weight: 600;
-    letter-spacing: .02em;
-}
-
-body.light #prizeRewardName {
-    color: #fff;
-}
-
-body.light .prize-reward small {
-    background: rgba(255, 255, 255, .8);
-    color: var(--ink);
-}
-
 /* Chữ vàng ánh kim + quầng sáng */
 .gold-text {
     background: linear-gradient(180deg, color-mix(in srgb, #fff 62%, var(--title-color)) 0%, var(--title-color) 48%, color-mix(in srgb, #b25a00 45%, var(--title-color)) 100%);
@@ -496,40 +380,6 @@ body.light .event-title.title-3d {
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-.prize-col .prize-nav {
-    max-width: 100%;
-}
-
-/* Tên giải 1 dòng (tên dài như "Giải khuyến khích" vẫn nằm giữa 2 mũi tên) */
-.prize-col .prize-name {
-    font-size: clamp(28px, 3vw, 62px);
-    white-space: nowrap;
-    overflow-wrap: normal;
-}
-
-/* Ảnh phần thưởng: khung cố định 4:3 (mọi giải cùng cỡ), viền vàng đôi + hào quang */
-.prize-col .prize-img {
-    width: clamp(220px, 21vw, 420px);
-    height: auto;
-    aspect-ratio: 4 / 3;
-    max-width: 92%;
-    max-height: 38vh;
-    min-height: 0;
-    object-fit: cover;
-    border-radius: 18px;
-    border: 4px solid #f5d27a;
-    background: #2a0006;
-    box-shadow:
-        0 0 0 6px rgba(110, 6, 18, .75),
-        0 0 0 8px rgba(245, 210, 122, .55),
-        0 18px 40px rgba(20, 0, 2, .6),
-        0 0 46px rgba(255, 200, 110, .4);
-}
-
-.prize-col .medal {
-    --badge: clamp(150px, 26vh, 280px);
 }
 
 .medal {
@@ -856,26 +706,6 @@ body.light .event-title.title-3d {
     to {
         transform: translateX(110%);
     }
-}
-
-/* Không động chuột 10 giây → nút mờ đi cho màn chiếu gọn (draw.js gắn body.btn-idle); động chuột là hiện lại */
-body.btn-idle .start-btn:not(:hover) {
-    opacity: .22;
-    transition: opacity 1.2s ease;
-    /* mờ dần chậm, hiện lại nhanh */
-}
-
-/* Hàng ô quay số cũng mờ theo – trừ lúc đang quay (body.drawing) để khán giả luôn thấy số chạy */
-body.btn-idle:not(.drawing) .slots {
-    opacity: .22;
-    transition: opacity 1.2s ease;
-}
-
-/* Thanh công cụ (Giải thưởng, Người tham dự…) mờ cùng nhịp 10 giây với nút Bắt đầu; rê chuột vào là rõ lại */
-body.btn-idle:not(.idle) .pill:not(:hover):not(:focus-within) {
-    /* :not(.idle): toàn màn hình vẫn ẩn hẳn như cũ */
-    opacity: .22;
-    transition: opacity 1.2s ease;
 }
 
 /* Lớp vẽ hiệu ứng động kèm con trỏ: tia pháo bông (Đũa thần), hào quang (Quyền trượng) – cursor-fx.js */
@@ -3072,6 +2902,406 @@ body.idle .honor-x {
     color: var(--ink-soft);
 }
 
+/* =====================================================================
+   BỐ CỤC MÀN CHIẾU (dạng thẻ)
+   ┌──────────── —— TIỆC TẤT NIÊN LOTES 2027 —— ────────────┐
+   │              2027 年尾牙 · NĂM ĐINH MÙI                  │
+   ├─ thẻ trái (giải đang quay) ─┬─ thẻ phải (quay số) ──────┤
+   │ GIẢI ĐANG QUAY · 4/6        │ Quay giải khuyến khích     │
+   │ ‹  Giải khuyến khích  ›     │ [2][4][1][0][0][5][8][7]   │
+   │ [ ảnh phần thưởng ]         │ [?][?][?][?][?][?][?][?]   │
+   │ Bao lì xì 1 triệu đồng      │                            │
+   │ 10 suất · mỗi lượt 4 người  │     ( BẮT ĐẦU QUAY )       │
+   │ Đã trao ██████░░░ 6/10 suất │      hoặc nhấn phím Space  │
+   └─────────────────────────────┴────────────────────────────┘
+   ===================================================================== */
+.stage-main {
+    grid-area: main;
+    min-width: 0;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 36fr) minmax(0, 64fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    gap: 2.2vh 1.6vw;
+    padding: 2.6vh 2.6vw 2vh;
+    overflow: hidden;
+}
+
+/* ---------- Header ---------- */
+.stage-head {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .9vh;
+    min-width: 0;
+    text-align: center;
+}
+
+/* Tên sự kiện: chữ vàng phẳng, 2 bên có gạch vàng mảnh */
+.title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .55em;
+    width: 100%;
+    font-size: max(24px, calc(var(--title-size) * 100vw / 1920 * .78));
+}
+
+.title-row > .event-title {
+    flex: 0 1 auto;
+}
+
+.title-row::before,
+.title-row::after {
+    content: "";
+    flex: 0 1 2.6em;
+    min-width: 1em;
+    height: max(1px, .03em);
+    background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--title-color) 80%, transparent));
+}
+
+.title-row::after {
+    background: linear-gradient(270deg, transparent, color-mix(in srgb, var(--title-color) 80%, transparent));
+}
+
+.stage-head .event-title {
+    margin: 0;
+    padding: .06em .1em .12em;
+    max-width: none;
+    min-width: 0;
+    font-size: 1em;
+    font-family: var(--title-font), var(--cjk);
+    line-height: 1.15;
+    letter-spacing: .02em;
+    color: var(--title-color);
+    text-shadow: 0 2px 0 rgba(60, 0, 6, .55), 0 0 .5em color-mix(in srgb, var(--title-color) 30%, transparent);
+    /* 1 dòng: 2 gạch hai bên co lại trước khi chữ phải xuống dòng */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+body.light .stage-head .event-title {
+    text-shadow: none;
+}
+
+.event-sub {
+    font: 700 clamp(12px, 1.05vw, 22px) var(--ui);
+    letter-spacing: .32em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--title-color) 78%, #fff);
+    opacity: .92;
+}
+
+/* ---------- Thẻ ---------- */
+.card {
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    padding: 2.2vh 1.5vw;
+    border-radius: 18px;
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+    background: linear-gradient(180deg, rgba(66, 0, 10, .66), rgba(34, 0, 5, .74));
+    backdrop-filter: blur(8px);
+    box-shadow: 0 22px 50px rgba(20, 0, 2, .45), inset 0 1px 0 rgba(255, 255, 255, .05);
+}
+
+body.light .card {
+    background: rgba(255, 255, 255, .78);
+    border-color: var(--panel-line);
+}
+
+.card-kicker {
+    font: 700 clamp(11px, .78vw, 15px) var(--ui);
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: color-mix(in srgb, var(--accent) 70%, #fff);
+    opacity: .85;
+}
+
+.card-kicker.accent {
+    letter-spacing: .04em;
+    text-transform: none;
+    font-size: clamp(12px, .9vw, 17px);
+    color: var(--accent);
+    opacity: 1;
+}
+
+/* ---------- Thẻ trái: giải đang quay ---------- */
+.prize-card {
+    text-align: center;
+    gap: 1.6vh;
+}
+
+.prize-card .card-kicker {
+    text-align: left;
+}
+
+.prize-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .8vw;
+    min-width: 0;
+}
+
+.prize-nav .nav-btn {
+    width: clamp(28px, 2vw, 42px);
+    height: clamp(28px, 2vw, 42px);
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    background: rgba(0, 0, 0, .18);
+}
+
+.prize-nav .nav-btn svg {
+    width: 50%;
+    height: 50%;
+}
+
+.prize-name {
+    flex: 1;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    font: 800 clamp(20px, 1.9vw, 40px) var(--ui);
+    line-height: 1.2;
+    color: var(--accent);
+    overflow-wrap: anywhere;
+}
+
+body.light .prize-name {
+    color: #a50d26;
+}
+
+/* Tên giải + dòng tiếng Trung nhỏ bên dưới, nằm giữa 2 nút ‹ › */
+.prize-title {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .3vh;
+}
+
+.prize-title .prize-name {
+    flex: none;
+    max-width: 100%;
+}
+
+/* Dòng phụ tiếng Trung (tên giải / phần thưởng): chữ nhỏ, màu nhạt */
+.prize-sub {
+    /* --ui có sẵn font chữ Hán dự phòng (--cjk) */
+    font: 600 clamp(12px, .95vw, 19px) var(--ui);
+    letter-spacing: .06em;
+    line-height: 1.3;
+    color: var(--ink-soft);
+    overflow-wrap: anywhere;
+}
+
+.prize-title .prize-sub {
+    color: color-mix(in srgb, var(--accent) 70%, #fff);
+    opacity: .85;
+}
+
+/* Ảnh phần thưởng nằm trong ô tối bo góc, chiếm phần cao còn lại của thẻ */
+.prize-media {
+    --badge: clamp(110px, 20vh, 220px);
+    position: relative;
+    flex: 1 1 auto;
+    min-height: 16vh;
+    display: grid;
+    place-items: center;
+    border-radius: 14px;
+    background: rgba(0, 0, 0, .24);
+    overflow: hidden;
+}
+
+/* Ảnh phóng vừa ô (kể cả ảnh gốc nhỏ), giữ đúng tỉ lệ */
+.prize-media .prize-img {
+    position: absolute;
+    inset: 1.6vh 1.2vw;
+    width: calc(100% - 2.4vw);
+    height: calc(100% - 3.2vh);
+    max-width: none;
+    max-height: none;
+    min-height: 0;
+    object-fit: contain;
+    border: 0;
+    border-radius: 8px;
+    background: none;
+    box-shadow: none;
+    filter: drop-shadow(0 10px 22px rgba(0, 0, 0, .45));
+}
+
+.prize-reward {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .7vh;
+}
+
+#prizeRewardName {
+    font: 800 clamp(16px, 1.35vw, 28px) var(--ui);
+    color: var(--ink);
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+.prize-reward small {
+    font: 600 clamp(12px, .85vw, 17px) var(--ui);
+    color: color-mix(in srgb, var(--accent) 80%, #fff);
+}
+
+.prize-progress {
+    margin-top: auto;
+    padding-top: 1vh;
+}
+
+.pp-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: .8vh;
+    font: 700 clamp(11px, .8vw, 15px) var(--ui);
+    color: var(--ink-soft);
+}
+
+.pp-row b {
+    color: var(--accent);
+}
+
+.pp-bar {
+    height: clamp(5px, .7vh, 9px);
+    border-radius: 99px;
+    background: rgba(255, 255, 255, .1);
+    overflow: hidden;
+}
+
+.pp-bar i {
+    display: block;
+    height: 100%;
+    width: 0;
+    border-radius: inherit;
+    background: linear-gradient(90deg, color-mix(in srgb, var(--accent) 70%, #b56a00), var(--accent));
+    transition: width .6s ease;
+}
+
+/* ---------- Thẻ phải: quay số ---------- */
+.draw-card {
+    gap: 1.8vh;
+}
+
+/* Khu ô quay: luôn nằm giữa thẻ (ngang + dọc) dù lượt quay có 1, 2, 3… người */
+.draw-col {
+    flex: 1 1 auto;
+    min-width: 0;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: safe center;
+}
+
+/* Mỗi người = 1 dải ngang ôm vừa các ô, các dải xếp chồng theo hàng dọc và căn giữa */
+.draw-card .slots {
+    max-width: 100%;
+    margin: 0;
+    grid-template-columns: repeat(var(--cols, 1), auto);
+    justify-content: center;
+    justify-items: center;
+    gap: calc(var(--box) * .18) calc(var(--box) * .3);
+}
+
+.draw-card .slot {
+    justify-content: center;
+}
+
+.draw-card .slot,
+.draw-card .slot.multi {
+    padding: calc(var(--box) * .12) calc(var(--box) * .14);
+    border-radius: calc(var(--box) * .2);
+    background: rgba(255, 255, 255, .045);
+    border: 1px solid transparent;
+    transition: border-color .3s, background .3s;
+}
+
+/* Dải đang quay: viền vàng */
+.draw-card .slot:has(.box.spin) {
+    border-color: color-mix(in srgb, var(--accent) 45%, transparent);
+    background: rgba(255, 255, 255, .07);
+}
+
+/* Ô số kiểu tấm: chờ = "?" mờ, đang quay = đỏ chữ trắng, đã chốt = tấm kem chữ đỏ */
+.draw-card .slots.glass .box {
+    width: calc(var(--box) * .84);
+    color: color-mix(in srgb, var(--accent) 55%, transparent);
+    background: rgba(255, 255, 255, .06);
+    border: 1px solid color-mix(in srgb, var(--accent) 16%, transparent);
+    box-shadow: none;
+    text-shadow: none;
+}
+
+.draw-card .slots.glass .box.spin {
+    color: #fff;
+    background: linear-gradient(180deg, #c2182f, #8c0a1e);
+    border-color: rgba(255, 190, 200, .3);
+}
+
+.draw-card .slots.glass .box.locked {
+    color: #7d0a19;
+    background: linear-gradient(180deg, #fffaf0, #f4e2b8);
+    border-color: transparent;
+    box-shadow: 0 calc(var(--box) * .05) calc(var(--box) * .12) rgba(0, 0, 0, .3);
+}
+
+.draw-card .slots.glass .box.locked.blank {
+    opacity: .3;
+}
+
+.draw-card .slots.glass .box.hit {
+    box-shadow: 0 0 calc(var(--box) * .4) color-mix(in srgb, var(--accent) 85%, transparent);
+}
+
+.draw-card .slots.done.glass .box {
+    border-color: transparent;
+}
+
+.draw-foot {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: .6vh;
+}
+
+.draw-foot .controls {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 1.2vw;
+    min-height: 0;
+}
+
+/* Nút quay: viên thuốc vàng */
+.draw-card .start-btn {
+    clip-path: none;
+    border-radius: 999px;
+    padding: clamp(11px, 1.6vh, 22px) clamp(40px, 3.6vw, 80px);
+    font-size: clamp(15px, 1.2vw, 26px);
+    letter-spacing: .08em;
+}
+
+.draw-foot .view-note {
+    font: 600 clamp(11px, .8vw, 15px) var(--ui);
+    color: var(--ink-soft);
+}
+
+/* ---------- Thanh công cụ (dưới, bên trái cạnh nút toàn màn hình) ---------- */
+.stage-main > .pill {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin: 0 0 0 52px;
+}
+
 @media (max-width: 700px) {
 
     /* Màn hẹp (điện thoại): xếp dọc 1 cột, cho cuộn */
@@ -3082,8 +3312,13 @@ body.idle .honor-x {
         padding-bottom: 70px;
     }
 
-    .prize-col .prize-img {
-        max-height: 26vh;
+    .prize-media {
+        min-height: 26vh;
+    }
+
+    .stage-main > .pill {
+        justify-self: center;
+        margin: 0;
     }
 
     .pill-btn .lbl {

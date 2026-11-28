@@ -21,6 +21,9 @@
         ["allDone"] = L["Đã quay xong tất cả giải"],
         ["progress"] = L["Đã quay {0} / {1} người trúng giải này"],
         ["prizeQty"] = L["{0} suất · mỗi lượt {1} người"],
+        ["nowDrawing"] = L["Giải đang quay"],
+        ["drawPrize"] = L["Quay {0}"],
+        ["awarded"] = L["{0} / {1} suất"],
         ["notEnough"] = L["Chỉ còn {0} người đủ điều kiện"],
         ["noResults"] = L["Chưa có người trúng giải này."],
         ["noPrizes"] = L["Chưa có giải thưởng"],
@@ -121,43 +124,55 @@
     {
         var subName = LocalizedName.Sub(Model);
         <main class="stage-main">
-            @* Header: tên sự kiện + dòng phụ tiếng Trung chữ nhỏ *@
+            @* Header: tên sự kiện (2 bên có gạch vàng) + dòng phụ: tên tiếng Trung · năm âm lịch *@
             <header class="stage-head">
-                <div class="title-banner">
-                    <h1 class="event-title gold-text title-3d" id="eventTitle" data-text="@LocalizedName.Get(Model)">@LocalizedName.Get(Model)</h1>
+                <div class="title-row">
+                    <h1 class="event-title" id="eventTitle" data-text="@LocalizedName.Get(Model)">@LocalizedName.Get(Model)</h1>
                 </div>
-                <div class="event-sub gold-text" id="eventSub" hidden="@(subName is null)">@subName</div>
+                <div class="event-sub" id="eventSub">@subName</div>
             </header>
 
-            @* Cột trái: giải đang quay (tên + ảnh phần thưởng) *@
-            <section class="prize-col">
+            @* Thẻ trái: giải đang quay *@
+            <section class="card prize-card">
+                <div class="card-kicker" id="prizeKicker">@L["Giải đang quay"]</div>
                 <div class="prize-nav">
                     <button class="nav-btn" id="prev" type="button" aria-label="@L["Giải trước"]"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
-                    <div class="prize-name gold-text" id="prizeName"></div>
+                    <div class="prize-title">
+                        <div class="prize-name" id="prizeName"></div>
+                        <div class="prize-sub" id="prizeNameSub" hidden></div>
+                    </div>
                     <button class="nav-btn" id="next" type="button" aria-label="@L["Giải sau"]"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
                 </div>
-                <div class="prize-badge">
+                <div class="prize-media">
                     <img class="prize-img" id="prizeImg" alt="" hidden />
                     <div class="medal" id="medal">
                         <img src="~/images/award.png" alt="" aria-hidden="true" />
                         <span class="medal-num" id="medalNum"></span>
                     </div>
                 </div>
-                <div class="prize-reward" id="prizeReward"><span id="prizeRewardName"></span><small id="prizeQty"></small></div>
+                <div class="prize-reward" id="prizeReward"><span id="prizeRewardName"></span><span class="prize-sub" id="prizeRewardSub" hidden></span><small id="prizeQty"></small></div>
+                <div class="prize-progress">
+                    <div class="pp-row"><span>@L["Đã trao"]</span><b id="prizeAwarded"></b></div>
+                    <div class="pp-bar"><i id="prizeBar"></i></div>
+                </div>
             </section>
 
-            @* Cột phải: khu quay số *@
-            <section class="draw-col">
-                <div class="slots glass" id="slots" aria-live="polite"></div>
-                <div class="controls">
-                    <div class="start-wrap"><button class="start-btn s2" id="btnStart" type="button" hidden></button></div>
-                    @if (!canDraw)
-                    {
-                        <span class="view-note">@L["Chế độ xem – đăng nhập MC để quay"]</span>
-                    }
+            @* Thẻ phải: khu quay số *@
+            <section class="card draw-card">
+                <div class="card-kicker accent" id="drawKicker"></div>
+                <div class="draw-col">
+                    <div class="slots glass" id="slots" aria-live="polite"></div>
                 </div>
-                <div class="progress-txt" id="progressTxt"></div>
-                <div class="warn" id="warn" style="visibility:hidden">&nbsp;</div>
+                <div class="draw-foot">
+                    <div class="controls">
+                        <div class="start-wrap"><button class="start-btn s2" id="btnStart" type="button" hidden></button></div>
+                        @if (!canDraw)
+                        {
+                            <span class="view-note">@L["Chế độ xem – đăng nhập MC để quay"]</span>
+                        }
+                    </div>
+                    <div class="warn" id="warn" style="visibility:hidden">&nbsp;</div>
+                </div>
             </section>
 
             <nav class="pill" aria-label="@L["Công cụ"]">

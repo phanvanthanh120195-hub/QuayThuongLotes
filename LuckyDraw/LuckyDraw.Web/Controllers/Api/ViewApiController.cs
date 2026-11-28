@@ -77,7 +77,8 @@ public class ViewApiController : ControllerBase
                 var remaining = Math.Max(0, p.Quantity - p.WonCount);
                 return new PrizeViewDto(p.PrizeId, i + 1, LocalizedName.Get(p), p.ImagePath, p.Quantity, p.DrawPerTurn,
                     p.DrawType, p.SpinSeconds, p.StopSeconds, p.WonCount, remaining, p.EligibleCount,
-                    Math.Min(p.DrawPerTurn, remaining), p.MinSeniorityMonths, p.MaxSeniorityMonths, LocalizedName.Reward(p));
+                    Math.Min(p.DrawPerTurn, remaining), p.MinSeniorityMonths, p.MaxSeniorityMonths, LocalizedName.Reward(p),
+                    LocalizedName.Sub(p), LocalizedName.RewardSub(p));
             })
             .ToList();
         return Ok(list);

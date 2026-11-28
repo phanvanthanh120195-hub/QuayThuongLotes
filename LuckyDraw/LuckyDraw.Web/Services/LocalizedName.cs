@@ -30,11 +30,19 @@ public static class LocalizedName
     /// Dòng phụ dưới tên (màn chiếu): tên tiếng Trung (繁 trước, không có thì 简); đang xem tiếng Trung thì là tên tiếng Việt.
     /// Trống hoặc trùng tên chính → null (không hiện).
     /// </summary>
-    public static string? Sub(IMultiLangName x)
+    public static string? Sub(IMultiLangName x) => Sub(Get(x), x.NameVi, x.NameZhTw, x.NameZhCn);
+
+    /// <summary>Dòng phụ tiếng Trung dưới phần thưởng của giải (vd. "Bao lì xì 1 triệu đồng" → "紅包 100 萬越盾").</summary>
+    public static string? RewardSub(Prize p)
     {
-        var main = Get(x);
-        var zh = !string.IsNullOrWhiteSpace(x.NameZhTw) ? x.NameZhTw : x.NameZhCn;
-        var sub = CultureInfo.CurrentUICulture.Name.StartsWith("zh") ? x.NameVi : zh;
+        var main = Reward(p);
+        return main is null ? null : Sub(main, p.RewardVi, p.RewardZhTw, p.RewardZhCn);
+    }
+
+    private static string? Sub(string main, string? vi, string? zhTw, string? zhCn)
+    {
+        var zh = !string.IsNullOrWhiteSpace(zhTw) ? zhTw : zhCn;
+        var sub = CultureInfo.CurrentUICulture.Name.StartsWith("zh") ? vi : zh;
         return string.IsNullOrWhiteSpace(sub) || sub.Trim() == main.Trim() ? null : sub.Trim();
     }
 

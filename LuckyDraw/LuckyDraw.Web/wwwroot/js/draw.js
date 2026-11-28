@@ -190,6 +190,21 @@
     }
     var fontVar = function (f) { return '"' + String(f || 'Anton').replace(/"/g, '') + '"'; };
 
+    /**
+     * Năm âm lịch (can chi) của sự kiện: lấy năm ghi trong tên sự kiện (vd. "… LOTES 2027"),
+     * không có thì lấy năm của ngày sự kiện. 2027 → "Năm Đinh Mùi" / "丁未年" / "Year of the Goat".
+     */
+    function lunarYear(ev) {
+        var m = /(?:^|\D)((?:19|20)\d\d)(?!\d)/.exec(ev.name || '') || /(\d{4})\s*$/.exec(ev.date || '');
+        if (!m) return '';
+        var y = +m[1], c = LD.culture || 'vi-VN';
+        if (/^zh/.test(c)) return '甲乙丙丁戊己庚辛壬癸'.charAt((y - 4) % 10) + '子丑寅卯辰巳午未申酉戌亥'.charAt((y - 4) % 12) + '年';
+        if (/^en/.test(c)) return 'Year of the ' + ['Rat', 'Ox', 'Tiger', 'Rabbit', 'Dragon', 'Snake', 'Horse', 'Goat', 'Monkey', 'Rooster', 'Dog', 'Pig'][(y - 4) % 12];
+        var can = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'][(y - 4) % 10];
+        var chi = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'][(y - 4) % 12];
+        return 'Năm ' + can + ' ' + chi;
+    }
+
     function applyTheme() {
         var ev = state.ev, t = ev.theme, p = ev.preset, root = document.documentElement.style, body = document.body;
         root.setProperty('--bg', p.bg);
@@ -207,9 +222,13 @@
         if (window.BgScene) BgScene.apply(t.backgroundPath ? null : p.bg);
         var logo = $('#logo');
         if (t.logoPath) { logo.src = t.logoPath; logo.hidden = false; } else { logo.hidden = true; }
-        // Dòng phụ tiếng Trung chữ nhỏ dưới tên sự kiện (server chọn sẵn, null = không hiện)
+        // Dòng phụ dưới tên sự kiện: "2027 年尾牙 · NĂM ĐINH MÙI" (tên tiếng Trung do server chọn + năm âm lịch)
         var sub = $('#eventSub');
-        if (sub) { sub.textContent = ev.subName || ''; sub.hidden = !ev.subName; }
+        if (sub) {
+            var subText = [ev.subName, lunarYear(ev)].filter(Boolean).join(' · ');
+            sub.textContent = subText;
+            sub.hidden = !subText;
+        }
         applyCursor(t.cursor, t.cursorSize);
         if (window.CursorFx) CursorFx.setButtonSparkler(!t.startButton || t.startButton.sparkler !== false);
         $('#btnStart').classList.remove('s1', 's2', 's3', 's4', 's5', 's6');
@@ -281,7 +300,7 @@
     function sizeSlots() {
         var n = state.slotCount, len = state.ev ? state.ev.codeLength : 4;
         var col = document.querySelector('.draw-col');
-        var availW = (col ? col.clientWidth : window.innerWidth * 0.6) * 0.94;   // khu quay số = cột phải
+        var availW = (col ? col.clientWidth : window.innerWidth * 0.6) * 0.96;   // khu quay số trong thẻ phải
         // Các dãy ô xếp chồng theo hàng dọc; nhiều hơn 4 dãy thì chia 2 cột (mỗi cột tối đa 5 dãy, rồi 3 cột…)
         var cols = n <= 4 ? 1 : Math.ceil(n / 5);
         var slotsEl = $('#slots');
@@ -684,6 +703,12 @@
         if (state.ev) sizeSlots();   // tính lại cỡ ô cho vừa khu quay số (cột phải)
     }
 
+    function setSub(sel, text) {
+        var e = $(sel);
+        e.textContent = text || '';
+        e.hidden = !text;
+    }
+
     function renderPrize() {
         var p = cur(), idle = state.phase === 'idle';
         $('#prev').disabled = !idle || state.idx <= 0;
@@ -691,14 +716,22 @@
         var img = $('#prizeImg'), medal = $('#medal');
         if (!p) {
             $('#prizeName').textContent = T('noPrizes');
+            $('#prizeKicker').textContent = T('nowDrawing');
+            $('#drawKicker').textContent = '';
             img.hidden = true;
             medal.hidden = true;
             $('#prizeReward').hidden = true;
-            $('#progressTxt').textContent = '';
+            $('#prizeNameSub').hidden = true;
+            $('#prizeAwarded').textContent = '';
+            $('#prizeBar').style.width = '0';
             $('#warn').style.visibility = 'hidden';
             return;
         }
         $('#prizeName').textContent = p.name;
+        setSub('#prizeNameSub', p.nameSub);            // tên giải tiếng Trung chữ nhỏ
+        // "GIẢI ĐANG QUAY · 4/6" (giải thứ mấy / tổng số giải) và "Quay giải khuyến khích"
+        $('#prizeKicker').textContent = T('nowDrawing') + ' · ' + (state.idx + 1) + '/' + state.prizes.length;
+        $('#drawKicker').textContent = T('drawPrize', /^vi/.test(LD.culture) ? p.name.toLocaleLowerCase('vi') : p.name);
         // Có ảnh phần thưởng thì hiện ảnh, không thì hiện huy hiệu ghi số suất của giải
         if (p.imagePath) { img.src = p.imagePath; img.hidden = false; medal.hidden = true; }
         else { img.hidden = true; medal.hidden = false; $('#medalNum').textContent = p.quantity; }
@@ -706,8 +739,11 @@
         $('#prizeReward').hidden = false;
         $('#prizeRewardName').textContent = p.reward || '';
         $('#prizeRewardName').hidden = !p.reward;
+        setSub('#prizeRewardSub', p.reward && p.rewardSub);   // phần thưởng tiếng Trung chữ nhỏ
         $('#prizeQty').textContent = T('prizeQty', p.quantity, p.drawPerTurn);
-        $('#progressTxt').textContent = T('progress', p.won, p.quantity);
+        // Chân thẻ: "Đã trao 6 / 10 suất" + thanh tiến độ
+        $('#prizeAwarded').textContent = T('awarded', p.won, p.quantity);
+        $('#prizeBar').style.width = (p.quantity ? Math.min(100, p.won * 100 / p.quantity) : 0) + '%';
         // Giữ chỗ cố định cho dòng cảnh báo (ẩn bằng visibility) để bố cục không nhảy khi nó hiện / ẩn
         var warn = $('#warn');
         warn.style.visibility = (p.remaining > 0 && p.eligible < p.nextTake) ? 'visible' : 'hidden';
@@ -1381,14 +1417,12 @@
         else if (document.documentElement.requestFullscreen) document.documentElement.requestFullscreen();
     }
     var idleTimer = 0;
-    var btnIdleTimer = 0;
+    // Nút Bắt đầu, ô quay số và thanh công cụ luôn rõ (không còn tự mờ khi để yên chuột).
+    // Chỉ khi toàn màn hình + không động chuột: ẩn con trỏ và các nút góc / thanh công cụ.
     function poke() {
-        document.body.classList.remove('idle', 'btn-idle');
+        document.body.classList.remove('idle');
         clearTimeout(idleTimer);
         if (document.fullscreenElement) idleTimer = setTimeout(function () { document.body.classList.add('idle'); }, 2800);
-        // nút Bắt đầu: không động chuột 10 giây thì mờ đi (cả khi không toàn màn hình)
-        clearTimeout(btnIdleTimer);
-        btnIdleTimer = setTimeout(function () { document.body.classList.add('btn-idle'); }, 10000);
     }
 
     // ------------------------------------------------------------------ Realtime (SignalR)
