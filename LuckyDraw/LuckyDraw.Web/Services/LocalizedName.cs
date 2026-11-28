@@ -26,6 +26,18 @@ public static class LocalizedName
 
     public static string Get(IMultiLangName x) => Get(x.NameVi, x.NameZhTw, x.NameZhCn, x.NameEn);
 
+    /// <summary>
+    /// Dòng phụ dưới tên (màn chiếu): tên tiếng Trung (繁 trước, không có thì 简); đang xem tiếng Trung thì là tên tiếng Việt.
+    /// Trống hoặc trùng tên chính → null (không hiện).
+    /// </summary>
+    public static string? Sub(IMultiLangName x)
+    {
+        var main = Get(x);
+        var zh = !string.IsNullOrWhiteSpace(x.NameZhTw) ? x.NameZhTw : x.NameZhCn;
+        var sub = CultureInfo.CurrentUICulture.Name.StartsWith("zh") ? x.NameVi : zh;
+        return string.IsNullOrWhiteSpace(sub) || sub.Trim() == main.Trim() ? null : sub.Trim();
+    }
+
     /// <summary>Phần thưởng của giải theo ngôn ngữ người xem (cùng quy tắc dự phòng như tên); chưa nhập → null.</summary>
     public static string? Reward(Prize p)
     {

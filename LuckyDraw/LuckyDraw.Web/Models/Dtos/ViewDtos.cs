@@ -16,7 +16,9 @@ public record EventViewDto(
     ThemePresetDto Preset,
     SoundViewDto Sound,
     bool CanDraw,
-    string? UserName);
+    string? UserName,
+    // Dòng phụ nhỏ dưới tên sự kiện: tên tiếng Trung (đang xem tiếng Trung thì là tên tiếng Việt); null = không hiện
+    string? SubName);
 
 public record ThemePresetDto(string Bg, string Accent, bool Light);
 

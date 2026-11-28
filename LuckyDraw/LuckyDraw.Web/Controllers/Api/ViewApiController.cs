@@ -60,7 +60,8 @@ public class ViewApiController : ControllerBase
             new ThemePresetDto(preset.Bg, preset.Accent, preset.Key == "minimal-light"),
             ToView(SettingsJson.Read<SoundSettings>(ev.SoundJson)),
             CanDraw,
-            User.Identity?.Name));
+            User.Identity?.Name,
+            LocalizedName.Sub(ev)));
     }
 
     [HttpGet("prizes")]

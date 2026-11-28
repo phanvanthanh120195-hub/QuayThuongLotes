@@ -195,8 +195,9 @@
         if (window.BgScene) BgScene.apply(t.backgroundPath ? null : p.bg);
         var logo = $('#logo');
         if (t.logoPath) { logo.src = t.logoPath; logo.hidden = false; } else { logo.hidden = true; }
-        body.classList.remove('pos-bottom', 'pos-left', 'pos-right');
-        body.classList.add('pos-' + (t.resultPanelPosition || 'bottom'));
+        // Dòng phụ tiếng Trung chữ nhỏ dưới tên sự kiện (server chọn sẵn, null = không hiện)
+        var sub = $('#eventSub');
+        if (sub) { sub.textContent = ev.subName || ''; sub.hidden = !ev.subName; }
         applyCursor(t.cursor, t.cursorSize);
         if (window.CursorFx) CursorFx.setButtonSparkler(!t.startButton || t.startButton.sparkler !== false);
         $('#btnStart').classList.remove('s1', 's2', 's3', 's4', 's5', 's6');
@@ -267,9 +268,12 @@
 
     function sizeSlots() {
         var n = state.slotCount, len = state.ev ? state.ev.codeLength : 4;
-        var side = document.body.classList.contains('pos-bottom') ? 0 : 0.27;
-        var availW = window.innerWidth * (0.86 - side);
-        var cols = n === 1 ? 1 : Math.min(n, Math.max(1, Math.round(Math.sqrt(n * 1.8))));
+        var col = document.querySelector('.draw-col');
+        var availW = (col ? col.clientWidth : window.innerWidth * 0.6) * 0.94;   // khu quay số = cột phải
+        // Các dãy ô xếp chồng theo hàng dọc; nhiều hơn 4 dãy thì chia 2 cột (mỗi cột tối đa 5 dãy, rồi 3 cột…)
+        var cols = n <= 4 ? 1 : Math.ceil(n / 5);
+        var slotsEl = $('#slots');
+        if (slotsEl) slotsEl.style.setProperty('--cols', String(cols));
         var drum = digitStyle() === 'drum';                  // trống 3D: ô rộng hơn + khung vàng dày
         var extra = drum ? 1 : n === 1 ? 0 : 0.75;           // khung + khoảng cách giữa các dãy ô
         var wBox = availW / (cols * (len * (drum ? 1.16 : 1.1) + extra));
@@ -277,7 +281,9 @@
         var rootStyle = document.documentElement.style, main = document.querySelector('.stage-main');
         function fits(b) {
             rootStyle.setProperty('--box', b + 'px');
-            return !main || main.scrollHeight <= main.clientHeight + 1;
+            // cả khu chính lẫn cột quay số (ô + nút + dòng tiến độ) đều không được tràn
+            return (!main || main.scrollHeight <= main.clientHeight + 1) &&
+                (!col || col.scrollHeight <= col.clientHeight + 1);
         }
         // Tìm cỡ ô LỚN NHẤT mà toàn bộ khu chính vẫn vừa màn hình (bảng kết quả có chiều cao cố định)
         if (fits(hi)) return;
@@ -659,29 +665,14 @@
         if (r) r(ok);
     }
 
-    function markAbsent(r) {
-        if (state.phase !== 'idle') return;
-        confirmAbsent(r).then(function (ok) { if (ok) doMarkAbsent(r); });
-    }
-
-    function doMarkAbsent(r) {
-        api('/api/results/' + r.resultId + '/absent', { method: 'POST' }).then(function () {
-            toast(T('absentDone'));
-            state.freshBatch = null;
-            return refreshData(true);
-        }).catch(function (e) { toast(e.message, true); refreshData(true); });
-    }
-
     // ------------------------------------------------------------------ Hiển thị
     function renderAll() {
         renderPrize();
         renderButton();
-        renderResults();
-        if (state.ev) sizeSlots();   // bảng kết quả đổi chiều cao → tính lại cỡ ô cho vừa màn hình
+        if (state.ev) sizeSlots();   // tính lại cỡ ô cho vừa khu quay số (cột phải)
     }
 
     function renderPrize() {
-        debugger
         var p = cur(), idle = state.phase === 'idle';
         $('#prev').disabled = !idle || state.idx <= 0;
         $('#next').disabled = !idle || state.idx >= state.prizes.length - 1;
@@ -690,6 +681,7 @@
             $('#prizeName').textContent = T('noPrizes');
             img.hidden = true;
             medal.hidden = true;
+            $('#prizeReward').hidden = true;
             $('#progressTxt').textContent = '';
             $('#warn').style.visibility = 'hidden';
             return;
@@ -698,6 +690,11 @@
         // Có ảnh phần thưởng thì hiện ảnh, không thì hiện huy hiệu ghi số suất của giải
         if (p.imagePath) { img.src = p.imagePath; img.hidden = false; medal.hidden = true; }
         else { img.hidden = true; medal.hidden = false; $('#medalNum').textContent = p.quantity; }
+        // Dưới ảnh: tên phần thưởng (vd. "Tivi Xiaomi") + số suất
+        $('#prizeReward').hidden = false;
+        $('#prizeRewardName').textContent = p.reward || '';
+        $('#prizeRewardName').hidden = !p.reward;
+        $('#prizeQty').textContent = T('prizeQty', p.quantity, p.drawPerTurn);
         $('#progressTxt').textContent = T('progress', p.won, p.quantity);
         // Giữ chỗ cố định cho dòng cảnh báo (ẩn bằng visibility) để bố cục không nhảy khi nó hiện / ẩn
         var warn = $('#warn');
@@ -770,73 +767,6 @@
                 else if (state.prizes.some(function (x) { return x.remaining > 0; })) b.textContent = T('nextPrize');
                 else { b.textContent = T('allDone'); b.disabled = true; }
         }
-    }
-
-    // Bảng "Danh sách trúng giải": mỗi giải 1 tab, STT theo thứ tự trúng (người trúng đầu tiên là 1)
-    function renderResults() {
-        var tabs = $('#resultTabs'), body = $('#resultsBody');
-        tabs.innerHTML = '';
-        state.prizes.forEach(function (p) {
-            var t = el('button', 'tab' + (p.prizeId === state.viewPrizeId ? ' active' : ''), p.name);
-            t.type = 'button';
-            t.setAttribute('role', 'tab');
-            t.appendChild(el('span', 'n', p.won + '/' + p.quantity));
-            t.addEventListener('click', function () {
-                if (state.phase !== 'idle') return;
-                var curName = ($('#prizeName') && $('#prizeName').textContent || '').trim();
-                var curIdx = state.prizes.findIndex(function (x) { return x.name.trim() === curName; });
-                var targetIdx = state.prizes.findIndex(function (x) { return x.prizeId === p.prizeId; });
-
-                if (curIdx !== -1 && targetIdx !== -1 && curIdx !== targetIdx) {
-                    var diff = targetIdx - curIdx;
-                    var navBtn = diff > 0 ? $('#next') : $('#prev');
-                    if (navBtn) {
-                        for (var s = 0; s < Math.abs(diff); s++) {
-                            navBtn.click();
-                        }
-                    }
-                }
-                state.viewPrizeId = p.prizeId;
-                renderResults();
-            });
-            tabs.appendChild(t);
-        });
-        var active = tabs.querySelector('.tab.active');
-        if (active) tabs.scrollLeft = Math.max(0, active.offsetLeft - (tabs.clientWidth - active.offsetWidth) / 2);
-
-        var rows = state.results.filter(function (r) { return r.prizeId === state.viewPrizeId; }).reverse();
-        var canAct = LD.canDraw && state.phase === 'idle';
-        var cols = LD.canDraw ? 5 : 4;
-        body.innerHTML = '';
-        if (!rows.length) {
-            var tr0 = el('tr', 'empty'), td0 = el('td', null, T('noResults'));
-            td0.colSpan = cols;
-            tr0.appendChild(td0);
-            body.appendChild(tr0);
-            return;
-        }
-        rows.forEach(function (r, i) {
-            var tr = el('tr', r.batchId === state.freshBatch ? 'fresh' : '');
-            tr.appendChild(el('td', 'stt', i + 1));
-            tr.appendChild(el('td', 'code', r.code));
-            tr.appendChild(el('td', null, r.name));
-            tr.appendChild(el('td', null, r.department || ''));
-            if (LD.canDraw) {
-                var td = el('td');
-                if (canAct) {
-                    var btn = el('button', 'absent-btn', T('absent'));
-                    btn.type = 'button';
-                    btn.title = T('absentTitle');
-                    btn.addEventListener('click', function () { markAbsent(r); });
-                    td.appendChild(btn);
-                }
-                tr.appendChild(td);
-            }
-            body.appendChild(tr);
-        });
-        // Cuộn khung bảng (không cuộn cả trang) tới dòng người vừa trúng
-        var wrap = body.closest('.table-wrap'), fresh = body.querySelector('tr.fresh');
-        if (wrap && fresh) wrap.scrollTop = Math.max(0, fresh.offsetTop - 40);
     }
 
     // ------------------------------------------------------------------ Bảng thông tin giải thưởng (chỉ xem)

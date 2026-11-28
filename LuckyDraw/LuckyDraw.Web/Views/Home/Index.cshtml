@@ -20,6 +20,7 @@
         ["nextPrize"] = L["Giải tiếp theo"],
         ["allDone"] = L["Đã quay xong tất cả giải"],
         ["progress"] = L["Đã quay {0} / {1} người trúng giải này"],
+        ["prizeQty"] = L["{0} suất · mỗi lượt {1} người"],
         ["notEnough"] = L["Chỉ còn {0} người đủ điều kiện"],
         ["noResults"] = L["Chưa có người trúng giải này."],
         ["noPrizes"] = L["Chưa có giải thưởng"],
@@ -80,7 +81,7 @@
     <link rel="preload" as="image" href="~/images/award.png" />
     <link rel="stylesheet" href="~/css/stage.css" asp-append-version="true" />
 </head>
-<body class="stage pos-bottom">
+<body class="stage">
     <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
         <symbol id="s-gift" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
         <symbol id="s-clip" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 10h6M9 14h6M9 18h3"/></symbol>
@@ -118,32 +119,46 @@
     }
     else
     {
+        var subName = LocalizedName.Sub(Model);
         <main class="stage-main">
-            <div class="title-banner">
-                <h1 class="event-title gold-text title-3d" id="eventTitle" data-text="@LocalizedName.Get(Model)">@LocalizedName.Get(Model)</h1>
-            </div>
-            <div class="prize-nav">
-                <button class="nav-btn" id="prev" type="button" aria-label="@L["Giải trước"]"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
-                <div class="prize-name gold-text" id="prizeName"></div>
-                <button class="nav-btn" id="next" type="button" aria-label="@L["Giải sau"]"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
-            </div>
-            <div class="prize-badge">
-                <img class="prize-img" id="prizeImg" alt="" hidden />
-                <div class="medal" id="medal">
-                    <img src="~/images/award.png" alt="" aria-hidden="true" />
-                    <span class="medal-num" id="medalNum"></span>
+            @* Header: tên sự kiện + dòng phụ tiếng Trung chữ nhỏ *@
+            <header class="stage-head">
+                <div class="title-banner">
+                    <h1 class="event-title gold-text title-3d" id="eventTitle" data-text="@LocalizedName.Get(Model)">@LocalizedName.Get(Model)</h1>
                 </div>
-            </div>
-            <div class="slots glass" id="slots" aria-live="polite"></div>
-            <div class="controls">
-                <div class="start-wrap"><button class="start-btn s2" id="btnStart" type="button" hidden></button></div>
-                @if (!canDraw)
-                {
-                    <span class="view-note">@L["Chế độ xem – đăng nhập MC để quay"]</span>
-                }
-            </div>
-            <div class="progress-txt" id="progressTxt"></div>
-            <div class="warn" id="warn" style="visibility:hidden">&nbsp;</div>
+                <div class="event-sub gold-text" id="eventSub" hidden="@(subName is null)">@subName</div>
+            </header>
+
+            @* Cột trái: giải đang quay (tên + ảnh phần thưởng) *@
+            <section class="prize-col">
+                <div class="prize-nav">
+                    <button class="nav-btn" id="prev" type="button" aria-label="@L["Giải trước"]"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+                    <div class="prize-name gold-text" id="prizeName"></div>
+                    <button class="nav-btn" id="next" type="button" aria-label="@L["Giải sau"]"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+                </div>
+                <div class="prize-badge">
+                    <img class="prize-img" id="prizeImg" alt="" hidden />
+                    <div class="medal" id="medal">
+                        <img src="~/images/award.png" alt="" aria-hidden="true" />
+                        <span class="medal-num" id="medalNum"></span>
+                    </div>
+                </div>
+                <div class="prize-reward" id="prizeReward"><span id="prizeRewardName"></span><small id="prizeQty"></small></div>
+            </section>
+
+            @* Cột phải: khu quay số *@
+            <section class="draw-col">
+                <div class="slots glass" id="slots" aria-live="polite"></div>
+                <div class="controls">
+                    <div class="start-wrap"><button class="start-btn s2" id="btnStart" type="button" hidden></button></div>
+                    @if (!canDraw)
+                    {
+                        <span class="view-note">@L["Chế độ xem – đăng nhập MC để quay"]</span>
+                    }
+                </div>
+                <div class="progress-txt" id="progressTxt"></div>
+                <div class="warn" id="warn" style="visibility:hidden">&nbsp;</div>
+            </section>
 
             <nav class="pill" aria-label="@L["Công cụ"]">
                 <button class="pill-btn" id="btnPrizes" type="button"><svg><use href="#s-gift"/></svg><span class="lbl">@L["Giải thưởng"]</span></button>
@@ -156,31 +171,6 @@
                         data-title-on="@L["Vinh danh"] (V)" data-title-off="@L["Mở được khi đã quay xong tất cả các giải"]"><svg><use href="#s-star"/></svg><span class="lbl">@L["Vinh danh"]</span></button>
             </nav>
         </main>
-
-        <section class="results" aria-labelledby="resultsTitle">
-            <div class="results-head">
-                <h2 id="resultsTitle">@L["Danh sách trúng giải"]</h2>
-                @if (canDraw)
-                {
-                    <a class="dl-btn" href="/api/results/export"><svg><use href="#s-download"/></svg>@L["Tải kết quả"]</a>
-                }
-            </div>
-            <div class="tabs" id="resultTabs" role="tablist"></div>
-            <div class="table-wrap">
-                <table class="rtable">
-                    <thead>
-                        <tr>
-                            <th>@L["STT"]</th>
-                            <th>@L["Mã trúng thưởng"]</th>
-                            <th>@L["Họ và tên"]</th>
-                            <th>@L["Bộ phận"]</th>
-                            @if (canDraw) { <th></th> }
-                        </tr>
-                    </thead>
-                    <tbody id="resultsBody"></tbody>
-                </table>
-            </div>
-        </section>
 
         <div class="corner left">
             <button class="corner-btn" id="btnFull" type="button" title="@L["Toàn màn hình"] (F)"><svg><use href="#s-full"/></svg></button>

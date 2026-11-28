@@ -57,27 +57,14 @@ body.stage {
     font-family: var(--ui);
     background: #5a0008;
     display: grid;
-    /* minmax(0, …): danh sách dài chỉ cuộn bên trong, không đẩy rộng cả trang */
+    /* minmax(0, …): nội dung dài không đẩy rộng cả trang */
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) auto;
-    grid-template-areas: "main" "results";
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-areas: "main";
     -webkit-font-smoothing: antialiased;
 }
 
-body.pos-left {
-    grid-template-columns: minmax(280px, 26vw) minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr);
-    grid-template-areas: "results main";
-}
-
-body.pos-right {
-    grid-template-columns: minmax(0, 1fr) minmax(280px, 26vw);
-    grid-template-rows: minmax(0, 1fr);
-    grid-template-areas: "main results";
-}
-
-.stage-main,
-.results {
+.stage-main {
     min-width: 0;
 }
 
@@ -171,17 +158,119 @@ body.pos-right {
 }
 
 /* ---------- Khu chính ---------- */
+/* Header (tên sự kiện) ở trên, bên dưới chia 2 cột: trái = giải đang quay (~35%), phải = khu quay số (~65%) */
 .stage-main {
     grid-area: main;
+    min-height: 0;
+    display: grid;
+    grid-template-columns: minmax(0, 35fr) minmax(0, 65fr);
+    grid-template-rows: auto minmax(0, 1fr) auto;
+    align-items: center;
+    justify-items: center;
+    gap: 1.6vh 2.4vw;
+    padding: 2.4vh 3vw 2.4vh;
+    text-align: center;
+    overflow: hidden;
+}
+
+.stage-head {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 100%;
+}
+
+.stage-head .title-banner {
+    margin: 0;
+}
+
+/* Tên tiếng Trung: chữ nhỏ (~45% cỡ tên sự kiện) dưới bảng hiệu */
+.event-sub {
+    font-family: var(--title-font), var(--cjk);
+    font-weight: 900;
+    font-size: calc(max(26px, calc(var(--title-size) * 100vw / 1920)) * .45);
+    letter-spacing: .25em;
+    line-height: 1.2;
+    margin-top: .4vh;
+    padding: .1em .2em .2em;
+}
+
+.prize-col,
+.draw-col {
+    align-self: stretch;
+    width: 100%;
+    min-width: 0;
     min-height: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: safe center;
-    gap: 1.4vh;
-    padding: 2.6vh 3vw 1.4vh;
+}
+
+/* Không có khung nền: ảnh nền sự kiện hiện trọn, không bị che mờ */
+.prize-col {
+    gap: 2.2vh;
+    padding: 3vh 1.5vw;
+}
+
+
+.draw-col {
+    gap: 3.2vh;
+}
+
+.stage-main > .pill {
+    grid-column: 1 / -1;
+    margin-top: 0;
+}
+
+/* Tên phần thưởng + số suất dưới ảnh giải */
+.prize-reward {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.2vh;
+    max-width: 100%;
+    font-size: clamp(17px, 1.4vw, 28px);
     text-align: center;
-    overflow: hidden;
+}
+
+/* Tên phần thưởng: dải nhãn đỏ viền vàng – đọc rõ trên mọi ảnh nền */
+#prizeRewardName {
+    max-width: 100%;
+    padding: .38em 1.3em .42em;
+    border-radius: 999px;
+    border: 2px solid transparent;
+    background:
+        linear-gradient(180deg, #d01a33, #8e0a1d) padding-box,
+        linear-gradient(90deg, #8a5512, #ffe39a 25%, #c8902c 50%, #ffe39a 75%, #8a5512) border-box;
+    color: #fff3cf;
+    font-weight: 800;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+    text-shadow: 0 1px 2px rgba(60, 0, 6, .6);
+    box-shadow: 0 10px 24px rgba(30, 0, 4, .45), inset 0 1px 0 rgba(255, 255, 255, .25);
+}
+
+/* Số suất: chip nhỏ, nền tối mờ */
+.prize-reward small {
+    padding: .3em 1em;
+    border-radius: 999px;
+    background: rgba(40, 0, 6, .55);
+    border: 1px solid rgba(255, 216, 107, .35);
+    color: #ffe9b8;
+    font-size: .68em;
+    font-weight: 600;
+    letter-spacing: .02em;
+}
+
+body.light #prizeRewardName {
+    color: #fff;
+}
+
+body.light .prize-reward small {
+    background: rgba(255, 255, 255, .8);
+    color: var(--ink);
 }
 
 /* Chữ vàng ánh kim + quầng sáng */
@@ -400,11 +489,47 @@ body.light .event-title.title-3d {
 
 /* Huy hiệu số lượng giải (hoặc ảnh phần thưởng nếu có) */
 .prize-badge {
-    --badge: clamp(52px, 7.2vh, 100px);
-    height: var(--badge);
+    /* cột trái: ảnh giải / huy hiệu hiện to */
+    --badge: clamp(120px, 22vh, 240px);
+    width: 100%;
+    min-height: var(--badge);
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.prize-col .prize-nav {
+    max-width: 100%;
+}
+
+/* Tên giải 1 dòng (tên dài như "Giải khuyến khích" vẫn nằm giữa 2 mũi tên) */
+.prize-col .prize-name {
+    font-size: clamp(28px, 3vw, 62px);
+    white-space: nowrap;
+    overflow-wrap: normal;
+}
+
+/* Ảnh phần thưởng: khung cố định 4:3 (mọi giải cùng cỡ), viền vàng đôi + hào quang */
+.prize-col .prize-img {
+    width: clamp(220px, 21vw, 420px);
+    height: auto;
+    aspect-ratio: 4 / 3;
+    max-width: 92%;
+    max-height: 38vh;
+    min-height: 0;
+    object-fit: cover;
+    border-radius: 18px;
+    border: 4px solid #f5d27a;
+    background: #2a0006;
+    box-shadow:
+        0 0 0 6px rgba(110, 6, 18, .75),
+        0 0 0 8px rgba(245, 210, 122, .55),
+        0 18px 40px rgba(20, 0, 2, .6),
+        0 0 46px rgba(255, 200, 110, .4);
+}
+
+.prize-col .medal {
+    --badge: clamp(150px, 26vh, 280px);
 }
 
 .medal {
@@ -439,22 +564,28 @@ body.light .event-title.title-3d {
 }
 
 .prize-img {
-    height: var(--badge);
-    width: var(--badge);
-    object-fit: cover;
-    border-radius: 14px;
-    border: 2px solid var(--accent);
-    box-shadow: 0 8px 22px rgba(0, 0, 0, .35);
+    width: auto;
+    height: auto;
+    max-width: 88%;
+    max-height: 40vh;
+    min-height: 24vh;
+    object-fit: contain;
+    border-radius: 18px;
+    border: 3px solid var(--accent);
+    background: #fff;
+    box-shadow: 0 14px 34px rgba(0, 0, 0, .45), 0 0 30px color-mix(in srgb, var(--accent) 35%, transparent);
 }
 
 /* ---------- Ô quay số ---------- */
+/* Các dãy ô xếp chồng theo hàng dọc (--cols do draw.js đặt: 1 cột khi ≤ 4 dãy, nhiều hơn thì 2–3 cột) */
 .slots {
     transition: opacity .25s ease;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(var(--cols, 1), auto);
     justify-content: center;
-    gap: calc(var(--box) * .3) calc(var(--box) * .45);
-    max-width: 94vw;
+    justify-items: center;
+    gap: calc(var(--box) * .26) calc(var(--box) * .45);
+    max-width: 100%;
     margin: .6vh 0;
 }
 
@@ -940,228 +1071,6 @@ body.light .warn {
     stroke-linecap: round;
     stroke-linejoin: round;
     flex-shrink: 0;
-}
-
-/* ---------- Bảng danh sách trúng giải ---------- */
-.results {
-    grid-area: results;
-    justify-self: center;
-    width: min(1040px, 92vw);
-    /* Chiều cao CỐ ĐỊNH: đổi tab / thêm người trúng không làm bảng co giãn → giao diện không nhảy */
-    height: 31vh;
-    min-height: 210px;
-    margin: 0 0 2.4vh;
-    border-radius: 14px;
-    background: var(--panel);
-    border: 1px solid var(--panel-line);
-    backdrop-filter: blur(10px);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 16px 40px rgba(40, 0, 4, .35);
-    transition: opacity .4s;
-}
-
-body.pos-left .results,
-body.pos-right .results {
-    width: auto;
-    justify-self: stretch;
-    height: auto;
-    margin: 2.4vh 1.6vw;
-}
-
-.results-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 10px;
-    padding: 12px 18px;
-}
-
-.results-head h2 {
-    margin: 0;
-    font-size: clamp(15px, 1.1vw, 21px);
-    font-weight: 800;
-}
-
-.dl-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 6px 12px;
-    border-radius: 8px;
-    border: 1px solid var(--panel-line);
-    background: rgba(255, 255, 255, .06);
-    color: var(--ink);
-    font: 600 13px var(--ui);
-    text-decoration: none;
-}
-
-.dl-btn:hover {
-    background: rgba(255, 255, 255, .14);
-}
-
-.dl-btn svg {
-    width: 15px;
-    height: 15px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
-
-.tabs {
-    display: flex;
-    gap: 4px;
-    padding: 0 12px;
-    background: var(--panel-2);
-    overflow-x: auto;
-    scrollbar-width: thin;
-}
-
-.tab {
-    padding: 10px 10px 9px;
-    border: 0;
-    background: transparent;
-    color: var(--ink-soft);
-    font: 600 clamp(12px, .85vw, 15px) var(--ui);
-    cursor: var(--cur-pointer);
-    white-space: nowrap;
-    border-bottom: 2px solid transparent;
-}
-
-.tab:hover {
-    color: var(--ink);
-}
-
-.tab.active {
-    color: var(--accent);
-    border-bottom-color: var(--accent);
-}
-
-body.light .tab.active {
-    color: #a50d26;
-    border-bottom-color: #a50d26;
-}
-
-.tab .n {
-    font-size: .85em;
-    opacity: .7;
-    margin-left: 4px;
-}
-
-.table-wrap {
-    overflow: auto;
-    padding: 0 18px 16px;
-    margin-top: 12px;
-    flex: 1;
-    min-height: 0;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255, 210, 160, .35) transparent;
-}
-
-.table-wrap::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
-}
-
-.table-wrap::-webkit-scrollbar-track {
-    background: transparent;
-}
-
-.table-wrap::-webkit-scrollbar-thumb {
-    background: rgba(255, 210, 160, .3);
-    border-radius: 8px;
-}
-
-.table-wrap::-webkit-scrollbar-thumb:hover {
-    background: rgba(255, 210, 160, .5);
-}
-
-/* border-collapse: separate để viền dòng tiêu đề đi theo khi ghim (sticky) */
-.rtable {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-    font-size: clamp(13px, .95vw, 18px);
-}
-
-.rtable th,
-.rtable td {
-    border-right: 1px solid var(--panel-line);
-    border-bottom: 1px solid var(--panel-line);
-    padding: 9px 12px;
-    text-align: center;
-}
-
-.rtable th:first-child,
-.rtable td:first-child {
-    border-left: 1px solid var(--panel-line);
-}
-
-.rtable thead th {
-    border-top: 1px solid var(--panel-line);
-}
-
-/* Nền đặc (không trong suốt) để các dòng cuộn bên dưới không hiện xuyên qua tiêu đề */
-.rtable th {
-    font-weight: 700;
-    background: #4a0309;
-    position: sticky;
-    top: 0;
-    z-index: 2;
-}
-
-body.light .rtable th {
-    background: #f1f2f5;
-}
-
-.rtable td.stt {
-    width: 60px;
-    color: var(--ink-soft);
-}
-
-.rtable td.code {
-    font-family: var(--digit-font), var(--cjk);
-    letter-spacing: 1px;
-    font-size: 1.08em;
-}
-
-.rtable tr.fresh td {
-    background: color-mix(in srgb, var(--accent) 16%, transparent);
-}
-
-.rtable .empty td {
-    color: var(--ink-soft);
-    padding: 18px;
-}
-
-body.pos-left .rtable th:nth-child(4),
-body.pos-left .rtable td:nth-child(4),
-body.pos-right .rtable th:nth-child(4),
-body.pos-right .rtable td:nth-child(4) {
-    display: none;
-}
-
-.absent-btn {
-    border: 1px solid rgba(255, 150, 130, .65);
-    background: transparent;
-    color: #ffc2b5;
-    border-radius: 8px;
-    padding: 3px 9px;
-    font: 600 12px var(--ui);
-    cursor: var(--cur-pointer);
-    white-space: nowrap;
-}
-
-body.light .absent-btn {
-    color: #c8102e;
-    border-color: #f2a5b1;
-}
-
-.absent-btn:hover {
-    background: rgba(255, 90, 70, .22);
 }
 
 /* ---------- Nút góc màn hình ---------- */
@@ -3147,31 +3056,19 @@ body.idle .honor-x {
 
 @media (max-width: 700px) {
 
-    body.pos-left,
-    body.pos-right {
+    /* Màn hẹp (điện thoại): xếp dọc 1 cột, cho cuộn */
+    .stage-main {
         grid-template-columns: minmax(0, 1fr);
-        grid-template-rows: minmax(0, 1fr) auto;
-        grid-template-areas: "main" "results";
+        grid-template-rows: auto auto auto auto;
+        overflow-y: auto;
+        padding-bottom: 70px;
     }
 
-    body.pos-left .results,
-    body.pos-right .results {
-        margin: 0 12px 70px;
-        height: 34vh;
-    }
-
-    .results {
-        width: calc(100vw - 24px);
-        margin-bottom: 70px;
-        height: 34vh;
+    .prize-col .prize-img {
+        max-height: 26vh;
     }
 
     .pill-btn .lbl {
-        display: none;
-    }
-
-    .rtable th:nth-child(4),
-    .rtable td:nth-child(4) {
         display: none;
     }
 }
