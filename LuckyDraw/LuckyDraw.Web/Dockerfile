@@ -4,7 +4,7 @@ WORKDIR /src
 
 # Copy file csproj và khôi phục các gói NuGet
 COPY ["LuckyDraw.Web.csproj", "./"]
-RUN dotnet restore "TenDuAn.csproj"
+RUN dotnet restore "LuckyDraw.Web.csproj"
 
 # Copy toàn bộ mã nguồn và publish bản Release
 COPY . .
