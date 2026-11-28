@@ -14,6 +14,9 @@ using Microsoft.Extensions.Localization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "10000";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 // Dapper: cột snake_case (full_name) ↔ thuộc tính PascalCase (FullName)
 DefaultTypeMap.MatchNamesWithUnderscores = true;
 
