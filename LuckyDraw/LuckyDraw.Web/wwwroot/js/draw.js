@@ -17,6 +17,18 @@
         if (text != null) e.textContent = text;
         return e;
     }
+    /**
+     * Phím Bắt đầu / Dừng: Space hoặc Enter (kể cả nút bấm USB to giả lập phím Space).
+     * Xét cả e.code (phím vật lý): khi bộ gõ tiếng Hoa / tiếng Việt của Windows đang bật,
+     * trình duyệt báo e.key = "Process" (keyCode 229) thay vì " ", nhưng e.code vẫn là "Space".
+     */
+    function isStartKey(e) {
+        return e.code === 'Space' || e.code === 'Enter' || e.code === 'NumpadEnter'
+            || e.key === ' ' || e.key === 'Spacebar' || e.key === 'Enter'
+            || e.keyCode === 32 || e.keyCode === 13;
+    }
+    var lastStartKey = 0;
+
     var store = {
         get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } },
         set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) { /* bỏ qua */ } }
@@ -1286,7 +1298,7 @@
         key: function (e) {
             var k = e.key;
             if (k === 'Escape' || k === 'v' || k === 'V') this.close();
-            else if (k === ' ' || k === 'Enter') this.paused = !this.paused;
+            else if (isStartKey(e)) { if (!e.repeat) this.paused = !this.paused; }
             else if (k === 'ArrowUp') this.speed = Math.min(4, this.speed * 1.25);
             else if (k === 'ArrowDown') this.speed = Math.max(0.25, this.speed / 1.25);
             else if (k === 'PageDown') this.scrollBy(this.viewH * 0.8);
@@ -1452,23 +1464,83 @@
                 return;                                    // Enter/Space: để nút đang focus tự xử lý
             }
             if (Honor.open) { Honor.key(e); return; }
-            var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName)
-                || !!(e.target.closest && e.target.closest('.lang-pick'));      // đang thao tác menu ngôn ngữ
+            // Chỉ coi là "đang gõ chữ" khi ô nhập còn hiện trên màn hình (ô tìm kiếm của popup đã đóng vẫn có thể giữ focus)
+            var t = e.target;
+            var typing = (/^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName) && t.offsetParent !== null)
+                || !!(t.closest && t.closest('.lang-pick'));                    // đang thao tác menu ngôn ngữ
             var modalOpen = $$('.modal').some(function (m) { return !m.hidden; });
             if (e.key === 'Escape') { $$('.modal').forEach(function (m) { m.hidden = true; }); if (state.phase === 'congrats') closeCongrats(); return; }
             if (typing || modalOpen) return;
-            if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); onStart(); }
+            if (isStartKey(e)) {
+                e.preventDefault();
+                // Focus còn ở 1 nút vừa bấm (vd. "Kết quả vừa quay") → bỏ focus để Space không bấm lại nút đó
+                if (/^(BUTTON|A)$/.test(t.tagName)) t.blur();
+                if (e.repeat || Date.now() - lastStartKey < 350) return;   // giữ nút / nút bị nảy → chỉ tính 1 lần
+                lastStartKey = Date.now();
+                onStart();
+            }
             else if (e.key === 'ArrowLeft') selectPrize(state.idx - 1);
             else if (e.key === 'ArrowRight') selectPrize(state.idx + 1);
             else if (e.key === 'f' || e.key === 'F') toggleFullscreen();
             else if (e.key === 'm' || e.key === 'M') Sound.toggle();
             else if (e.key === 'v' || e.key === 'V') Honor.show();
         });
+        // Nút bấm USB dạng CHUỘT (gửi nút giữa / Back / Forward) cũng là Bắt đầu / Dừng – khỏi cài X-Mouse.
+        // e.button: 1 = nút giữa, 3 = Back, 4 = Forward. Chặn tác dụng gốc: Back/Forward làm trình duyệt lùi trang,
+        // nút giữa bật chế độ cuộn tự động.
+        var isStartButton = function (e) { return e.button === 1 || e.button === 3 || e.button === 4; };
+        document.addEventListener('mousedown', function (e) {
+            if (!isStartButton(e)) return;
+            e.preventDefault();
+            if (Date.now() - lastStartKey < 350) return;           // nút bị nảy → chỉ tính 1 lần
+            lastStartKey = Date.now();
+            if (!$('#confirmModal').hidden) return;
+            if (Honor.open) { Honor.paused = !Honor.paused; return; }
+            if ($$('.modal').some(function (m) { return !m.hidden; })) return;
+            onStart();
+        });
+        ['mouseup', 'auxclick'].forEach(function (type) {
+            document.addEventListener(type, function (e) { if (isStartButton(e)) e.preventDefault(); });
+        });
+
         var rt = 0;
         window.addEventListener('resize', function () {
             clearTimeout(rt);
             rt = setTimeout(function () { sizeSlots(); if (Honor.open) Honor.fit(); }, 120);
         });
+        if (/[?&]keys=1\b/.test(location.search)) keyDebug();
+    }
+
+    /**
+     * Soi phím: mở màn chiếu với ?keys=1 (vd. https://.../?keys=1) rồi bấm nút / phím bất kỳ →
+     * góc dưới bên trái hiện phím trình duyệt nhận được (để kiểm tra nút bấm USB gửi phím gì).
+     */
+    function keyDebug() {
+        var box = el('div', 'key-debug');
+        box.textContent = 'Bấm nút / phím bất kỳ để kiểm tra…';
+        document.body.appendChild(box);
+        var n = 0;
+        ['keydown', 'keyup'].forEach(function (type) {
+            document.addEventListener(type, function (e) {
+                n++;
+                box.textContent = '#' + n + ' ' + type + '  key="' + e.key + '"  code="' + e.code + '"  keyCode=' + e.keyCode
+                    + (e.repeat ? '  (lặp)' : '') + '  →  ' + (isStartKey(e) ? 'BẮT ĐẦU/DỪNG ✓' : 'không dùng');
+                box.classList.toggle('ok', isStartKey(e));
+            }, true);
+        });
+        var names = { 0: 'trái', 1: 'giữa', 2: 'phải', 3: 'Back', 4: 'Forward' };
+        document.addEventListener('mousedown', function (e) {
+            n++;
+            var ok = e.button === 1 || e.button === 3 || e.button === 4;
+            box.textContent = '#' + n + ' chuột  button=' + e.button + ' (' + (names[e.button] || '?') + ')  →  '
+                + (ok ? 'BẮT ĐẦU/DỪNG ✓' : 'không dùng');
+            box.classList.toggle('ok', ok);
+        }, true);
+        document.addEventListener('wheel', function (e) {
+            n++;
+            box.textContent = '#' + n + ' lăn chuột  deltaY=' + Math.round(e.deltaY) + '  →  không dùng';
+            box.classList.remove('ok');
+        }, { capture: true, passive: true });
     }
 
     StageFx.init($('#fxAmbient'), $('#fxBurst'));
